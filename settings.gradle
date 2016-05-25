@@ -1,1 +1,1 @@
-include ':samples', ':volley-comments'
+include ':samples', ':volley-comments', ':easyvolley-hurl'
