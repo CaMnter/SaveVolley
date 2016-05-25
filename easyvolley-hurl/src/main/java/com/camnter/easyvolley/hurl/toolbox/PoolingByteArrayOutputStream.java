@@ -32,6 +32,7 @@ public class PoolingByteArrayOutputStream extends ByteArrayOutputStream {
 
     private final ByteArrayPool mPool;
 
+
     /**
      * Constructs a new PoolingByteArrayOutputStream with a default size. If more bytes are written
      * to this instance, the underlying byte array will expand.
@@ -40,30 +41,33 @@ public class PoolingByteArrayOutputStream extends ByteArrayOutputStream {
         this(pool, DEFAULT_SIZE);
     }
 
+
     /**
      * Constructs a new {@code ByteArrayOutputStream} with a default size of {@code size} bytes. If
      * more than {@code size} bytes are written to this instance, the underlying byte array will
      * expand.
      *
-     * @param size initial size for the underlying byte array. The value will be pinned to a default
-     *        minimum size.
+     * @param size initial size for the underlying byte array. The value will be pinned to a
+     * default
+     * minimum size.
      */
     public PoolingByteArrayOutputStream(ByteArrayPool pool, int size) {
         mPool = pool;
         buf = mPool.getBuf(Math.max(size, DEFAULT_SIZE));
     }
 
-    @Override
-    public void close() throws IOException {
+
+    @Override public void close() throws IOException {
         mPool.returnBuf(buf);
         buf = null;
         super.close();
     }
 
-    @Override
-    public void finalize() {
+
+    @Override public void finalize() {
         mPool.returnBuf(buf);
     }
+
 
     /**
      * Ensures there is enough space in the buffer for the given number of additional bytes.
@@ -79,14 +83,14 @@ public class PoolingByteArrayOutputStream extends ByteArrayOutputStream {
         buf = newbuf;
     }
 
-    @Override
-    public synchronized void write(byte[] buffer, int offset, int len) {
+
+    @Override public synchronized void write(byte[] buffer, int offset, int len) {
         expand(len);
         super.write(buffer, offset, len);
     }
 
-    @Override
-    public synchronized void write(int oneByte) {
+
+    @Override public synchronized void write(int oneByte) {
         expand(1);
         super.write(oneByte);
     }

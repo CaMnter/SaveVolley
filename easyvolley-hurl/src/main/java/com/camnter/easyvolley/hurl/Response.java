@@ -38,10 +38,12 @@ public class Response<T> {
         public void onErrorResponse(VolleyError error);
     }
 
+
     /** Returns a successful response containing the parsed result. */
     public static <T> Response<T> success(T result, Cache.Entry cacheEntry) {
         return new Response<T>(result, cacheEntry);
     }
+
 
     /**
      * Returns a failed response containing the given error code and an optional
@@ -50,6 +52,7 @@ public class Response<T> {
     public static <T> Response<T> error(VolleyError error) {
         return new Response<T>(error);
     }
+
 
     /** Parsed response, or null in the case of error. */
     public final T result;
@@ -62,6 +65,7 @@ public class Response<T> {
 
     /** True if this response was a soft-expired one and a second one MAY be coming. */
     public boolean intermediate = false;
+
 
     /**
      * Returns whether this response is considered successful.
@@ -76,6 +80,7 @@ public class Response<T> {
         this.cacheEntry = cacheEntry;
         this.error = null;
     }
+
 
     private Response(VolleyError error) {
         this.result = null;

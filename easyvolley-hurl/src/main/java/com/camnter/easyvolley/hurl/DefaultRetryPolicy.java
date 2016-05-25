@@ -16,7 +16,6 @@
 
 package com.camnter.easyvolley.hurl;
 
-
 /**
  * Default retry policy for requests.
  */
@@ -42,6 +41,7 @@ public class DefaultRetryPolicy implements RetryPolicy {
     /** The default backoff multiplier */
     public static final float DEFAULT_BACKOFF_MULT = 1f;
 
+
     /**
      * Constructs a new retry policy using the default timeouts.
      */
@@ -49,8 +49,10 @@ public class DefaultRetryPolicy implements RetryPolicy {
         this(DEFAULT_TIMEOUT_MS, DEFAULT_MAX_RETRIES, DEFAULT_BACKOFF_MULT);
     }
 
+
     /**
      * Constructs a new retry policy.
+     *
      * @param initialTimeoutMs The initial timeout for the policy.
      * @param maxNumRetries The maximum number of retries.
      * @param backoffMultiplier Backoff multiplier for the policy.
@@ -61,21 +63,22 @@ public class DefaultRetryPolicy implements RetryPolicy {
         mBackoffMultiplier = backoffMultiplier;
     }
 
+
     /**
      * Returns the current timeout.
      */
-    @Override
-    public int getCurrentTimeout() {
+    @Override public int getCurrentTimeout() {
         return mCurrentTimeoutMs;
     }
+
 
     /**
      * Returns the current retry count.
      */
-    @Override
-    public int getCurrentRetryCount() {
+    @Override public int getCurrentRetryCount() {
         return mCurrentRetryCount;
     }
+
 
     /**
      * Returns the backoff multiplier for the policy.
@@ -84,18 +87,20 @@ public class DefaultRetryPolicy implements RetryPolicy {
         return mBackoffMultiplier;
     }
 
+
     /**
      * Prepares for the next retry by applying a backoff to the timeout.
+     *
      * @param error The error code of the last attempt.
      */
-    @Override
-    public void retry(VolleyError error) throws VolleyError {
+    @Override public void retry(VolleyError error) throws VolleyError {
         mCurrentRetryCount++;
         mCurrentTimeoutMs += (mCurrentTimeoutMs * mBackoffMultiplier);
         if (!hasAttemptRemaining()) {
             throw error;
         }
     }
+
 
     /**
      * Returns true if this policy has attempts remaining, false otherwise.

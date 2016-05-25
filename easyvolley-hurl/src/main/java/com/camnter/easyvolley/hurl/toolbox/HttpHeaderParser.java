@@ -97,9 +97,7 @@ public class HttpHeaderParser {
         // is more restrictive.
         if (hasCacheControl) {
             softExpire = now + maxAge * 1000;
-            finalExpire = mustRevalidate
-                    ? softExpire
-                    : softExpire + staleWhileRevalidate * 1000;
+            finalExpire = mustRevalidate ? softExpire : softExpire + staleWhileRevalidate * 1000;
         } else if (serverDate > 0 && serverExpires >= serverDate) {
             // Default semantic for Expire header in HTTP specification is softExpire.
             softExpire = now + (serverExpires - serverDate);
@@ -118,6 +116,7 @@ public class HttpHeaderParser {
         return entry;
     }
 
+
     /**
      * Parse date in RFC1123 format, and return its value as epoch
      */
@@ -130,6 +129,7 @@ public class HttpHeaderParser {
             return 0;
         }
     }
+
 
     /**
      * Retrieve a charset from headers
@@ -155,6 +155,7 @@ public class HttpHeaderParser {
 
         return defaultCharset;
     }
+
 
     /**
      * Returns the charset specified in the Content-Type of this header,

@@ -16,7 +16,6 @@
 
 package com.camnter.easyvolley.hurl;
 
-
 /**
  * Retry policy for a request.
  */
@@ -34,6 +33,7 @@ public interface RetryPolicy {
 
     /**
      * Prepares for the next retry by applying a backoff to the timeout.
+     *
      * @param error The error code of the last attempt.
      * @throws VolleyError In the event that the retry could not be performed (for example if we
      * ran out of attempts), the passed in error is thrown.

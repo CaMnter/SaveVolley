@@ -33,7 +33,8 @@ import java.util.List;
  * <p>
  * A good candidate user for this class is something like an I/O system that uses large temporary
  * <code>byte[]</code> buffers to copy data around. In these use cases, often the consumer wants
- * the buffer to be a certain minimum size to ensure good performance (e.g. when copying data chunks
+ * the buffer to be a certain minimum size to ensure good performance (e.g. when copying data
+ * chunks
  * off of a stream), but doesn't mind if the buffer is larger than the minimum. Taking this into
  * account and also to maximize the odds of being able to reuse a recycled buffer, this class is
  * free to return buffers larger than the requested size. The caller needs to be able to gracefully
@@ -67,11 +68,11 @@ public class ByteArrayPool {
 
     /** Compares buffers by size */
     protected static final Comparator<byte[]> BUF_COMPARATOR = new Comparator<byte[]>() {
-        @Override
-        public int compare(byte[] lhs, byte[] rhs) {
+        @Override public int compare(byte[] lhs, byte[] rhs) {
             return lhs.length - rhs.length;
         }
     };
+
 
     /**
      * @param sizeLimit the maximum size of the pool, in bytes
@@ -80,12 +81,13 @@ public class ByteArrayPool {
         mSizeLimit = sizeLimit;
     }
 
+
     /**
      * Returns a buffer from the pool if one is available in the requested size, or allocates a new
      * one if a pooled one is not available.
      *
      * @param len the minimum size, in bytes, of the requested buffer. The returned buffer may be
-     *        larger.
+     * larger.
      * @return a byte[] buffer is always returned.
      */
     public synchronized byte[] getBuf(int len) {
@@ -101,8 +103,10 @@ public class ByteArrayPool {
         return new byte[len];
     }
 
+
     /**
-     * Returns a buffer to the pool, throwing away old buffers if the pool would exceed its allotted
+     * Returns a buffer to the pool, throwing away old buffers if the pool would exceed its
+     * allotted
      * size.
      *
      * @param buf the buffer to return to the pool.
@@ -121,6 +125,7 @@ public class ByteArrayPool {
         trim();
     }
 
+
     /**
      * Removes buffers from the pool until it is under its size limit.
      */
@@ -131,5 +136,4 @@ public class ByteArrayPool {
             mCurrentSize -= buf.length;
         }
     }
-
 }

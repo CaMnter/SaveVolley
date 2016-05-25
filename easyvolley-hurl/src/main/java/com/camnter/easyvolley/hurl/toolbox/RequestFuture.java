@@ -50,25 +50,27 @@ import java.util.concurrent.TimeoutException;
  *
  * @param <T> The type of parsed response this future expects.
  */
-public class RequestFuture<T> implements Future<T>, Response.Listener<T>,
-       Response.ErrorListener {
+public class RequestFuture<T> implements Future<T>, Response.Listener<T>, Response.ErrorListener {
     private Request<?> mRequest;
     private boolean mResultReceived = false;
     private T mResult;
     private VolleyError mException;
 
+
     public static <E> RequestFuture<E> newFuture() {
         return new RequestFuture<E>();
     }
 
+
     private RequestFuture() {}
+
 
     public void setRequest(Request<?> request) {
         mRequest = request;
     }
 
-    @Override
-    public synchronized boolean cancel(boolean mayInterruptIfRunning) {
+
+    @Override public synchronized boolean cancel(boolean mayInterruptIfRunning) {
         if (mRequest == null) {
             return false;
         }
@@ -81,8 +83,8 @@ public class RequestFuture<T> implements Future<T>, Response.Listener<T>,
         }
     }
 
-    @Override
-    public T get() throws InterruptedException, ExecutionException {
+
+    @Override public T get() throws InterruptedException, ExecutionException {
         try {
             return doGet(null);
         } catch (TimeoutException e) {
@@ -90,11 +92,12 @@ public class RequestFuture<T> implements Future<T>, Response.Listener<T>,
         }
     }
 
-    @Override
-    public T get(long timeout, TimeUnit unit)
+
+    @Override public T get(long timeout, TimeUnit unit)
             throws InterruptedException, ExecutionException, TimeoutException {
         return doGet(TimeUnit.MILLISECONDS.convert(timeout, unit));
     }
+
 
     private synchronized T doGet(Long timeoutMs)
             throws InterruptedException, ExecutionException, TimeoutException {
@@ -123,28 +126,28 @@ public class RequestFuture<T> implements Future<T>, Response.Listener<T>,
         return mResult;
     }
 
-    @Override
-    public boolean isCancelled() {
+
+    @Override public boolean isCancelled() {
         if (mRequest == null) {
             return false;
         }
         return mRequest.isCanceled();
     }
 
-    @Override
-    public synchronized boolean isDone() {
+
+    @Override public synchronized boolean isDone() {
         return mResultReceived || mException != null || isCancelled();
     }
 
-    @Override
-    public synchronized void onResponse(T response) {
+
+    @Override public synchronized void onResponse(T response) {
         mResultReceived = true;
         mResult = response;
         notifyAll();
     }
 
-    @Override
-    public synchronized void onErrorResponse(VolleyError error) {
+
+    @Override public synchronized void onErrorResponse(VolleyError error) {
         mException = error;
         notifyAll();
     }

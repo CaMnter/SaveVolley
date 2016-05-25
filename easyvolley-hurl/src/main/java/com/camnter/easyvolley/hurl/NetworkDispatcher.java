@@ -43,6 +43,7 @@ public class NetworkDispatcher extends Thread {
     /** Used for telling us to die. */
     private volatile boolean mQuit = false;
 
+
     /**
      * Creates a new network dispatcher thread.  You must call {@link #start()}
      * in order to begin processing.
@@ -52,14 +53,13 @@ public class NetworkDispatcher extends Thread {
      * @param cache Cache interface to use for writing responses to cache
      * @param delivery Delivery interface to use for posting responses
      */
-    public NetworkDispatcher(BlockingQueue<Request<?>> queue,
-            Network network, Cache cache,
-            ResponseDelivery delivery) {
+    public NetworkDispatcher(BlockingQueue<Request<?>> queue, Network network, Cache cache, ResponseDelivery delivery) {
         mQueue = queue;
         mNetwork = network;
         mCache = cache;
         mDelivery = delivery;
     }
+
 
     /**
      * Forces this dispatcher to quit immediately.  If any requests are still in
@@ -70,6 +70,7 @@ public class NetworkDispatcher extends Thread {
         interrupt();
     }
 
+
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void addTrafficStatsTag(Request<?> request) {
         // Tag the request (if API >= 14)
@@ -78,8 +79,8 @@ public class NetworkDispatcher extends Thread {
         }
     }
 
-    @Override
-    public void run() {
+
+    @Override public void run() {
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
         while (true) {
             long startTimeMs = SystemClock.elapsedRealtime();
@@ -143,6 +144,7 @@ public class NetworkDispatcher extends Thread {
             }
         }
     }
+
 
     private void parseAndDeliverNetworkError(Request<?> request, VolleyError error) {
         error = request.parseNetworkError(error);

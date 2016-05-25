@@ -47,6 +47,7 @@ public class CacheDispatcher extends Thread {
     /** Used for telling us to die. */
     private volatile boolean mQuit = false;
 
+
     /**
      * Creates a new cache triage dispatcher thread.  You must call {@link #start()}
      * in order to begin processing.
@@ -56,14 +57,13 @@ public class CacheDispatcher extends Thread {
      * @param cache Cache interface to use for resolution
      * @param delivery Delivery interface to use for posting responses
      */
-    public CacheDispatcher(
-            BlockingQueue<Request<?>> cacheQueue, BlockingQueue<Request<?>> networkQueue,
-            Cache cache, ResponseDelivery delivery) {
+    public CacheDispatcher(BlockingQueue<Request<?>> cacheQueue, BlockingQueue<Request<?>> networkQueue, Cache cache, ResponseDelivery delivery) {
         mCacheQueue = cacheQueue;
         mNetworkQueue = networkQueue;
         mCache = cache;
         mDelivery = delivery;
     }
+
 
     /**
      * Forces this dispatcher to quit immediately.  If any requests are still in
@@ -74,8 +74,8 @@ public class CacheDispatcher extends Thread {
         interrupt();
     }
 
-    @Override
-    public void run() {
+
+    @Override public void run() {
         if (DEBUG) VolleyLog.v("start new dispatcher");
         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
 
@@ -134,8 +134,7 @@ public class CacheDispatcher extends Thread {
                     // Post the intermediate response back to the user and have
                     // the delivery then forward the request along to the network.
                     mDelivery.postResponse(request, response, new Runnable() {
-                        @Override
-                        public void run() {
+                        @Override public void run() {
                             try {
                                 mNetworkQueue.put(request);
                             } catch (InterruptedException e) {
@@ -144,7 +143,6 @@ public class CacheDispatcher extends Thread {
                         }
                     });
                 }
-
             } catch (InterruptedException e) {
                 // We may have been interrupted because it was time to quit.
                 if (mQuit) {

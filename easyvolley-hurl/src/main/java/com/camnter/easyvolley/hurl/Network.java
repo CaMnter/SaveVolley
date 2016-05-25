@@ -22,6 +22,7 @@ package com.camnter.easyvolley.hurl;
 public interface Network {
     /**
      * Performs the specified request.
+     *
      * @param request Request to process
      * @return A {@link NetworkResponse} with data and caching metadata; will never be null
      * @throws VolleyError on errors

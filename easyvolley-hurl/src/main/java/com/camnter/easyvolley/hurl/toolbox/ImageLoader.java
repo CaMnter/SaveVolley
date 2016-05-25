@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -52,12 +52,12 @@ public class ImageLoader {
      * HashMap of Cache keys -> BatchedImageRequest used to track in-flight requests so
      * that we can coalesce multiple requests to the same URL into a single network request.
      */
-    private final HashMap<String, BatchedImageRequest> mInFlightRequests =
-            new HashMap<String, BatchedImageRequest>();
+    private final HashMap<String, BatchedImageRequest> mInFlightRequests
+            = new HashMap<String, BatchedImageRequest>();
 
     /** HashMap of the currently pending responses (waiting to be delivered). */
-    private final HashMap<String, BatchedImageRequest> mBatchedResponses =
-            new HashMap<String, BatchedImageRequest>();
+    private final HashMap<String, BatchedImageRequest> mBatchedResponses
+            = new HashMap<String, BatchedImageRequest>();
 
     /** Handler to the main thread. */
     private final Handler mHandler = new Handler(Looper.getMainLooper());
@@ -72,8 +72,10 @@ public class ImageLoader {
      */
     public interface ImageCache {
         public Bitmap getBitmap(String url);
+
         public void putBitmap(String url, Bitmap bitmap);
     }
+
 
     /**
      * Constructs a new ImageLoader.
@@ -85,6 +87,7 @@ public class ImageLoader {
         mCache = imageCache;
     }
 
+
     /**
      * The default implementation of ImageListener which handles basic functionality
      * of showing a default image until the network response is received, at which point
@@ -93,18 +96,16 @@ public class ImageLoader {
      * @param defaultImageResId Default image resource ID to use, or 0 if it doesn't exist.
      * @param errorImageResId Error image resource ID to use, or 0 if it doesn't exist.
      */
-    public static ImageListener getImageListener(final ImageView view,
-            final int defaultImageResId, final int errorImageResId) {
+    public static ImageListener getImageListener(final ImageView view, final int defaultImageResId, final int errorImageResId) {
         return new ImageListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+            @Override public void onErrorResponse(VolleyError error) {
                 if (errorImageResId != 0) {
                     view.setImageResource(errorImageResId);
                 }
             }
 
-            @Override
-            public void onResponse(ImageContainer response, boolean isImmediate) {
+
+            @Override public void onResponse(ImageContainer response, boolean isImmediate) {
                 if (response.getBitmap() != null) {
                     view.setImageBitmap(response.getBitmap());
                 } else if (defaultImageResId != 0) {
@@ -113,6 +114,7 @@ public class ImageLoader {
             }
         };
     }
+
 
     /**
      * Interface for the response handlers on image requests.
@@ -141,6 +143,7 @@ public class ImageLoader {
         public void onResponse(ImageContainer response, boolean isImmediate);
     }
 
+
     /**
      * Checks if the item is available in the cache.
      * @param requestUrl The url of the remote image
@@ -151,6 +154,7 @@ public class ImageLoader {
     public boolean isCached(String requestUrl, int maxWidth, int maxHeight) {
         return isCached(requestUrl, maxWidth, maxHeight, ScaleType.CENTER_INSIDE);
     }
+
 
     /**
      * Checks if the item is available in the cache.
@@ -168,6 +172,7 @@ public class ImageLoader {
         return mCache.getBitmap(cacheKey) != null;
     }
 
+
     /**
      * Returns an ImageContainer for the requested URL.
      *
@@ -181,14 +186,15 @@ public class ImageLoader {
         return get(requestUrl, listener, 0, 0);
     }
 
+
     /**
      * Equivalent to calling {@link #get(String, ImageListener, int, int, ScaleType)} with
      * {@code Scaletype == ScaleType.CENTER_INSIDE}.
      */
-    public ImageContainer get(String requestUrl, ImageListener imageListener,
-            int maxWidth, int maxHeight) {
+    public ImageContainer get(String requestUrl, ImageListener imageListener, int maxWidth, int maxHeight) {
         return get(requestUrl, imageListener, maxWidth, maxHeight, ScaleType.CENTER_INSIDE);
     }
+
 
     /**
      * Issues a bitmap request with the given URL if that image is not available
@@ -203,8 +209,7 @@ public class ImageLoader {
      * @return A container object that contains all of the properties of the request, as well as
      *     the currently available image (default if remote is not loaded).
      */
-    public ImageContainer get(String requestUrl, ImageListener imageListener,
-            int maxWidth, int maxHeight, ScaleType scaleType) {
+    public ImageContainer get(String requestUrl, ImageListener imageListener, int maxWidth, int maxHeight, ScaleType scaleType) {
 
         // only fulfill requests that were initiated from the main thread.
         throwIfNotOnMainThread();
@@ -221,8 +226,8 @@ public class ImageLoader {
         }
 
         // The bitmap did not exist in the cache, fetch it!
-        ImageContainer imageContainer =
-                new ImageContainer(null, requestUrl, cacheKey, imageListener);
+        ImageContainer imageContainer = new ImageContainer(null, requestUrl, cacheKey,
+                imageListener);
 
         // Update the caller to let them know that they should use the default bitmap.
         imageListener.onResponse(imageContainer, true);
@@ -241,25 +246,23 @@ public class ImageLoader {
                 cacheKey);
 
         mRequestQueue.add(newRequest);
-        mInFlightRequests.put(cacheKey,
-                new BatchedImageRequest(newRequest, imageContainer));
+        mInFlightRequests.put(cacheKey, new BatchedImageRequest(newRequest, imageContainer));
         return imageContainer;
     }
 
-    protected Request<Bitmap> makeImageRequest(String requestUrl, int maxWidth, int maxHeight,
-            ScaleType scaleType, final String cacheKey) {
+
+    protected Request<Bitmap> makeImageRequest(String requestUrl, int maxWidth, int maxHeight, ScaleType scaleType, final String cacheKey) {
         return new ImageRequest(requestUrl, new Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
+            @Override public void onResponse(Bitmap response) {
                 onGetImageSuccess(cacheKey, response);
             }
         }, maxWidth, maxHeight, scaleType, Config.RGB_565, new ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+            @Override public void onErrorResponse(VolleyError error) {
                 onGetImageError(cacheKey, error);
             }
         });
     }
+
 
     /**
      * Sets the amount of time to wait after the first response arrives before delivering all
@@ -269,6 +272,7 @@ public class ImageLoader {
     public void setBatchedResponseDelay(int newBatchedResponseDelayMs) {
         mBatchResponseDelayMs = newBatchedResponseDelayMs;
     }
+
 
     /**
      * Handler for when an image was successfully loaded.
@@ -291,6 +295,7 @@ public class ImageLoader {
         }
     }
 
+
     /**
      * Handler for when an image failed to load.
      * @param cacheKey The cache key that is associated with the image request.
@@ -308,6 +313,7 @@ public class ImageLoader {
             batchResponse(cacheKey, request);
         }
     }
+
 
     /**
      * Container object for all of the data surrounding an image request.
@@ -327,19 +333,20 @@ public class ImageLoader {
         /** The request URL that was specified */
         private final String mRequestUrl;
 
+
         /**
          * Constructs a BitmapContainer object.
          * @param bitmap The final bitmap (if it exists).
          * @param requestUrl The requested URL for this container.
          * @param cacheKey The cache key that identifies the requested URL for this container.
          */
-        public ImageContainer(Bitmap bitmap, String requestUrl,
-                String cacheKey, ImageListener listener) {
+        public ImageContainer(Bitmap bitmap, String requestUrl, String cacheKey, ImageListener listener) {
             mBitmap = bitmap;
             mRequestUrl = requestUrl;
             mCacheKey = cacheKey;
             mListener = listener;
         }
+
 
         /**
          * Releases interest in the in-flight request (and cancels it if no one else is listening).
@@ -367,12 +374,14 @@ public class ImageLoader {
             }
         }
 
+
         /**
          * Returns the bitmap associated with the request URL if it has been loaded, null otherwise.
          */
         public Bitmap getBitmap() {
             return mBitmap;
         }
+
 
         /**
          * Returns the requested URL for this container.
@@ -399,6 +408,7 @@ public class ImageLoader {
         /** List of all of the active ImageContainers that are interested in the request */
         private final LinkedList<ImageContainer> mContainers = new LinkedList<ImageContainer>();
 
+
         /**
          * Constructs a new BatchedImageRequest object
          * @param request The request being tracked
@@ -409,12 +419,14 @@ public class ImageLoader {
             mContainers.add(container);
         }
 
+
         /**
          * Set the error for this response
          */
         public void setError(VolleyError error) {
             mError = error;
         }
+
 
         /**
          * Get the error for this response
@@ -423,6 +435,7 @@ public class ImageLoader {
             return mError;
         }
 
+
         /**
          * Adds another ImageContainer to the list of those interested in the results of
          * the request.
@@ -430,6 +443,7 @@ public class ImageLoader {
         public void addContainer(ImageContainer container) {
             mContainers.add(container);
         }
+
 
         /**
          * Detatches the bitmap container from the request and cancels the request if no one is
@@ -447,6 +461,7 @@ public class ImageLoader {
         }
     }
 
+
     /**
      * Starts the runnable for batched delivery of responses if it is not already started.
      * @param cacheKey The cacheKey of the response being delivered.
@@ -458,8 +473,7 @@ public class ImageLoader {
         // Note that this will be used to deliver responses to all callers in mBatchedResponses.
         if (mRunnable == null) {
             mRunnable = new Runnable() {
-                @Override
-                public void run() {
+                @Override public void run() {
                     for (BatchedImageRequest bir : mBatchedResponses.values()) {
                         for (ImageContainer container : bir.mContainers) {
                             // If one of the callers in the batched request canceled the request
@@ -479,18 +493,20 @@ public class ImageLoader {
                     mBatchedResponses.clear();
                     mRunnable = null;
                 }
-
             };
             // Post the runnable.
             mHandler.postDelayed(mRunnable, mBatchResponseDelayMs);
         }
     }
 
+
     private void throwIfNotOnMainThread() {
         if (Looper.myLooper() != Looper.getMainLooper()) {
             throw new IllegalStateException("ImageLoader must be invoked from the main thread.");
         }
     }
+
+
     /**
      * Creates a cache key for use with the L1 cache.
      * @param url The URL of the request.
@@ -499,8 +515,13 @@ public class ImageLoader {
      * @param scaleType The scaleType of the imageView.
      */
     private static String getCacheKey(String url, int maxWidth, int maxHeight, ScaleType scaleType) {
-        return new StringBuilder(url.length() + 12).append("#W").append(maxWidth)
-                .append("#H").append(maxHeight).append("#S").append(scaleType.ordinal()).append(url)
-                .toString();
+        return new StringBuilder(url.length() + 12).append("#W")
+                                                   .append(maxWidth)
+                                                   .append("#H")
+                                                   .append(maxHeight)
+                                                   .append("#S")
+                                                   .append(scaleType.ordinal())
+                                                   .append(url)
+                                                   .toString();
     }
 }

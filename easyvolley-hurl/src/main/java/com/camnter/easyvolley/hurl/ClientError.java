@@ -22,11 +22,11 @@ package com.camnter.easyvolley.hurl;
  * For backwards compatibility, extends ServerError which used to be thrown for all server errors,
  * including 4xx error codes indicating a client error.
  */
-@SuppressWarnings("serial")
-public class ClientError extends ServerError {
+@SuppressWarnings("serial") public class ClientError extends ServerError {
     public ClientError(NetworkResponse networkResponse) {
         super(networkResponse);
     }
+
 
     public ClientError() {
         super();

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -46,17 +46,21 @@ public class NetworkImageView extends ImageView {
     /** Current ImageContainer. (either in-flight or finished) */
     private ImageLoader.ImageContainer mImageContainer;
 
+
     public NetworkImageView(Context context) {
         this(context, null);
     }
+
 
     public NetworkImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
+
     public NetworkImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+
 
     /**
      * Sets URL of the image that should be loaded into this view. Note that calling this will
@@ -77,6 +81,7 @@ public class NetworkImageView extends ImageView {
         loadImageIfNecessary(false);
     }
 
+
     /**
      * Sets the default image resource ID to be used for this view until the attempt to load it
      * completes.
@@ -85,6 +90,7 @@ public class NetworkImageView extends ImageView {
         mDefaultImageId = defaultImage;
     }
 
+
     /**
      * Sets the error image resource ID to be used for this view in the event that the image
      * requested fails to load.
@@ -92,6 +98,7 @@ public class NetworkImageView extends ImageView {
     public void setErrorImageResId(int errorImage) {
         mErrorImageId = errorImage;
     }
+
 
     /**
      * Loads the image for the view if it isn't already loaded.
@@ -146,12 +153,12 @@ public class NetworkImageView extends ImageView {
         // from the network.
         ImageLoader.ImageContainer newContainer = mImageLoader.get(mUrl,
                 new ImageLoader.ImageListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+                    @Override public void onErrorResponse(VolleyError error) {
                         if (mErrorImageId != 0) {
                             setImageResource(mErrorImageId);
                         }
                     }
+
 
                     @Override
                     public void onResponse(final ImageLoader.ImageContainer response, boolean isImmediate) {
@@ -161,8 +168,7 @@ public class NetworkImageView extends ImageView {
                         // the main thread.
                         if (isImmediate && isInLayoutPass) {
                             post(new Runnable() {
-                                @Override
-                                public void run() {
+                                @Override public void run() {
                                     onResponse(response, false);
                                 }
                             });
@@ -181,23 +187,23 @@ public class NetworkImageView extends ImageView {
         mImageContainer = newContainer;
     }
 
+
     private void setDefaultImageOrNull() {
-        if(mDefaultImageId != 0) {
+        if (mDefaultImageId != 0) {
             setImageResource(mDefaultImageId);
-        }
-        else {
+        } else {
             setImageBitmap(null);
         }
     }
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+
+    @Override protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         loadImageIfNecessary(true);
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
+
+    @Override protected void onDetachedFromWindow() {
         if (mImageContainer != null) {
             // If the view was bound to an image request, cancel it and clear
             // out the image from the view.
@@ -209,8 +215,8 @@ public class NetworkImageView extends ImageView {
         super.onDetachedFromWindow();
     }
 
-    @Override
-    protected void drawableStateChanged() {
+
+    @Override protected void drawableStateChanged() {
         super.drawableStateChanged();
         invalidate();
     }
