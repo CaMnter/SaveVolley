@@ -18,9 +18,9 @@ package com.camnter.easyvolley.hurl.toolbox;
 
 import com.camnter.easyvolley.hurl.AuthFailureError;
 import com.camnter.easyvolley.hurl.Request;
+import com.camnter.easyvolley.hurl.core.http.HttpResponse;
 import java.io.IOException;
 import java.util.Map;
-import org.apache.http.HttpResponse;
 
 /**
  * An HTTP stack abstraction.

@@ -19,6 +19,16 @@ package com.camnter.easyvolley.hurl.toolbox;
 import com.camnter.easyvolley.hurl.AuthFailureError;
 import com.camnter.easyvolley.hurl.Request;
 import com.camnter.easyvolley.hurl.Request.Method;
+import com.camnter.easyvolley.hurl.core.http.Header;
+import com.camnter.easyvolley.hurl.core.http.HttpEntity;
+import com.camnter.easyvolley.hurl.core.http.HttpResponse;
+import com.camnter.easyvolley.hurl.core.http.HttpStatus;
+import com.camnter.easyvolley.hurl.core.http.ProtocolVersion;
+import com.camnter.easyvolley.hurl.core.http.StatusLine;
+import com.camnter.easyvolley.hurl.core.http.entry.BasicHttpEntity;
+import com.camnter.easyvolley.hurl.core.message.BasicHeader;
+import com.camnter.easyvolley.hurl.core.message.BasicHttpResponse;
+import com.camnter.easyvolley.hurl.core.message.BasicStatusLine;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,16 +40,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.ProtocolVersion;
-import org.apache.http.StatusLine;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.message.BasicHttpResponse;
-import org.apache.http.message.BasicStatusLine;
 
 /**
  * An {@link HttpStack} based on {@link HttpURLConnection}.

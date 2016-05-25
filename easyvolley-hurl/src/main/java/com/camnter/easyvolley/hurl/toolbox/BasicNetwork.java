@@ -31,6 +31,12 @@ import com.camnter.easyvolley.hurl.ServerError;
 import com.camnter.easyvolley.hurl.TimeoutError;
 import com.camnter.easyvolley.hurl.VolleyError;
 import com.camnter.easyvolley.hurl.VolleyLog;
+import com.camnter.easyvolley.hurl.core.http.Header;
+import com.camnter.easyvolley.hurl.core.http.HttpEntity;
+import com.camnter.easyvolley.hurl.core.http.HttpResponse;
+import com.camnter.easyvolley.hurl.core.http.HttpStatus;
+import com.camnter.easyvolley.hurl.core.http.StatusLine;
+import com.camnter.easyvolley.hurl.core.http.impl.cookie.DateUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -40,13 +46,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
 import org.apache.http.conn.ConnectTimeoutException;
-import org.apache.http.impl.cookie.DateUtils;
 
 /**
  * A network performing Volley requests over an {@link HttpStack}.
