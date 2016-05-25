@@ -7,7 +7,7 @@ EasyVolley
    
 [easyvolley-hurl](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-hurl/src/main/java/com/camnter/easyvolley/hurl)   
    
-移除了 **原版 google/volley** 中的，所有相关与 HttpClient 的逻辑，全版本的网络通信接入到 **HttpUrlConnection** 内。   
+移除了 **原版** **google/volley** 中的，所有相关与 HttpClient 的逻辑，全版本的网络通信接入到 **HttpUrlConnection** 内。   
        
 ## volley-comments 
      
