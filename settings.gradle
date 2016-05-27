@@ -1,1 +1,2 @@
-include ':samples', ':volley-comments', ':easyvolley-hurl'
+include ':samples', ':volley-comments', ':easyvolley-hurl', ':easyvolley-convert',
+        ':easyvolley-network-core'

@@ -18,9 +18,9 @@ package com.camnter.easyvolley.hurl.toolbox;
 
 import com.camnter.easyvolley.hurl.Cache;
 import com.camnter.easyvolley.hurl.NetworkResponse;
-import com.camnter.easyvolley.hurl.easyvolley.http.exception.DateParseException;
-import com.camnter.easyvolley.hurl.easyvolley.http.protocol.HTTP;
-import com.camnter.easyvolley.hurl.easyvolley.util.DateUtils;
+import com.camnter.easyvolley.network.core.http.exception.DateParseException;
+import com.camnter.easyvolley.network.core.http.protocol.HTTP;
+import com.camnter.easyvolley.network.core.util.DateUtils;
 import java.util.Map;
 
 /**

@@ -18,7 +18,7 @@ package com.camnter.easyvolley.hurl.toolbox;
 
 import com.camnter.easyvolley.hurl.AuthFailureError;
 import com.camnter.easyvolley.hurl.Request;
-import com.camnter.easyvolley.hurl.easyvolley.http.core.HttpResponse;
+import com.camnter.easyvolley.network.core.http.core.HttpResponse;
 import java.io.IOException;
 import java.util.Map;
 
