@@ -16,7 +16,7 @@
 
 package com.camnter.easyvolley.hurl;
 
-import com.camnter.easyvolley.hurl.core.http.HttpStatus;
+import com.camnter.easyvolley.hurl.easyvolley.core.HttpStatus;
 import java.util.Collections;
 import java.util.Map;
 

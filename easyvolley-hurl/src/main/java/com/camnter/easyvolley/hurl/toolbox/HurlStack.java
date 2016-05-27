@@ -19,16 +19,16 @@ package com.camnter.easyvolley.hurl.toolbox;
 import com.camnter.easyvolley.hurl.AuthFailureError;
 import com.camnter.easyvolley.hurl.Request;
 import com.camnter.easyvolley.hurl.Request.Method;
-import com.camnter.easyvolley.hurl.core.http.Header;
-import com.camnter.easyvolley.hurl.core.http.HttpEntity;
-import com.camnter.easyvolley.hurl.core.http.HttpResponse;
-import com.camnter.easyvolley.hurl.core.http.HttpStatus;
-import com.camnter.easyvolley.hurl.core.http.ProtocolVersion;
-import com.camnter.easyvolley.hurl.core.http.StatusLine;
-import com.camnter.easyvolley.hurl.core.http.entry.BasicHttpEntity;
-import com.camnter.easyvolley.hurl.core.message.BasicHeader;
-import com.camnter.easyvolley.hurl.core.message.BasicHttpResponse;
-import com.camnter.easyvolley.hurl.core.message.BasicStatusLine;
+import com.camnter.easyvolley.hurl.easyvolley.core.Header;
+import com.camnter.easyvolley.hurl.easyvolley.core.HttpEntity;
+import com.camnter.easyvolley.hurl.easyvolley.core.HttpResponse;
+import com.camnter.easyvolley.hurl.easyvolley.core.HttpStatus;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyProtocolVersion;
+import com.camnter.easyvolley.hurl.easyvolley.core.StatusLine;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyHttpEntity;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyHeader;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyHttpResponse;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyStatusLine;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -107,22 +107,22 @@ public class HurlStack implements HttpStack {
         }
         setConnectionParametersForRequest(connection, request);
         // Initialize HttpResponse with data from the HttpURLConnection.
-        ProtocolVersion protocolVersion = new ProtocolVersion("HTTP", 1, 1);
+        EasyProtocolVersion protocolVersion = new EasyProtocolVersion("HTTP", 1, 1);
         int responseCode = connection.getResponseCode();
         if (responseCode == -1) {
             // -1 is returned by getResponseCode() if the response code could not be retrieved.
             // Signal to the caller that something was wrong with the connection.
             throw new IOException("Could not retrieve response code from HttpUrlConnection.");
         }
-        StatusLine responseStatus = new BasicStatusLine(protocolVersion,
+        StatusLine responseStatus = new EasyStatusLine(protocolVersion,
                 connection.getResponseCode(), connection.getResponseMessage());
-        BasicHttpResponse response = new BasicHttpResponse(responseStatus);
+        EasyHttpResponse response = new EasyHttpResponse(responseStatus);
         if (hasResponseBody(request.getMethod(), responseStatus.getStatusCode())) {
             response.setEntity(entityFromConnection(connection));
         }
         for (Entry<String, List<String>> header : connection.getHeaderFields().entrySet()) {
             if (header.getKey() != null) {
-                Header h = new BasicHeader(header.getKey(), header.getValue().get(0));
+                Header h = new EasyHeader(header.getKey(), header.getValue().get(0));
                 response.addHeader(h);
             }
         }
@@ -152,7 +152,7 @@ public class HurlStack implements HttpStack {
      * @return an HttpEntity populated with data from <code>connection</code>.
      */
     private static HttpEntity entityFromConnection(HttpURLConnection connection) {
-        BasicHttpEntity entity = new BasicHttpEntity();
+        EasyHttpEntity entity = new EasyHttpEntity();
         InputStream inputStream;
         try {
             inputStream = connection.getInputStream();
