@@ -1,7 +1,7 @@
 /*
- * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/HeaderIterator.java $
- * $Revision: 581981 $
- * $Date: 2007-10-04 11:26:26 -0700 (Thu, 04 Oct 2007) $
+ * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpclient/trunk/module-client/src/main/java/org/apache/http/impl/cookie/DateParseException.java $
+ * $Revision: 609105 $
+ * $Date: 2008-01-05 00:55:00 -0800 (Sat, 05 Jan 2008) $
  *
  * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -29,31 +29,25 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.core;
+package com.camnter.easyvolley.hurl.easyvolley.http.exception;
 
-import java.util.Iterator;
+import com.camnter.easyvolley.hurl.easyvolley.util.DateUtils;
 
 /**
- * A type-safe iterator for {@link Header Header} objects.
+ * An exception to indicate an error parsing a date string.
  *
- * @version $Revision: 581981 $
+ * @author Michael Becke
+ * @see DateUtils
  */
-public interface HeaderIterator extends Iterator {
+public class DateParseException extends Exception {
+
+    private static final long serialVersionUID = 4417696455000643370L;
+
 
     /**
-     * Indicates whether there is another header in this iteration.
-     *
-     * @return <code>true</code> if there is another header,
-     * <code>false</code> otherwise
+     * @param message the exception message
      */
-    boolean hasNext();
-
-    /**
-     * Obtains the next header from this iteration.
-     * This method should only be called while {@link #hasNext hasNext}
-     * is true.
-     *
-     * @return the next header in this iteration
-     */
-    Header nextHeader();
+    public DateParseException(String message) {
+        super(message);
+    }
 }

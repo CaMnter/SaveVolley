@@ -31,7 +31,7 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.StatusLine;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.StatusLine;
 
 /**
  * Represents a status line as returned from a HTTP server.

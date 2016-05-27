@@ -31,11 +31,11 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.base.AbstractHttpMessage;
-import com.camnter.easyvolley.hurl.easyvolley.core.HttpEntity;
-import com.camnter.easyvolley.hurl.easyvolley.core.HttpResponse;
-import com.camnter.easyvolley.hurl.easyvolley.core.ReasonPhraseCatalog;
-import com.camnter.easyvolley.hurl.easyvolley.core.StatusLine;
+import com.camnter.easyvolley.hurl.easyvolley.http.base.AbstractHttpMessage;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HttpEntity;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HttpResponse;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.ReasonPhraseCatalog;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.StatusLine;
 import java.util.Locale;
 
 /**

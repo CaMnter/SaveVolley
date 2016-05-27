@@ -31,8 +31,8 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.HeaderElement;
-import com.camnter.easyvolley.hurl.easyvolley.core.NameValuePair;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HeaderElement;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.NameValuePair;
 import com.camnter.easyvolley.hurl.easyvolley.util.CharArrayBuffer;
 import com.camnter.easyvolley.hurl.easyvolley.util.LangUtils;
 

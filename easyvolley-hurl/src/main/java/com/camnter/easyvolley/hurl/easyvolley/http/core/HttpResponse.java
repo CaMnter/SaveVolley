@@ -29,7 +29,7 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.core;
+package com.camnter.easyvolley.hurl.easyvolley.http.core;
 
 import com.camnter.easyvolley.hurl.easyvolley.http.EasyProtocolVersion;
 import java.util.Locale;

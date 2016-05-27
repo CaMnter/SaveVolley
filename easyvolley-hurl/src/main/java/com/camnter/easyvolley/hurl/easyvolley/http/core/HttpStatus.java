@@ -29,7 +29,7 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.core;
+package com.camnter.easyvolley.hurl.easyvolley.http.core;
 
 /**
  * Constants enumerating the HTTP status codes.

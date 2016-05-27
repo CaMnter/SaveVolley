@@ -1,5 +1,5 @@
 /*
- * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/RequestLine.java $
+ * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/StatusLine.java $
  * $Revision: 573864 $
  * $Date: 2007-09-08 08:53:25 -0700 (Sat, 08 Sep 2007) $
  *
@@ -29,24 +29,27 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.core;
+package com.camnter.easyvolley.hurl.easyvolley.http.core;
 
 import com.camnter.easyvolley.hurl.easyvolley.http.EasyProtocolVersion;
 
 /**
- * The first line of an Http Request.
- * It contains the method, URI, and HTTP version of the request.
- * For details, see RFC 2616.
+ * Represents a status line as returned from a HTTP server.
+ * See <a href="http://www.ietf.org/rfc/rfc2616.txt">RFC2616</a>,
+ * section 6.1.
+ * Implementations are expected to be thread safe.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
- * @version $Revision: 573864 $
+ * @author <a href="mailto:jsdever@apache.org">Jeff Dever</a>
+ * @author <a href="mailto:mbowler@GargoyleSoftware.com">Mike Bowler</a>
+ * @version $Id: StatusLine.java 573864 2007-09-08 15:53:25Z rolandw $
+ * @see HttpStatus
  * @since 4.0
  */
-public interface RequestLine {
-
-    String getMethod();
+public interface StatusLine {
 
     EasyProtocolVersion getProtocolVersion();
 
-    String getUri();
+    int getStatusCode();
+
+    String getReasonPhrase();
 }

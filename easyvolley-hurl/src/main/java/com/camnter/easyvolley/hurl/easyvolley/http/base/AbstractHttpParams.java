@@ -29,9 +29,9 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.base;
+package com.camnter.easyvolley.hurl.easyvolley.http.base;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.HttpParams;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HttpParams;
 
 /**
  * Abstract base class for parameter collections.

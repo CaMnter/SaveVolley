@@ -29,9 +29,9 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.core;
+package com.camnter.easyvolley.hurl.easyvolley.http.core;
 
-import com.camnter.easyvolley.hurl.easyvolley.exception.ParseException;
+import com.camnter.easyvolley.hurl.easyvolley.http.exception.ParseException;
 
 /**
  * Represents an HTTP header field.

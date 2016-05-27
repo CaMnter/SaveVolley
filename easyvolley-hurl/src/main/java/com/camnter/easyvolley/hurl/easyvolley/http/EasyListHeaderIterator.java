@@ -31,8 +31,8 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.Header;
-import com.camnter.easyvolley.hurl.easyvolley.core.HeaderIterator;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.Header;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HeaderIterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 

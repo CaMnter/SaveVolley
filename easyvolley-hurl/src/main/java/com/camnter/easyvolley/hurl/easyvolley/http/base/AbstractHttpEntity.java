@@ -29,11 +29,11 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.base;
+package com.camnter.easyvolley.hurl.easyvolley.http.base;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.Header;
-import com.camnter.easyvolley.hurl.easyvolley.core.HttpEntity;
 import com.camnter.easyvolley.hurl.easyvolley.http.EasyHeader;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.Header;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HttpEntity;
 import com.camnter.easyvolley.hurl.easyvolley.http.protocol.HTTP;
 import java.io.IOException;
 

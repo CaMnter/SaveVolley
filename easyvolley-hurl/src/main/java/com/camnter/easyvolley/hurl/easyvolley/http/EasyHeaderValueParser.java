@@ -31,10 +31,10 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.HeaderElement;
-import com.camnter.easyvolley.hurl.easyvolley.core.HeaderValueParser;
-import com.camnter.easyvolley.hurl.easyvolley.core.NameValuePair;
-import com.camnter.easyvolley.hurl.easyvolley.exception.ParseException;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HeaderElement;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HeaderValueParser;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.NameValuePair;
+import com.camnter.easyvolley.hurl.easyvolley.http.exception.ParseException;
 import com.camnter.easyvolley.hurl.easyvolley.http.protocol.HTTP;
 import com.camnter.easyvolley.hurl.easyvolley.util.CharArrayBuffer;
 import java.util.ArrayList;

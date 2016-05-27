@@ -31,8 +31,8 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.base.AbstractHttpParams;
-import com.camnter.easyvolley.hurl.easyvolley.core.HttpParams;
+import com.camnter.easyvolley.hurl.easyvolley.http.base.AbstractHttpParams;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HttpParams;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;

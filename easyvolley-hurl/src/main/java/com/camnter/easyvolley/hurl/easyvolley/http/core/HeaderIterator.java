@@ -1,7 +1,7 @@
 /*
- * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/ParseException.java $
- * $Revision: 609106 $
- * $Date: 2008-01-05 01:15:42 -0800 (Sat, 05 Jan 2008) $
+ * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/HeaderIterator.java $
+ * $Revision: 581981 $
+ * $Date: 2007-10-04 11:26:26 -0700 (Thu, 04 Oct 2007) $
  *
  * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -29,30 +29,31 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.exception;
+package com.camnter.easyvolley.hurl.easyvolley.http.core;
+
+import java.util.Iterator;
 
 /**
- * Indicates a parse error.
- * Parse errors when receiving a message will typically trigger
- * {@link java.net.ProtocolException}. Parse errors that do not occur during
- * protocol execution may be handled differently.
- * This is an unchecked exceptions, since there are cases where
- * the data to be parsed has been generated and is therefore
- * known to be parseable.
+ * A type-safe iterator for {@link Header Header} objects.
  *
- * @since 4.0
+ * @version $Revision: 581981 $
  */
-public class ParseException extends RuntimeException {
-
-    private static final long serialVersionUID = -7288819855864183578L;
-
+public interface HeaderIterator extends Iterator {
 
     /**
-     * Creates a {@link ParseException} with a detail message.
+     * Indicates whether there is another header in this iteration.
      *
-     * @param message the exception detail message, or <code>null</code>
+     * @return <code>true</code> if there is another header,
+     * <code>false</code> otherwise
      */
-    public ParseException(String message) {
-        super(message);
-    }
+    boolean hasNext();
+
+    /**
+     * Obtains the next header from this iteration.
+     * This method should only be called while {@link #hasNext hasNext}
+     * is true.
+     *
+     * @return the next header in this iteration
+     */
+    Header nextHeader();
 }

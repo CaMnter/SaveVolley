@@ -31,7 +31,7 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.base.AbstractHttpEntity;
+import com.camnter.easyvolley.hurl.easyvolley.http.base.AbstractHttpEntity;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;

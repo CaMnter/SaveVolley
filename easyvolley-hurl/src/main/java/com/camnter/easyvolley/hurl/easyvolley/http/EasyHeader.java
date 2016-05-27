@@ -31,10 +31,9 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.Header;
-import com.camnter.easyvolley.hurl.easyvolley.core.HeaderElement;
-import com.camnter.easyvolley.hurl.easyvolley.core.HeaderValueParser;
-import com.camnter.easyvolley.hurl.easyvolley.exception.ParseException;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.Header;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.HeaderElement;
+import com.camnter.easyvolley.hurl.easyvolley.http.exception.ParseException;
 
 /**
  * Represents an HTTP header field.
@@ -128,7 +127,8 @@ public class EasyHeader implements Header, Cloneable {
      *
      * @return an array of header elements
      * @throws ParseException in case of a parse error
-     * @see EasyHeaderValueParser#parseElements(String, HeaderValueParser)
+     * @see com.camnter.easyvolley.hurl.easyvolley.http.EasyHeaderValueParser parseElements(String,
+     * HeaderValueParser)
      */
     public HeaderElement[] getElements() throws ParseException {
         if (this.value != null) {

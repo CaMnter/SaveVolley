@@ -1,7 +1,7 @@
 /*
- * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpclient/trunk/module-client/src/main/java/org/apache/http/impl/cookie/DateParseException.java $
- * $Revision: 609105 $
- * $Date: 2008-01-05 00:55:00 -0800 (Sat, 05 Jan 2008) $
+ * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/ReasonPhraseCatalog.java $
+ * $Revision: 505744 $
+ * $Date: 2007-02-10 10:58:45 -0800 (Sat, 10 Feb 2007) $
  *
  * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -29,25 +29,30 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.exception;
+package com.camnter.easyvolley.hurl.easyvolley.http.core;
 
-import com.camnter.easyvolley.hurl.easyvolley.util.DateUtils;
+import java.util.Locale;
 
 /**
- * An exception to indicate an error parsing a date string.
+ * Interface for obtaining reason phrases for HTTP status codes.
  *
- * @author Michael Becke
- * @see DateUtils
+ * @author <a href="mailto:rolandw at apache.org">Roland Weber</a>
+ *
+ *
+ *         <!-- empty lines above to avoid 'svn diff' context problems -->
+ * @version $Revision: 505744 $
+ * @since 4.0
  */
-public class DateParseException extends Exception {
-
-    private static final long serialVersionUID = 4417696455000643370L;
-
+public interface ReasonPhraseCatalog {
 
     /**
-     * @param message the exception message
+     * Obtains the reason phrase for a status code.
+     * The optional context allows for catalogs that detect
+     * the language for the reason phrase.
+     *
+     * @param status the status code, in the range 100-599
+     * @param loc the preferred locale for the reason phrase
+     * @return the reason phrase, or <code>null</code> if unknown
      */
-    public DateParseException(String message) {
-        super(message);
-    }
+    public String getReason(int status, Locale loc);
 }

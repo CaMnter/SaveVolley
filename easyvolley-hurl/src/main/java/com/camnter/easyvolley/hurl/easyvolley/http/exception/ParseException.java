@@ -1,7 +1,7 @@
 /*
- * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/StatusLine.java $
- * $Revision: 573864 $
- * $Date: 2007-09-08 08:53:25 -0700 (Sat, 08 Sep 2007) $
+ * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/ParseException.java $
+ * $Revision: 609106 $
+ * $Date: 2008-01-05 01:15:42 -0800 (Sat, 05 Jan 2008) $
  *
  * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -29,27 +29,30 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.core;
-
-import com.camnter.easyvolley.hurl.easyvolley.http.EasyProtocolVersion;
+package com.camnter.easyvolley.hurl.easyvolley.http.exception;
 
 /**
- * Represents a status line as returned from a HTTP server.
- * See <a href="http://www.ietf.org/rfc/rfc2616.txt">RFC2616</a>,
- * section 6.1.
- * Implementations are expected to be thread safe.
+ * Indicates a parse error.
+ * Parse errors when receiving a message will typically trigger
+ * {@link java.net.ProtocolException}. Parse errors that do not occur during
+ * protocol execution may be handled differently.
+ * This is an unchecked exceptions, since there are cases where
+ * the data to be parsed has been generated and is therefore
+ * known to be parseable.
  *
- * @author <a href="mailto:jsdever@apache.org">Jeff Dever</a>
- * @author <a href="mailto:mbowler@GargoyleSoftware.com">Mike Bowler</a>
- * @version $Id: StatusLine.java 573864 2007-09-08 15:53:25Z rolandw $
- * @see HttpStatus
  * @since 4.0
  */
-public interface StatusLine {
+public class ParseException extends RuntimeException {
 
-    EasyProtocolVersion getProtocolVersion();
+    private static final long serialVersionUID = -7288819855864183578L;
 
-    int getStatusCode();
 
-    String getReasonPhrase();
+    /**
+     * Creates a {@link ParseException} with a detail message.
+     *
+     * @param message the exception detail message, or <code>null</code>
+     */
+    public ParseException(String message) {
+        super(message);
+    }
 }

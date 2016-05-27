@@ -1,7 +1,7 @@
 /*
- * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/ReasonPhraseCatalog.java $
- * $Revision: 505744 $
- * $Date: 2007-02-10 10:58:45 -0800 (Sat, 10 Feb 2007) $
+ * $HeadURL: http://svn.apache.org/repos/asf/httpcomponents/httpcore/trunk/module-main/src/main/java/org/apache/http/RequestLine.java $
+ * $Revision: 573864 $
+ * $Date: 2007-09-08 08:53:25 -0700 (Sat, 08 Sep 2007) $
  *
  * ====================================================================
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -29,30 +29,24 @@
  *
  */
 
-package com.camnter.easyvolley.hurl.easyvolley.core;
+package com.camnter.easyvolley.hurl.easyvolley.http.core;
 
-import java.util.Locale;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyProtocolVersion;
 
 /**
- * Interface for obtaining reason phrases for HTTP status codes.
+ * The first line of an Http Request.
+ * It contains the method, URI, and HTTP version of the request.
+ * For details, see RFC 2616.
  *
- * @author <a href="mailto:rolandw at apache.org">Roland Weber</a>
- *
- *
- *         <!-- empty lines above to avoid 'svn diff' context problems -->
- * @version $Revision: 505744 $
+ * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @version $Revision: 573864 $
  * @since 4.0
  */
-public interface ReasonPhraseCatalog {
+public interface RequestLine {
 
-    /**
-     * Obtains the reason phrase for a status code.
-     * The optional context allows for catalogs that detect
-     * the language for the reason phrase.
-     *
-     * @param status the status code, in the range 100-599
-     * @param loc the preferred locale for the reason phrase
-     * @return the reason phrase, or <code>null</code> if unknown
-     */
-    public String getReason(int status, Locale loc);
+    String getMethod();
+
+    EasyProtocolVersion getProtocolVersion();
+
+    String getUri();
 }

@@ -31,7 +31,7 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.util;
 
-import com.camnter.easyvolley.hurl.easyvolley.exception.DateParseException;
+import com.camnter.easyvolley.hurl.easyvolley.http.exception.DateParseException;
 import java.lang.ref.SoftReference;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

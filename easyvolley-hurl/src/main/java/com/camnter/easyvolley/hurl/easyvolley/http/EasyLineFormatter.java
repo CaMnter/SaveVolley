@@ -31,11 +31,11 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.http;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.FormattedHeader;
-import com.camnter.easyvolley.hurl.easyvolley.core.Header;
-import com.camnter.easyvolley.hurl.easyvolley.core.LineFormatter;
-import com.camnter.easyvolley.hurl.easyvolley.core.RequestLine;
-import com.camnter.easyvolley.hurl.easyvolley.core.StatusLine;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.FormattedHeader;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.Header;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.LineFormatter;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.RequestLine;
+import com.camnter.easyvolley.hurl.easyvolley.http.core.StatusLine;
 import com.camnter.easyvolley.hurl.easyvolley.util.CharArrayBuffer;
 
 /**
