@@ -1,4 +1,4 @@
-package com.camnter.easyvolley.convert;
+package com.camnter.easyvolley.network.adapter;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

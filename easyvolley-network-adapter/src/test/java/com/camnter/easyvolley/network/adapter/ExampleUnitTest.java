@@ -1,4 +1,4 @@
-package com.camnter.easyvolley.convert;
+package com.camnter.easyvolley.network.adapter;
 
 import org.junit.Test;
 
