@@ -18,6 +18,7 @@ EasyVolley
 ## License
 
       Copyright (C) 2016 CaMnter yuanyu.camnter@gmail.com
+      Copyright (C) 2012 Square, Inc.
       Copyright (C) 2011 The Android Open Source Project
       Copyright (C) 2008 The Apache Software Foundation (ASF)
 

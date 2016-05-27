@@ -1,0 +1,44 @@
+package com.camnter.easyvolley.okhttp3.adapter;
+
+import com.camnter.easyvolley.network.adapter.core.EasyHeaderAdapter;
+import com.camnter.easyvolley.network.core.http.EasyHeader;
+import com.camnter.easyvolley.network.core.http.EasyHttpResponse;
+import okhttp3.Headers;
+import okhttp3.Response;
+
+/**
+ * Description：OkHttp3HeaderAdapter
+ * Created by：CaMnter
+ * Time：2016-05-27 16:46
+ */
+public class OkHttp3HeaderAdapter implements EasyHeaderAdapter<okhttp3.Response> {
+
+    private volatile static OkHttp3HeaderAdapter instance = null;
+
+
+    private OkHttp3HeaderAdapter() {
+    }
+
+
+    public static OkHttp3HeaderAdapter getInstance() {
+        if (instance == null) {
+            synchronized (OkHttp3HeaderAdapter.class) {
+                if (instance == null) instance = new OkHttp3HeaderAdapter();
+            }
+        }
+        return instance;
+    }
+
+
+    @Override public void adaptiveHeader(EasyHttpResponse easyHttpResponse, Response response) {
+        Headers headers;
+        if (response == null || (headers = response.headers()) == null) return;
+
+        for (int i = 0, len = headers.size(); i < len; i++) {
+            final String name = headers.name(i), value = headers.value(i);
+            if (name != null) {
+                easyHttpResponse.addHeader(new EasyHeader(name, value));
+            }
+        }
+    }
+}
