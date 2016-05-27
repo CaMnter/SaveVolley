@@ -1,20 +1,20 @@
 package com.camnter.easyvolley.samples.request;
 
-import com.camnter.easyvolley.hurl.NetworkResponse;
-import com.camnter.easyvolley.hurl.ParseError;
-import com.camnter.easyvolley.hurl.Request;
-import com.camnter.easyvolley.hurl.Response;
-import com.camnter.easyvolley.hurl.VolleyError;
-import com.camnter.easyvolley.hurl.toolbox.HttpHeaderParser;
+import com.camnter.easyvolley.okhttp3.volley.NetworkResponse;
+import com.camnter.easyvolley.okhttp3.volley.ParseError;
+import com.camnter.easyvolley.okhttp3.volley.Request;
+import com.camnter.easyvolley.okhttp3.volley.Response;
+import com.camnter.easyvolley.okhttp3.volley.VolleyError;
+import com.camnter.easyvolley.okhttp3.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Description：GsonRequest
+ * Description：OkHttp3GsonRequest
  * Created by：CaMnter
- * Time：2016-05-25 12:01
+ * Time：2016-05-27 17:22
  */
-public abstract class GsonRequest<T> extends Request<T>
+public abstract class OkHttp3GsonRequest<T> extends Request<T>
         implements Response.Listener<T>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
@@ -24,12 +24,12 @@ public abstract class GsonRequest<T> extends Request<T>
     private Class<T> mClass;
 
 
-    public GsonRequest(String url, Class<T> clazz) {
+    public OkHttp3GsonRequest(String url, Class<T> clazz) {
         this(Method.GET, url, clazz);
     }
 
 
-    public GsonRequest(int method, String url, Class<T> clazz) {
+    public OkHttp3GsonRequest(int method, String url, Class<T> clazz) {
         super(method, url, null);
         this.mGson = new Gson();
         this.mClass = clazz;

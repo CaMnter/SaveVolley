@@ -5,10 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.camnter.easyvolley.hurl.RequestQueue;
-import com.camnter.easyvolley.hurl.VolleyError;
-import com.camnter.easyvolley.hurl.toolbox.Volley;
-import com.camnter.easyvolley.samples.request.GsonRequest;
+import com.camnter.easyvolley.okhttp3.volley.RequestQueue;
+import com.camnter.easyvolley.okhttp3.volley.VolleyError;
+import com.camnter.easyvolley.okhttp3.volley.toolbox.Volley;
+import com.camnter.easyvolley.samples.request.OkHttp3GsonRequest;
 import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     protected void initData() {
 
         RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(new GsonRequest<GankData>("http://gank.io/api/data/Android/1/1", GankData.class) {
+        queue.add(new OkHttp3GsonRequest<GankData>("http://gank.io/api/data/Android/1/1", GankData.class) {
             /**
              * Called when a response is received.
              */

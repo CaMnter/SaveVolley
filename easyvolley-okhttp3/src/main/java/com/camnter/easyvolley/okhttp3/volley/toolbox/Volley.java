@@ -17,11 +17,10 @@
 package com.camnter.easyvolley.okhttp3.volley.toolbox;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager.NameNotFoundException;
 import com.camnter.easyvolley.okhttp3.volley.Network;
 import com.camnter.easyvolley.okhttp3.volley.RequestQueue;
 import java.io.File;
+import okhttp3.OkHttpClient;
 
 public class Volley {
 
@@ -39,16 +38,8 @@ public class Volley {
     public static RequestQueue newRequestQueue(Context context, HttpStack stack) {
         File cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);
 
-        String userAgent = "volley/0";
-        try {
-            String packageName = context.getPackageName();
-            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);
-            userAgent = packageName + "/" + info.versionCode;
-        } catch (NameNotFoundException e) {
-        }
-
         if (stack == null) {
-            stack = new HurlStack();
+            stack = new OkHttp3Stack(new OkHttpClient());
         }
 
         Network network = new BasicNetwork(stack);

@@ -114,7 +114,7 @@ public class OkHttp3Stack implements HttpStack {
             throws IOException, AuthFailureError {
         String url = request.getUrl();
 
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         map.putAll(request.getHeaders());
         map.putAll(additionalHeaders);
 
