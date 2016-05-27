@@ -1,2 +1,6 @@
-include ':samples', ':volley-comments', ':easyvolley-hurl', ':easyvolley-network-adapter',
+include ':samples',
+        ':volley-comments',
+        ':easyvolley-hurl',
+        ':easyvolley-network-adapter',
+        ':easyvolley-okhttp3',
         ':easyvolley-network-core'
