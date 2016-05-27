@@ -31,7 +31,6 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.core;
 
-import com.camnter.easyvolley.hurl.easyvolley.core.Header;
 import java.util.Iterator;
 
 /**

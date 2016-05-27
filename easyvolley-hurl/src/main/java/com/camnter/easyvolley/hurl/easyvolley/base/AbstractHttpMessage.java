@@ -31,13 +31,13 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.base;
 
-import com.camnter.easyvolley.hurl.easyvolley.http.EasyHeader;
-import com.camnter.easyvolley.hurl.easyvolley.http.EasyHeaderGroup;
 import com.camnter.easyvolley.hurl.easyvolley.core.Header;
 import com.camnter.easyvolley.hurl.easyvolley.core.HeaderIterator;
 import com.camnter.easyvolley.hurl.easyvolley.core.HttpMessage;
-import com.camnter.easyvolley.hurl.easyvolley.http.EasyHttpParams;
 import com.camnter.easyvolley.hurl.easyvolley.core.HttpParams;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyHeader;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyHeaderGroup;
+import com.camnter.easyvolley.hurl.easyvolley.http.EasyHttpParams;
 import java.util.Iterator;
 
 /**

@@ -79,6 +79,7 @@ public class ImageLoader {
 
     /**
      * Constructs a new ImageLoader.
+     *
      * @param queue The RequestQueue to use for making image requests.
      * @param imageCache The cache to use as an L1 cache.
      */
@@ -92,6 +93,7 @@ public class ImageLoader {
      * The default implementation of ImageListener which handles basic functionality
      * of showing a default image until the network response is received, at which point
      * it will switch to either the actual image or the error image.
+     *
      * @param view The imageView that the listener is associated with.
      * @param defaultImageResId Default image resource ID to use, or 0 if it doesn't exist.
      * @param errorImageResId Error image resource ID to use, or 0 if it doesn't exist.
@@ -125,9 +127,9 @@ public class ImageLoader {
      * data was available, response.getBitmap() will be non-null.
      *
      * 2. After a network response returns, only one of the following cases will happen:
-     *   - onResponse(response, false) will be called if the image was loaded.
-     *   or
-     *   - onErrorResponse will be called if there was an error loading the image.
+     * - onResponse(response, false) will be called if the image was loaded.
+     * or
+     * - onErrorResponse will be called if there was an error loading the image.
      */
     public interface ImageListener extends ErrorListener {
         /**
@@ -146,6 +148,7 @@ public class ImageLoader {
 
     /**
      * Checks if the item is available in the cache.
+     *
      * @param requestUrl The url of the remote image
      * @param maxWidth The maximum width of the returned image.
      * @param maxHeight The maximum height of the returned image.
@@ -160,9 +163,9 @@ public class ImageLoader {
      * Checks if the item is available in the cache.
      *
      * @param requestUrl The url of the remote image
-     * @param maxWidth   The maximum width of the returned image.
-     * @param maxHeight  The maximum height of the returned image.
-     * @param scaleType  The scaleType of the imageView.
+     * @param maxWidth The maximum width of the returned image.
+     * @param maxHeight The maximum height of the returned image.
+     * @param scaleType The scaleType of the imageView.
      * @return True if the item exists in cache, false otherwise.
      */
     public boolean isCached(String requestUrl, int maxWidth, int maxHeight, ScaleType scaleType) {
@@ -201,13 +204,14 @@ public class ImageLoader {
      * in the cache, and returns a bitmap container that contains all of the data
      * relating to the request (as well as the default image if the requested
      * image is not available).
+     *
      * @param requestUrl The url of the remote image
      * @param imageListener The listener to call when the remote image is loaded
      * @param maxWidth The maximum width of the returned image.
      * @param maxHeight The maximum height of the returned image.
      * @param scaleType The ImageViews ScaleType used to calculate the needed image size.
      * @return A container object that contains all of the properties of the request, as well as
-     *     the currently available image (default if remote is not loaded).
+     * the currently available image (default if remote is not loaded).
      */
     public ImageContainer get(String requestUrl, ImageListener imageListener, int maxWidth, int maxHeight, ScaleType scaleType) {
 
@@ -267,6 +271,7 @@ public class ImageLoader {
     /**
      * Sets the amount of time to wait after the first response arrives before delivering all
      * responses. Batching can be disabled entirely by passing in 0.
+     *
      * @param newBatchedResponseDelayMs The time in milliseconds to wait.
      */
     public void setBatchedResponseDelay(int newBatchedResponseDelayMs) {
@@ -276,6 +281,7 @@ public class ImageLoader {
 
     /**
      * Handler for when an image was successfully loaded.
+     *
      * @param cacheKey The cache key that is associated with the image request.
      * @param response The bitmap that was returned from the network.
      */
@@ -298,6 +304,7 @@ public class ImageLoader {
 
     /**
      * Handler for when an image failed to load.
+     *
      * @param cacheKey The cache key that is associated with the image request.
      */
     protected void onGetImageError(String cacheKey, VolleyError error) {
@@ -336,6 +343,7 @@ public class ImageLoader {
 
         /**
          * Constructs a BitmapContainer object.
+         *
          * @param bitmap The final bitmap (if it exists).
          * @param requestUrl The requested URL for this container.
          * @param cacheKey The cache key that identifies the requested URL for this container.
@@ -376,7 +384,8 @@ public class ImageLoader {
 
 
         /**
-         * Returns the bitmap associated with the request URL if it has been loaded, null otherwise.
+         * Returns the bitmap associated with the request URL if it has been loaded, null
+         * otherwise.
          */
         public Bitmap getBitmap() {
             return mBitmap;
@@ -411,6 +420,7 @@ public class ImageLoader {
 
         /**
          * Constructs a new BatchedImageRequest object
+         *
          * @param request The request being tracked
          * @param container The ImageContainer of the person who initiated the request.
          */
@@ -448,6 +458,7 @@ public class ImageLoader {
         /**
          * Detatches the bitmap container from the request and cancels the request if no one is
          * left listening.
+         *
          * @param container The container to remove from the list
          * @return True if the request was canceled, false otherwise.
          */
@@ -464,6 +475,7 @@ public class ImageLoader {
 
     /**
      * Starts the runnable for batched delivery of responses if it is not already started.
+     *
      * @param cacheKey The cacheKey of the response being delivered.
      * @param request The BatchedImageRequest to be delivered.
      */
@@ -509,6 +521,7 @@ public class ImageLoader {
 
     /**
      * Creates a cache key for use with the L1 cache.
+     *
      * @param url The URL of the request.
      * @param maxWidth The max-width of the output.
      * @param maxHeight The max-height of the output.

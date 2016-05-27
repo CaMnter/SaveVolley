@@ -31,8 +31,8 @@
 
 package com.camnter.easyvolley.hurl.easyvolley.core;
 
-import com.camnter.easyvolley.hurl.easyvolley.util.CharArrayBuffer;
 import com.camnter.easyvolley.hurl.easyvolley.http.EasyProtocolVersion;
+import com.camnter.easyvolley.hurl.easyvolley.util.CharArrayBuffer;
 
 /**
  * Interface for formatting elements of the HEAD section of an HTTP message.

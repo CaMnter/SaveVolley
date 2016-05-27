@@ -33,8 +33,8 @@ package com.camnter.easyvolley.hurl.easyvolley.http;
 
 import com.camnter.easyvolley.hurl.easyvolley.core.Header;
 import com.camnter.easyvolley.hurl.easyvolley.core.HeaderElement;
-import com.camnter.easyvolley.hurl.easyvolley.exception.ParseException;
 import com.camnter.easyvolley.hurl.easyvolley.core.HeaderValueParser;
+import com.camnter.easyvolley.hurl.easyvolley.exception.ParseException;
 
 /**
  * Represents an HTTP header field.

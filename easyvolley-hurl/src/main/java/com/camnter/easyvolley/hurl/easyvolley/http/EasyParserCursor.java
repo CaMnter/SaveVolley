@@ -34,12 +34,12 @@ package com.camnter.easyvolley.hurl.easyvolley.http;
 import com.camnter.easyvolley.hurl.easyvolley.util.CharArrayBuffer;
 
 /**
- * This class represents a context of a parsing operation: 
+ * This class represents a context of a parsing operation:
  * <ul>
- *  <li>the current position the parsing operation is expected to start at</li>
- *  <li>the bounds limiting the scope of the parsing operation</li>
+ * <li>the current position the parsing operation is expected to start at</li>
+ * <li>the bounds limiting the scope of the parsing operation</li>
  * </ul>
- * 
+ *
  * @author <a href="mailto:oleg at ural.com">Oleg Kalnichevski</a>
  */
 public class EasyParserCursor {
@@ -47,7 +47,8 @@ public class EasyParserCursor {
     private final int lowerBound;
     private final int upperBound;
     private int pos;
-    
+
+
     public EasyParserCursor(int lowerBound, int upperBound) {
         super();
         if (lowerBound < 0) {
@@ -61,17 +62,21 @@ public class EasyParserCursor {
         this.pos = lowerBound;
     }
 
+
     public int getLowerBound() {
         return this.lowerBound;
     }
+
 
     public int getUpperBound() {
         return this.upperBound;
     }
 
+
     public int getPos() {
         return this.pos;
     }
+
 
     public void updatePos(int pos) {
         if (pos < this.lowerBound) {
@@ -82,10 +87,12 @@ public class EasyParserCursor {
         }
         this.pos = pos;
     }
-    
+
+
     public boolean atEnd() {
         return this.pos >= this.upperBound;
     }
+
 
     public String toString() {
         CharArrayBuffer buffer = new CharArrayBuffer(16);
@@ -98,5 +105,4 @@ public class EasyParserCursor {
         buffer.append(']');
         return buffer.toString();
     }
-    
 }

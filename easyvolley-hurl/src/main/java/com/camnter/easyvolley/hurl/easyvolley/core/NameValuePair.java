@@ -34,16 +34,16 @@ package com.camnter.easyvolley.hurl.easyvolley.core;
 /**
  * A simple class encapsulating an attribute/value pair.
  * <p>
- *  This class comforms to the generic grammar and formatting rules outlined in the 
- *  <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2">Section 2.2</a>
- *  and  
- *  <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6">Section 3.6</a>
- *  of <a href="http://www.w3.org/Protocols/rfc2616/rfc2616.txt">RFC 2616</a>
+ * This class comforms to the generic grammar and formatting rules outlined in the
+ * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2.2">Section 2.2</a>
+ * and
+ * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.6">Section 3.6</a>
+ * of <a href="http://www.w3.org/Protocols/rfc2616/rfc2616.txt">RFC 2616</a>
  * </p>
  * <h>2.2 Basic Rules</h>
  * <p>
- *  The following rules are used throughout this specification to describe basic parsing constructs. 
- *  The US-ASCII coded character set is defined by ANSI X3.4-1986.
+ * The following rules are used throughout this specification to describe basic parsing constructs.
+ * The US-ASCII coded character set is defined by ANSI X3.4-1986.
  * </p>
  * <pre>
  *     OCTET          = <any 8-bit sequence of data>
@@ -61,9 +61,9 @@ package com.camnter.easyvolley.hurl.easyvolley.core;
  *     <">            = <US-ASCII double-quote mark (34)>
  * </pre>
  * <p>
- *  Many HTTP/1.1 header field values consist of words separated by LWS or special 
- *  characters. These special characters MUST be in a quoted string to be used within 
- *  a parameter value (as defined in section 3.6).
+ * Many HTTP/1.1 header field values consist of words separated by LWS or special
+ * characters. These special characters MUST be in a quoted string to be used within
+ * a parameter value (as defined in section 3.6).
  * <p>
  * <pre>
  * token          = 1*<any CHAR except CTLs or separators>
@@ -73,36 +73,34 @@ package com.camnter.easyvolley.hurl.easyvolley.core;
  *                | "{" | "}" | SP | HT
  * </pre>
  * <p>
- *  A string of text is parsed as a single word if it is quoted using double-quote marks.
+ * A string of text is parsed as a single word if it is quoted using double-quote marks.
  * </p>
  * <pre>
  * quoted-string  = ( <"> *(qdtext | quoted-pair ) <"> )
  * qdtext         = <any TEXT except <">>
  * </pre>
  * <p>
- *  The backslash character ("\") MAY be used as a single-character quoting mechanism only 
- *  within quoted-string and comment constructs.
+ * The backslash character ("\") MAY be used as a single-character quoting mechanism only
+ * within quoted-string and comment constructs.
  * </p>
  * <pre>
  * quoted-pair    = "\" CHAR
  * </pre>
  * <h>3.6 Transfer Codings</h>
  * <p>
- *  Parameters are in the form of attribute/value pairs.
+ * Parameters are in the form of attribute/value pairs.
  * </p>
  * <pre>
  * parameter               = attribute "=" value
  * attribute               = token
  * value                   = token | quoted-string
- * </pre> 
- * 
+ * </pre>
+ *
  * @author <a href="mailto:oleg at ural.com">Oleg Kalnichevski</a>
- * 
  */
 public interface NameValuePair {
 
     String getName();
 
     String getValue();
-      
 }
