@@ -36,6 +36,7 @@ import com.camnter.easyvolley.network.core.http.core.HttpEntity;
 import com.camnter.easyvolley.network.core.http.core.HttpResponse;
 import com.camnter.easyvolley.network.core.http.core.HttpStatus;
 import com.camnter.easyvolley.network.core.http.core.StatusLine;
+import com.camnter.easyvolley.network.core.http.exception.ConnectTimeoutException;
 import com.camnter.easyvolley.network.core.util.DateUtils;
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,7 +47,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
-import org.apache.http.conn.ConnectTimeoutException;
 
 /**
  * A network performing Volley requests over an {@link HttpStack}.
