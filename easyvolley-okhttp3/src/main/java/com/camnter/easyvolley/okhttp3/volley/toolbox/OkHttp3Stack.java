@@ -16,13 +16,13 @@
 
 package com.camnter.easyvolley.okhttp3.volley.toolbox;
 
-import camnter.easyvolley.network.okhttp3.adapter.OkHttp3HeaderAdapter;
-import camnter.easyvolley.network.okhttp3.adapter.OkHttp3HttpEntityAdapter;
-import camnter.easyvolley.network.okhttp3.adapter.OkHttp3ProtocolVersionAdapter;
-import camnter.easyvolley.network.okhttp3.adapter.OkHttp3StatusLineAdapter;
 import com.camnter.easyvolley.network.core.http.EasyHttpResponse;
 import com.camnter.easyvolley.network.core.http.EasyStatusLine;
 import com.camnter.easyvolley.network.core.http.core.HttpResponse;
+import com.camnter.easyvolley.network.okhttp3.adapter.OkHttp3HeaderAdapter;
+import com.camnter.easyvolley.network.okhttp3.adapter.OkHttp3HttpEntityAdapter;
+import com.camnter.easyvolley.network.okhttp3.adapter.OkHttp3ProtocolVersionAdapter;
+import com.camnter.easyvolley.network.okhttp3.adapter.OkHttp3StatusLineAdapter;
 import com.camnter.easyvolley.okhttp3.volley.AuthFailureError;
 import com.camnter.easyvolley.okhttp3.volley.Request;
 import com.camnter.easyvolley.okhttp3.volley.Request.Method;
@@ -123,21 +123,21 @@ public class OkHttp3Stack implements HttpStack {
 
         int timeoutMs = request.getTimeoutMs();
         OkHttpClient okHttpClient = this.okHttpClient.newBuilder()
-                                                     .connectTimeout(timeoutMs,
-                                                             TimeUnit.MILLISECONDS)
-                                                     .readTimeout(timeoutMs, TimeUnit.MILLISECONDS)
-                                                     .writeTimeout(timeoutMs, TimeUnit.MILLISECONDS)
-                                                     .build();
+                .connectTimeout(timeoutMs,
+                        TimeUnit.MILLISECONDS)
+                .readTimeout(timeoutMs, TimeUnit.MILLISECONDS)
+                .writeTimeout(timeoutMs, TimeUnit.MILLISECONDS)
+                .build();
         setConnectionParametersForRequest(okHttpRequestBuilder, request);
 
         okhttp3.Request okHttp3Request = okHttpRequestBuilder.url(request.getUrl()).build();
         okhttp3.Response okHttpResponse = okHttpClient.newCall(okHttp3Request).execute();
 
         EasyStatusLine easyStatusLine = OkHttp3StatusLineAdapter.getInstance()
-                                                                .adaptiveStatusLine(
-                                                                        OkHttp3ProtocolVersionAdapter
-                                                                                .getInstance(),
-                                                                        okHttpResponse);
+                .adaptiveStatusLine(
+                        OkHttp3ProtocolVersionAdapter
+                                .getInstance(),
+                        okHttpResponse);
 
         EasyHttpResponse easyHttpResponse = new EasyHttpResponse(easyStatusLine);
         easyHttpResponse.setEntity(
