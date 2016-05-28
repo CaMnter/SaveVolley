@@ -38,9 +38,6 @@ import static okhttp3.internal.Util.intersect;
  */
 public final class ConnectionSpec {
 
-    /** A backwards-compatible fallback connection for interop with obsolete servers. */
-    public static final ConnectionSpec COMPATIBLE_TLS = new Builder(MODERN_TLS).tlsVersions(
-            TlsVersion.TLS_1_0).supportsTlsExtensions(true).build();
     /** Unencrypted, unauthenticated connections for {@code http:} URLs. */
     public static final ConnectionSpec CLEARTEXT = new Builder(false).build();
     // This is a subset of the cipher suites supported in Chrome 46, current as of 2015-11-05.
@@ -71,6 +68,9 @@ public final class ConnectionSpec {
                                                                              TlsVersion.TLS_1_0)
                                                                      .supportsTlsExtensions(true)
                                                                      .build();
+    /** A backwards-compatible fallback connection for interop with obsolete servers. */
+    public static final ConnectionSpec COMPATIBLE_TLS = new Builder(MODERN_TLS).tlsVersions(
+            TlsVersion.TLS_1_0).supportsTlsExtensions(true).build();
     private final boolean tls;
     private final boolean supportsTlsExtensions;
     private final String[] cipherSuites;

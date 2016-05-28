@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.easyvolley.okhttp3.adapter;
+package camnter.easyvolley.network.okhttp3.adapter;
 
 import com.camnter.easyvolley.network.adapter.core.EasyHeaderAdapter;
 import com.camnter.easyvolley.network.core.http.EasyHeader;

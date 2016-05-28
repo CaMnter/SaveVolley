@@ -1,4 +1,4 @@
-include ':samples', ':agera', ':okhttp3',
+include ':samples', ':agera', ':okhttp3', ':easyvolley-network-okhttp3-adapter',
         ':easyvolley-okhttp3-agera',
         ':easyvolley-hurl-agera',
         ':volley-comments',

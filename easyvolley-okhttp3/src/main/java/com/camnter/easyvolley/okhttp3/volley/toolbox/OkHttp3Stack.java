@@ -16,13 +16,13 @@
 
 package com.camnter.easyvolley.okhttp3.volley.toolbox;
 
+import camnter.easyvolley.network.okhttp3.adapter.OkHttp3HeaderAdapter;
+import camnter.easyvolley.network.okhttp3.adapter.OkHttp3HttpEntityAdapter;
+import camnter.easyvolley.network.okhttp3.adapter.OkHttp3ProtocolVersionAdapter;
+import camnter.easyvolley.network.okhttp3.adapter.OkHttp3StatusLineAdapter;
 import com.camnter.easyvolley.network.core.http.EasyHttpResponse;
 import com.camnter.easyvolley.network.core.http.EasyStatusLine;
 import com.camnter.easyvolley.network.core.http.core.HttpResponse;
-import com.camnter.easyvolley.okhttp3.adapter.OkHttp3HeaderAdapter;
-import com.camnter.easyvolley.okhttp3.adapter.OkHttp3HttpEntityAdapter;
-import com.camnter.easyvolley.okhttp3.adapter.OkHttp3ProtocolVersionAdapter;
-import com.camnter.easyvolley.okhttp3.adapter.OkHttp3StatusLineAdapter;
 import com.camnter.easyvolley.okhttp3.volley.AuthFailureError;
 import com.camnter.easyvolley.okhttp3.volley.Request;
 import com.camnter.easyvolley.okhttp3.volley.Request.Method;
@@ -112,8 +112,6 @@ public class OkHttp3Stack implements HttpStack {
     @Override
     public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
             throws IOException, AuthFailureError {
-        String url = request.getUrl();
-
         HashMap<String, String> map = new HashMap<>();
         map.putAll(request.getHeaders());
         map.putAll(additionalHeaders);

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.easyvolley.okhttp3.adapter;
+package camnter.easyvolley.network.okhttp3.adapter;
 
 import com.camnter.easyvolley.network.adapter.core.EasyProtocolVersionAdapter;
 import com.camnter.easyvolley.network.adapter.core.EasyStatusLineAdapter;

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.camnter.easyvolley.okhttp3.adapter;
+package camnter.easyvolley.network.okhttp3.adapter;
 
 import com.camnter.easyvolley.network.adapter.core.EasyProtocolVersionAdapter;
 import com.camnter.easyvolley.network.core.http.EasyProtocolVersion;
+import okhttp3.Protocol;
 
 /**
  * Description：OkHttp3ProtocolVersionAdapter
@@ -45,17 +46,17 @@ public class OkHttp3ProtocolVersionAdapter implements EasyProtocolVersionAdapter
 
     @Override public EasyProtocolVersion adaptiveProtocolVersion(okhttp3.Response response) {
         if (response == null || response.protocol() == null) return null;
-        switch (response.protocol()) {
-            case HTTP_1_0:
-                return new EasyProtocolVersion("HTTP", 1, 0);
-            case HTTP_1_1:
-                return new EasyProtocolVersion("HTTP", 1, 1);
-            case SPDY_3:
-                return new EasyProtocolVersion("SPDY", 3, 1);
-            case HTTP_2:
-                return new EasyProtocolVersion("HTTP", 2, 0);
-            default:
-                throw new IllegalStateException("Unknown protocol type.");
+        Protocol protocol = response.protocol();
+        if (protocol == Protocol.HTTP_1_0) {
+            return new EasyProtocolVersion("HTTP", 1, 0);
+        } else if (protocol == Protocol.HTTP_1_1) {
+            return new EasyProtocolVersion("HTTP", 1, 1);
+        } else if (protocol == Protocol.SPDY_3) {
+            return new EasyProtocolVersion("SPDY", 3, 1);
+        } else if (protocol == Protocol.HTTP_2) {
+            return new EasyProtocolVersion("HTTP", 2, 0);
+        } else {
+            throw new IllegalStateException("Unknown protocol type.");
         }
     }
 }
