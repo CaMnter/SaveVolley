@@ -117,20 +117,6 @@ public class VolleyLog {
 
         /** Minimum duration from first marker to last in an marker log to warrant logging. */
         private static final long MIN_DURATION_FOR_LOGGING_MS = 0;
-
-        private static class Marker {
-            public final String name;
-            public final long thread;
-            public final long time;
-
-
-            public Marker(String name, long thread, long time) {
-                this.name = name;
-                this.thread = thread;
-                this.time = time;
-            }
-        }
-
         private final List<Marker> mMarkers = new ArrayList<Marker>();
         private boolean mFinished = false;
 
@@ -188,6 +174,19 @@ public class VolleyLog {
             long first = mMarkers.get(0).time;
             long last = mMarkers.get(mMarkers.size() - 1).time;
             return last - first;
+        }
+
+        private static class Marker {
+            public final String name;
+            public final long thread;
+            public final long time;
+
+
+            public Marker(String name, long thread, long time) {
+                this.name = name;
+                this.thread = thread;
+                this.time = time;
+            }
         }
     }
 }

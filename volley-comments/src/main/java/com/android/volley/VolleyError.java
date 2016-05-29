@@ -93,19 +93,19 @@ public class VolleyError extends Exception {
 
 
     /**
-     * 设置 请求用时
-     */
-    /* package */ void setNetworkTimeMs(long networkTimeMs) {
-        this.networkTimeMs = networkTimeMs;
-    }
-
-
-    /**
      * 获取 请求用时
      *
      * @return networkTimeMs
      */
     public long getNetworkTimeMs() {
         return networkTimeMs;
+    }
+
+
+    /**
+     * 设置 请求用时
+     */
+    /* package */ void setNetworkTimeMs(long networkTimeMs) {
+        this.networkTimeMs = networkTimeMs;
     }
 }

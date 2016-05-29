@@ -54,6 +54,17 @@ public class EasyHttpEntity extends AbstractHttpEntity {
 
 
     /**
+     * Specifies the length of the content.
+     *
+     * @param len the number of bytes in the content, or
+     * a negative number to indicate an unknown length
+     */
+    public void setContentLength(long len) {
+        this.length = len;
+    }
+
+
+    /**
      * Obtains the content, once only.
      *
      * @return the content, if this is the first call to this method
@@ -74,27 +85,6 @@ public class EasyHttpEntity extends AbstractHttpEntity {
 
 
     /**
-     * Tells that this entity is not repeatable.
-     *
-     * @return <code>false</code>
-     */
-    public boolean isRepeatable() {
-        return false;
-    }
-
-
-    /**
-     * Specifies the length of the content.
-     *
-     * @param len the number of bytes in the content, or
-     * a negative number to indicate an unknown length
-     */
-    public void setContentLength(long len) {
-        this.length = len;
-    }
-
-
-    /**
      * Specifies the content.
      *
      * @param instream the stream to return with the next call to
@@ -103,6 +93,16 @@ public class EasyHttpEntity extends AbstractHttpEntity {
     public void setContent(final InputStream instream) {
         this.content = instream;
         this.contentObtained = false;
+    }
+
+
+    /**
+     * Tells that this entity is not repeatable.
+     *
+     * @return <code>false</code>
+     */
+    public boolean isRepeatable() {
+        return false;
     }
 
 

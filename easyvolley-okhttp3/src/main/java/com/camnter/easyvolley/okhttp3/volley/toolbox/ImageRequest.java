@@ -40,15 +40,13 @@ public class ImageRequest extends Request<Bitmap> {
 
     /** Default backoff multiplier for image requests */
     public static final float DEFAULT_IMAGE_BACKOFF_MULT = 2f;
-
+    /** Decoding lock so that we don't decode more than one image at a time (to avoid OOM's) */
+    private static final Object sDecodeLock = new Object();
     private final Response.Listener<Bitmap> mListener;
     private final Config mDecodeConfig;
     private final int mMaxWidth;
     private final int mMaxHeight;
     private ScaleType mScaleType;
-
-    /** Decoding lock so that we don't decode more than one image at a time (to avoid OOM's) */
-    private static final Object sDecodeLock = new Object();
 
 
     /**
@@ -89,11 +87,6 @@ public class ImageRequest extends Request<Bitmap> {
     public ImageRequest(String url, Response.Listener<Bitmap> listener, int maxWidth, int maxHeight, Config decodeConfig, Response.ErrorListener errorListener) {
         this(url, listener, maxWidth, maxHeight, ScaleType.CENTER_INSIDE, decodeConfig,
                 errorListener);
-    }
-
-
-    @Override public Priority getPriority() {
-        return Priority.LOW;
     }
 
 
@@ -149,6 +142,34 @@ public class ImageRequest extends Request<Bitmap> {
             resized = (int) (maxSecondary / ratio);
         }
         return resized;
+    }
+
+
+    /**
+     * Returns the largest power-of-two divisor for use in downscaling a bitmap
+     * that will not result in the scaling past the desired dimensions.
+     *
+     * @param actualWidth Actual width of the bitmap
+     * @param actualHeight Actual height of the bitmap
+     * @param desiredWidth Desired width of the bitmap
+     * @param desiredHeight Desired height of the bitmap
+     */
+    // Visible for testing.
+    static int findBestSampleSize(int actualWidth, int actualHeight, int desiredWidth, int desiredHeight) {
+        double wr = (double) actualWidth / desiredWidth;
+        double hr = (double) actualHeight / desiredHeight;
+        double ratio = Math.min(wr, hr);
+        float n = 1.0f;
+        while ((n * 2) <= ratio) {
+            n *= 2;
+        }
+
+        return (int) n;
+    }
+
+
+    @Override public Priority getPriority() {
+        return Priority.LOW;
     }
 
 
@@ -216,28 +237,5 @@ public class ImageRequest extends Request<Bitmap> {
 
     @Override protected void deliverResponse(Bitmap response) {
         mListener.onResponse(response);
-    }
-
-
-    /**
-     * Returns the largest power-of-two divisor for use in downscaling a bitmap
-     * that will not result in the scaling past the desired dimensions.
-     *
-     * @param actualWidth Actual width of the bitmap
-     * @param actualHeight Actual height of the bitmap
-     * @param desiredWidth Desired width of the bitmap
-     * @param desiredHeight Desired height of the bitmap
-     */
-    // Visible for testing.
-    static int findBestSampleSize(int actualWidth, int actualHeight, int desiredWidth, int desiredHeight) {
-        double wr = (double) actualWidth / desiredWidth;
-        double hr = (double) actualHeight / desiredHeight;
-        double ratio = Math.min(wr, hr);
-        float n = 1.0f;
-        while ((n * 2) <= ratio) {
-            n *= 2;
-        }
-
-        return (int) n;
     }
 }

@@ -62,12 +62,12 @@ public final class ConnectionSpec {
     /** A modern TLS connection with extensions like SNI and ALPN available. */
     public static final ConnectionSpec MODERN_TLS = new Builder(true).cipherSuites(
             APPROVED_CIPHER_SUITES)
-                                                                     .tlsVersions(
-                                                                             TlsVersion.TLS_1_2,
-                                                                             TlsVersion.TLS_1_1,
-                                                                             TlsVersion.TLS_1_0)
-                                                                     .supportsTlsExtensions(true)
-                                                                     .build();
+            .tlsVersions(
+                    TlsVersion.TLS_1_2,
+                    TlsVersion.TLS_1_1,
+                    TlsVersion.TLS_1_0)
+            .supportsTlsExtensions(true)
+            .build();
     /** A backwards-compatible fallback connection for interop with obsolete servers. */
     public static final ConnectionSpec COMPATIBLE_TLS = new Builder(MODERN_TLS).tlsVersions(
             TlsVersion.TLS_1_0).supportsTlsExtensions(true).build();
@@ -177,8 +177,8 @@ public final class ConnectionSpec {
         }
 
         return new Builder(this).cipherSuites(cipherSuitesIntersection)
-                                .tlsVersions(tlsVersionsIntersection)
-                                .build();
+                .tlsVersions(tlsVersionsIntersection)
+                .build();
     }
 
 

@@ -59,6 +59,66 @@ public class EasyLineFormatter implements LineFormatter {
 
 
     /**
+     * Formats a protocol version.
+     *
+     * @param version the protocol version to format
+     * @param formatter the formatter to use, or
+     * <code>null</code> for the
+     * {@link #DEFAULT default}
+     * @return the formatted protocol version
+     */
+    public final static String formatProtocolVersion(final EasyProtocolVersion version, LineFormatter formatter) {
+        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
+        return formatter.appendProtocolVersion(null, version).toString();
+    }
+
+
+    /**
+     * Formats a request line.
+     *
+     * @param reqline the request line to format
+     * @param formatter the formatter to use, or
+     * <code>null</code> for the
+     * {@link #DEFAULT default}
+     * @return the formatted request line
+     */
+    public final static String formatRequestLine(final RequestLine reqline, LineFormatter formatter) {
+        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
+        return formatter.formatRequestLine(null, reqline).toString();
+    }
+
+
+    /**
+     * Formats a status line.
+     *
+     * @param statline the status line to format
+     * @param formatter the formatter to use, or
+     * <code>null</code> for the
+     * {@link #DEFAULT default}
+     * @return the formatted status line
+     */
+    public final static String formatStatusLine(final StatusLine statline, LineFormatter formatter) {
+        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
+        return formatter.formatStatusLine(null, statline).toString();
+    }
+
+
+    /**
+     * Formats a header.
+     *
+     * @param header the header to format
+     * @param formatter the formatter to use, or
+     * <code>null</code> for the
+     * {@link #DEFAULT default}
+     * @return the formatted header
+     */
+    public final static String formatHeader(final Header header, LineFormatter formatter) {
+        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
+        return formatter.formatHeader(null, header).toString();
+    }
+
+
+    /**
      * Obtains a buffer for formatting.
      *
      * @param buffer a buffer already available, or <code>null</code>
@@ -72,21 +132,6 @@ public class EasyLineFormatter implements LineFormatter {
             buffer = new CharArrayBuffer(64);
         }
         return buffer;
-    }
-
-
-    /**
-     * Formats a protocol version.
-     *
-     * @param version the protocol version to format
-     * @param formatter the formatter to use, or
-     * <code>null</code> for the
-     * {@link #DEFAULT default}
-     * @return the formatted protocol version
-     */
-    public final static String formatProtocolVersion(final EasyProtocolVersion version, LineFormatter formatter) {
-        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
-        return formatter.appendProtocolVersion(null, version).toString();
     }
 
 
@@ -128,21 +173,6 @@ public class EasyLineFormatter implements LineFormatter {
     }
 
 
-    /**
-     * Formats a request line.
-     *
-     * @param reqline the request line to format
-     * @param formatter the formatter to use, or
-     * <code>null</code> for the
-     * {@link #DEFAULT default}
-     * @return the formatted request line
-     */
-    public final static String formatRequestLine(final RequestLine reqline, LineFormatter formatter) {
-        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
-        return formatter.formatRequestLine(null, reqline).toString();
-    }
-
-
     // non-javadoc, see interface LineFormatter
     public CharArrayBuffer formatRequestLine(CharArrayBuffer buffer, RequestLine reqline) {
         if (reqline == null) {
@@ -178,21 +208,6 @@ public class EasyLineFormatter implements LineFormatter {
         buffer.append(uri);
         buffer.append(' ');
         appendProtocolVersion(buffer, reqline.getProtocolVersion());
-    }
-
-
-    /**
-     * Formats a status line.
-     *
-     * @param statline the status line to format
-     * @param formatter the formatter to use, or
-     * <code>null</code> for the
-     * {@link #DEFAULT default}
-     * @return the formatted status line
-     */
-    public final static String formatStatusLine(final StatusLine statline, LineFormatter formatter) {
-        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
-        return formatter.formatStatusLine(null, statline).toString();
     }
 
 
@@ -234,21 +249,6 @@ public class EasyLineFormatter implements LineFormatter {
         if (reason != null) {
             buffer.append(reason);
         }
-    }
-
-
-    /**
-     * Formats a header.
-     *
-     * @param header the header to format
-     * @param formatter the formatter to use, or
-     * <code>null</code> for the
-     * {@link #DEFAULT default}
-     * @return the formatted header
-     */
-    public final static String formatHeader(final Header header, LineFormatter formatter) {
-        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
-        return formatter.formatHeader(null, header).toString();
     }
 
 

@@ -119,7 +119,7 @@ public final class RouteSelector {
         if (failedRoute.proxy().type() != Proxy.Type.DIRECT && address.proxySelector() != null) {
             // Tell the proxy selector when we fail to connect on a fresh connection.
             address.proxySelector()
-                   .connectFailed(address.url().uri(), failedRoute.proxy().address(), failure);
+                    .connectFailed(address.url().uri(), failedRoute.proxy().address(), failure);
         }
 
         routeDatabase.failed(failedRoute);

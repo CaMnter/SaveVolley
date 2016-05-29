@@ -178,9 +178,9 @@ public final class Http1xStream implements HttpStream {
         sink.writeUtf8(requestLine).writeUtf8("\r\n");
         for (int i = 0, size = headers.size(); i < size; i++) {
             sink.writeUtf8(headers.name(i))
-                .writeUtf8(": ")
-                .writeUtf8(headers.value(i))
-                .writeUtf8("\r\n");
+                    .writeUtf8(": ")
+                    .writeUtf8(headers.value(i))
+                    .writeUtf8("\r\n");
         }
         sink.writeUtf8("\r\n");
         state = STATE_OPEN_REQUEST_BODY;
@@ -199,10 +199,10 @@ public final class Http1xStream implements HttpStream {
 
                 Response.Builder responseBuilder = new Response.Builder().protocol(
                         statusLine.protocol)
-                                                                         .code(statusLine.code)
-                                                                         .message(
-                                                                                 statusLine.message)
-                                                                         .headers(readHeaders());
+                        .code(statusLine.code)
+                        .message(
+                                statusLine.message)
+                        .headers(readHeaders());
 
                 if (statusLine.code != HTTP_CONTINUE) {
                     state = STATE_OPEN_RESPONSE_BODY;

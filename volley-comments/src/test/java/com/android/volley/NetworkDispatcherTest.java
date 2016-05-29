@@ -34,15 +34,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class) public class NetworkDispatcherTest {
+    private static final byte[] CANNED_DATA = "Ceci n'est pas une vraie reponse".getBytes();
+    private static final long TIMEOUT_MILLIS = 5000;
     private NetworkDispatcher mDispatcher;
     private MockResponseDelivery mDelivery;
     private WaitableQueue mNetworkQueue;
     private MockNetwork mNetwork;
     private MockCache mCache;
     private MockRequest mRequest;
-
-    private static final byte[] CANNED_DATA = "Ceci n'est pas une vraie reponse".getBytes();
-    private static final long TIMEOUT_MILLIS = 5000;
 
 
     @Before public void setUp() throws Exception {

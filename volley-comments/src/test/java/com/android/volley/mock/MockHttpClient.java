@@ -33,6 +33,7 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HttpContext;
 
 public class MockHttpClient implements HttpClient {
+    public HttpUriRequest requestExecuted = null;
     private int mStatusCode = HttpStatus.SC_OK;
     private HttpEntity mResponseEntity = null;
 
@@ -49,9 +50,6 @@ public class MockHttpClient implements HttpClient {
         }
         mStatusCode = statusCode;
     }
-
-
-    public HttpUriRequest requestExecuted = null;
 
 
     // This is the only one we actually use.

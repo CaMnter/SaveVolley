@@ -200,13 +200,13 @@ public final class CertificatePinner {
 
         // If we couldn't find a matching pin, format a nice exception.
         StringBuilder message = new StringBuilder().append("Certificate pinning failure!")
-                                                   .append("\n  Peer certificate chain:");
+                .append("\n  Peer certificate chain:");
         for (int c = 0, certsSize = peerCertificates.size(); c < certsSize; c++) {
             X509Certificate x509Certificate = (X509Certificate) peerCertificates.get(c);
             message.append("\n    ")
-                   .append(pin(x509Certificate))
-                   .append(": ")
-                   .append(x509Certificate.getSubjectDN().getName());
+                    .append(pin(x509Certificate))
+                    .append(": ")
+                    .append(x509Certificate.getSubjectDN().getName());
         }
         message.append("\n  Pinned certificates for ").append(hostname).append(":");
         for (int p = 0, pinsSize = pins.size(); p < pinsSize; p++) {
@@ -245,6 +245,7 @@ public final class CertificatePinner {
         return this.certificateChainCleaner != certificateChainCleaner ? new CertificatePinner(pins,
                 certificateChainCleaner) : this;
     }
+
 
     static final class Pin {
         /** A hostname like {@code example.com} or a pattern like {@code *.example.com}. */
@@ -313,7 +314,8 @@ public final class CertificatePinner {
          * Pins certificates for {@code pattern}.
          *
          * @param pattern lower-case host name or wildcard pattern such as {@code *.example.com}.
-         * @param pins SHA-256 or SHA-1 hashes. Each pin is a hash of a certificate's Subject Public
+         * @param pins SHA-256 or SHA-1 hashes. Each pin is a hash of a certificate's Subject
+         * Public
          * Key
          * Info, base64-encoded and prefixed with either {@code sha256/} or {@code sha1/}.
          */

@@ -55,7 +55,13 @@ public class ImageRequest extends Request<Bitmap> {
     /** Default backoff multiplier for image requests */
     // ImageRequest 默认的 重试策略类的 退避乘数
     public static final float DEFAULT_IMAGE_BACKOFF_MULT = 2f;
-
+    /** Decoding lock so that we don't decode more than one image at a time (to avoid OOM's) */
+    /*
+     * 全局解码锁
+     * 所有 ImageRequest 都被这一个锁控制
+     * 一次只能解析一张图片，避免 OOM
+     */
+    private static final Object sDecodeLock = new Object();
     // 解析结果数据 的回调接口
     private final Response.Listener<Bitmap> mListener;
     // Bitmap 的解析配置
@@ -66,14 +72,6 @@ public class ImageRequest extends Request<Bitmap> {
     private final int mMaxHeight;
     // ImageView 的 ScaleType（ CENTER_CROP, FIT_XY ... ）
     private ScaleType mScaleType;
-
-    /** Decoding lock so that we don't decode more than one image at a time (to avoid OOM's) */
-    /*
-     * 全局解码锁
-     * 所有 ImageRequest 都被这一个锁控制
-     * 一次只能解析一张图片，避免 OOM
-     */
-    private static final Object sDecodeLock = new Object();
 
 
     /**
@@ -117,15 +115,6 @@ public class ImageRequest extends Request<Bitmap> {
     public ImageRequest(String url, Response.Listener<Bitmap> listener, int maxWidth, int maxHeight, Config decodeConfig, Response.ErrorListener errorListener) {
         this(url, listener, maxWidth, maxHeight, ScaleType.CENTER_INSIDE, decodeConfig,
                 errorListener);
-    }
-
-
-    /*
-     * 覆写 getPriority()
-     * 修改优先级为：Priority.LOW （ 最低 ）
-     */
-    @Override public Priority getPriority() {
-        return Priority.LOW;
     }
 
 
@@ -293,6 +282,44 @@ public class ImageRequest extends Request<Bitmap> {
     }
 
 
+    /**
+     * Returns the largest power-of-two divisor for use in downscaling a bitmap
+     * that will not result in the scaling past the desired dimensions.
+     *
+     * @param actualWidth Actual width of the bitmap
+     * @param actualHeight Actual height of the bitmap
+     * @param desiredWidth Desired width of the bitmap
+     * @param desiredHeight Desired height of the bitmap
+     */
+    /*
+     * 这是 Volley 的提供的算法
+     * 根据 实际 Bitmap 宽高、需求宽高 计算得出 BitmapFactory.Options.inSampleSize
+     * 如果 BitmapFactory.Options.inSampleSize = 4，那么宽高为 原 Bitmap 的 1/4
+     *
+     */
+    // Visible for testing.
+    static int findBestSampleSize(int actualWidth, int actualHeight, int desiredWidth, int desiredHeight) {
+        double wr = (double) actualWidth / desiredWidth;
+        double hr = (double) actualHeight / desiredHeight;
+        double ratio = Math.min(wr, hr);
+        float n = 1.0f;
+        while ((n * 2) <= ratio) {
+            n *= 2;
+        }
+
+        return (int) n;
+    }
+
+
+    /*
+     * 覆写 getPriority()
+     * 修改优先级为：Priority.LOW （ 最低 ）
+     */
+    @Override public Priority getPriority() {
+        return Priority.LOW;
+    }
+
+
     @Override protected Response<Bitmap> parseNetworkResponse(NetworkResponse response) {
         // Serialize all decode on a global lock to reduce concurrent heap usage.
         // 解析 ImageRequest 的网络请求这块进行加锁，避免 OOM
@@ -412,34 +439,5 @@ public class ImageRequest extends Request<Bitmap> {
      */
     @Override protected void deliverResponse(Bitmap response) {
         mListener.onResponse(response);
-    }
-
-
-    /**
-     * Returns the largest power-of-two divisor for use in downscaling a bitmap
-     * that will not result in the scaling past the desired dimensions.
-     *
-     * @param actualWidth Actual width of the bitmap
-     * @param actualHeight Actual height of the bitmap
-     * @param desiredWidth Desired width of the bitmap
-     * @param desiredHeight Desired height of the bitmap
-     */
-    /*
-     * 这是 Volley 的提供的算法
-     * 根据 实际 Bitmap 宽高、需求宽高 计算得出 BitmapFactory.Options.inSampleSize
-     * 如果 BitmapFactory.Options.inSampleSize = 4，那么宽高为 原 Bitmap 的 1/4
-     *
-     */
-    // Visible for testing.
-    static int findBestSampleSize(int actualWidth, int actualHeight, int desiredWidth, int desiredHeight) {
-        double wr = (double) actualWidth / desiredWidth;
-        double hr = (double) actualHeight / desiredHeight;
-        double ratio = Math.min(wr, hr);
-        float n = 1.0f;
-        while ((n * 2) <= ratio) {
-            n *= 2;
-        }
-
-        return (int) n;
     }
 }

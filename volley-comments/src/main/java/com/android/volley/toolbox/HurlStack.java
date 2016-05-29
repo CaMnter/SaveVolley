@@ -54,33 +54,10 @@ public class HurlStack implements HttpStack {
 
     // 设置请求头信息的 key 内容 "Content-Type"
     private static final String HEADER_CONTENT_TYPE = "Content-Type";
-
-    /**
-     * An interface for transforming URLs before use.
-     */
-
-    /*
-     * 提供一个 UrlRewriter 接口
-     * 用于在 执行 网络请求前，改变 Url
-     */
-    public interface UrlRewriter {
-        /**
-         * Returns a URL to use instead of the provided one, or null to indicate
-         * this URL should not be used at all.
-         */
-        /*
-         * 传入 原始要请求的 Url
-         * 可以写自定义的转换 Url 逻辑：比如原本要请求 xxx，可以转换为 xxx/me 等需要转换 Url 的情况
-         */
-        public String rewriteUrl(String originalUrl);
-    }
-
     // 保存一个 UrlRewriter 对象，用于转换 Url
     private final UrlRewriter mUrlRewriter;
     // 保存一个 SSLSocketFactory 对象，用于处理 HTTPS 请求
     private final SSLSocketFactory mSslSocketFactory;
-
-
     /*
      * 无参构造方法
      * UrlRewriter 都默认为 null
@@ -115,94 +92,6 @@ public class HurlStack implements HttpStack {
     public HurlStack(UrlRewriter urlRewriter, SSLSocketFactory sslSocketFactory) {
         mUrlRewriter = urlRewriter;
         mSslSocketFactory = sslSocketFactory;
-    }
-
-
-    /*
-     * 执行处理 Volley内的 抽象请求 Request<?>
-     * 这里会调用 HttpURLConnection 去处理网络请求
-     * 但是 HttpURLConnection 处理后，都返回 Apache 的请求结果（ HttpResponse ）
-     * performRequest(...) 接下来会将：Apache HttpResponse -> Volley NetworkResponse 进行转化
-     */
-    @Override
-    public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
-            throws IOException, AuthFailureError {
-        // 获取 Volley 抽象请求 Request 中的 String 类型的 Url
-        String url = request.getUrl();
-        // 实例化一个 HashMap 来存放 Header 信息
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.putAll(request.getHeaders());
-        map.putAll(additionalHeaders);
-        // 判断是否有 Url 重写的逻辑
-        if (mUrlRewriter != null) {
-            String rewritten = mUrlRewriter.rewriteUrl(url);
-            if (rewritten == null) {
-                throw new IOException("URL blocked by rewriter: " + url);
-            }
-            // 重新赋值上 UrlRewriter 接口 重写的 Url
-            url = rewritten;
-        }
-        // 实例化一个 java.net.Url 对象
-        URL parsedUrl = new URL(url);
-        /*
-         * 将 URL 对象 和 Volley 的抽象请求 Request 传入到 openConnection(...) 方法内
-         * 完成 Volley 抽象请求 Request -> HttpURLConnection 的转换过渡
-         * 此时拿到一个 HttpURLConnection 对象
-         */
-        HttpURLConnection connection = openConnection(parsedUrl, request);
-        // 根据刚才存放 Header 信息的 Map，给 HttpURLConnection 添加头信息
-        for (String headerName : map.keySet()) {
-            connection.addRequestProperty(headerName, map.get(headerName));
-        }
-        // 设置 HttpURLConnection 请求方法类型
-        setConnectionParametersForRequest(connection, request);
-        // Initialize HttpResponse with data from the HttpURLConnection.
-        /*
-         * 初始化 一个 Apache 的 HTTP 协议 （ ProtocolVersion ）
-         */
-        ProtocolVersion protocolVersion = new ProtocolVersion("HTTP", 1, 1);
-
-        /*
-         * 正常情况下 HttpURLConnection 是依靠 connect() 发请求的
-         *
-         * 但是 HttpURLConnection 的 getInputStream() 和 getOutputStream() 也会自动调用 connect()
-         *
-         * HttpURLConnection 的 getResponseCode() 会调用 getInputStream()
-         * 然后 getInputStream() 又会自动调用 connect()，于是
-         *
-         * 这里就是 发请求了
-         */
-        int responseCode = connection.getResponseCode();
-
-        // responseCode == -1 表示 没有返回内容
-        if (responseCode == -1) {
-            // -1 is returned by getResponseCode() if the response code could not be retrieved.
-            // Signal to the caller that something was wrong with the connection.
-            throw new IOException("Could not retrieve response code from HttpUrlConnection.");
-        }
-        // 实例化  org.apache.http.StatusLine 对象
-        StatusLine responseStatus = new BasicStatusLine(protocolVersion,
-                connection.getResponseCode(), connection.getResponseMessage());
-        // 用 org.apache.http.StatusLine 去实例化一个 Apache 的 Response
-        BasicHttpResponse response = new BasicHttpResponse(responseStatus);
-        /*
-         * 判断请求结果 Response 是否存在 body
-         *
-         * 有的话，给刚才实例话的 Apache Response 设置 HttpEntity（ 调用 entityFromConnection(...)
-         * 通过一个 HttpURLConnection 获取其对应的 HttpEntity ）
-         */
-        if (hasResponseBody(request.getMethod(), responseStatus.getStatusCode())) {
-            response.setEntity(entityFromConnection(connection));
-        }
-        // 设置 请求结果 Response 的头信息
-        for (Entry<String, List<String>> header : connection.getHeaderFields().entrySet()) {
-            if (header.getKey() != null) {
-                Header h = new BasicHeader(header.getKey(), header.getValue().get(0));
-                response.addHeader(h);
-            }
-        }
-        // 返回设置好的 Apache Response
-        return response;
     }
 
 
@@ -258,71 +147,6 @@ public class HurlStack implements HttpStack {
         // 设置 HttpEntity Content-Type
         entity.setContentType(connection.getContentType());
         return entity;
-    }
-
-
-    /**
-     * Create an {@link HttpURLConnection} for the specified {@code url}.
-     */
-    /*
-     * 根据 URL 创建一个 HttpURLConnection
-     */
-    protected HttpURLConnection createConnection(URL url) throws IOException {
-        // URL -> HttpURLConnection
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        // Workaround for the M release HttpURLConnection not observing the
-        // HttpURLConnection.setFollowRedirects() property.
-        // https://code.google.com/p/android/issues/detail?id=194495
-        /*
-         * 对 M 版本以上 做兼容
-         */
-        connection.setInstanceFollowRedirects(HttpURLConnection.getFollowRedirects());
-
-        return connection;
-    }
-
-
-    /**
-     * Opens an {@link HttpURLConnection} with parameters.
-     *
-     * @return an open connection
-     * @throws IOException
-     */
-
-    /*
-     * Volley 抽象请求 Request -> HttpURLConnection 的转换过渡
-     */
-    private HttpURLConnection openConnection(URL url, Request<?> request) throws IOException {
-        // 根据 URL 创建一个 HttpURLConnection
-        HttpURLConnection connection = createConnection(url);
-
-        // 获取 Volley 抽象请求 Request 中的 超时时间
-        int timeoutMs = request.getTimeoutMs();
-        // 设置超时时间
-        connection.setConnectTimeout(timeoutMs);
-        // 设置读取时间
-        connection.setReadTimeout(timeoutMs);
-        // 关闭缓存
-        connection.setUseCaches(false);
-        /*
-         * 使用 URL 连接进行输入，则将 DoInput 标志设置为 true
-         * 之后就可以使用conn.getInputStream().read()
-         */
-        connection.setDoInput(true);
-
-        // use caller-provided custom SslSocketFactory, if any, for HTTPS
-
-        /*
-         * 处理 HTTPS （ HTTP2 ） 请求：
-         * 就是拿到 url 的协议，判断是不是 "https" && 存在 SSLSocketFactory 对象
-         * 然后 HttpsURLConnection.setSSLSocketFactory(SSLSocketFactory sf)
-         */
-        if ("https".equals(url.getProtocol()) && mSslSocketFactory != null) {
-            ((HttpsURLConnection) connection).setSSLSocketFactory(mSslSocketFactory);
-        }
-
-        return connection;
     }
 
 
@@ -445,5 +269,179 @@ public class HurlStack implements HttpStack {
             out.write(body);
             out.close();
         }
+    }
+
+
+    /*
+     * 执行处理 Volley内的 抽象请求 Request<?>
+     * 这里会调用 HttpURLConnection 去处理网络请求
+     * 但是 HttpURLConnection 处理后，都返回 Apache 的请求结果（ HttpResponse ）
+     * performRequest(...) 接下来会将：Apache HttpResponse -> Volley NetworkResponse 进行转化
+     */
+    @Override
+    public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
+            throws IOException, AuthFailureError {
+        // 获取 Volley 抽象请求 Request 中的 String 类型的 Url
+        String url = request.getUrl();
+        // 实例化一个 HashMap 来存放 Header 信息
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.putAll(request.getHeaders());
+        map.putAll(additionalHeaders);
+        // 判断是否有 Url 重写的逻辑
+        if (mUrlRewriter != null) {
+            String rewritten = mUrlRewriter.rewriteUrl(url);
+            if (rewritten == null) {
+                throw new IOException("URL blocked by rewriter: " + url);
+            }
+            // 重新赋值上 UrlRewriter 接口 重写的 Url
+            url = rewritten;
+        }
+        // 实例化一个 java.net.Url 对象
+        URL parsedUrl = new URL(url);
+        /*
+         * 将 URL 对象 和 Volley 的抽象请求 Request 传入到 openConnection(...) 方法内
+         * 完成 Volley 抽象请求 Request -> HttpURLConnection 的转换过渡
+         * 此时拿到一个 HttpURLConnection 对象
+         */
+        HttpURLConnection connection = openConnection(parsedUrl, request);
+        // 根据刚才存放 Header 信息的 Map，给 HttpURLConnection 添加头信息
+        for (String headerName : map.keySet()) {
+            connection.addRequestProperty(headerName, map.get(headerName));
+        }
+        // 设置 HttpURLConnection 请求方法类型
+        setConnectionParametersForRequest(connection, request);
+        // Initialize HttpResponse with data from the HttpURLConnection.
+        /*
+         * 初始化 一个 Apache 的 HTTP 协议 （ ProtocolVersion ）
+         */
+        ProtocolVersion protocolVersion = new ProtocolVersion("HTTP", 1, 1);
+
+        /*
+         * 正常情况下 HttpURLConnection 是依靠 connect() 发请求的
+         *
+         * 但是 HttpURLConnection 的 getInputStream() 和 getOutputStream() 也会自动调用 connect()
+         *
+         * HttpURLConnection 的 getResponseCode() 会调用 getInputStream()
+         * 然后 getInputStream() 又会自动调用 connect()，于是
+         *
+         * 这里就是 发请求了
+         */
+        int responseCode = connection.getResponseCode();
+
+        // responseCode == -1 表示 没有返回内容
+        if (responseCode == -1) {
+            // -1 is returned by getResponseCode() if the response code could not be retrieved.
+            // Signal to the caller that something was wrong with the connection.
+            throw new IOException("Could not retrieve response code from HttpUrlConnection.");
+        }
+        // 实例化  org.apache.http.StatusLine 对象
+        StatusLine responseStatus = new BasicStatusLine(protocolVersion,
+                connection.getResponseCode(), connection.getResponseMessage());
+        // 用 org.apache.http.StatusLine 去实例化一个 Apache 的 Response
+        BasicHttpResponse response = new BasicHttpResponse(responseStatus);
+        /*
+         * 判断请求结果 Response 是否存在 body
+         *
+         * 有的话，给刚才实例话的 Apache Response 设置 HttpEntity（ 调用 entityFromConnection(...)
+         * 通过一个 HttpURLConnection 获取其对应的 HttpEntity ）
+         */
+        if (hasResponseBody(request.getMethod(), responseStatus.getStatusCode())) {
+            response.setEntity(entityFromConnection(connection));
+        }
+        // 设置 请求结果 Response 的头信息
+        for (Entry<String, List<String>> header : connection.getHeaderFields().entrySet()) {
+            if (header.getKey() != null) {
+                Header h = new BasicHeader(header.getKey(), header.getValue().get(0));
+                response.addHeader(h);
+            }
+        }
+        // 返回设置好的 Apache Response
+        return response;
+    }
+
+
+    /**
+     * Create an {@link HttpURLConnection} for the specified {@code url}.
+     */
+    /*
+     * 根据 URL 创建一个 HttpURLConnection
+     */
+    protected HttpURLConnection createConnection(URL url) throws IOException {
+        // URL -> HttpURLConnection
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        // Workaround for the M release HttpURLConnection not observing the
+        // HttpURLConnection.setFollowRedirects() property.
+        // https://code.google.com/p/android/issues/detail?id=194495
+        /*
+         * 对 M 版本以上 做兼容
+         */
+        connection.setInstanceFollowRedirects(HttpURLConnection.getFollowRedirects());
+
+        return connection;
+    }
+
+
+    /**
+     * Opens an {@link HttpURLConnection} with parameters.
+     *
+     * @return an open connection
+     * @throws IOException
+     */
+
+    /*
+     * Volley 抽象请求 Request -> HttpURLConnection 的转换过渡
+     */
+    private HttpURLConnection openConnection(URL url, Request<?> request) throws IOException {
+        // 根据 URL 创建一个 HttpURLConnection
+        HttpURLConnection connection = createConnection(url);
+
+        // 获取 Volley 抽象请求 Request 中的 超时时间
+        int timeoutMs = request.getTimeoutMs();
+        // 设置超时时间
+        connection.setConnectTimeout(timeoutMs);
+        // 设置读取时间
+        connection.setReadTimeout(timeoutMs);
+        // 关闭缓存
+        connection.setUseCaches(false);
+        /*
+         * 使用 URL 连接进行输入，则将 DoInput 标志设置为 true
+         * 之后就可以使用conn.getInputStream().read()
+         */
+        connection.setDoInput(true);
+
+        // use caller-provided custom SslSocketFactory, if any, for HTTPS
+
+        /*
+         * 处理 HTTPS （ HTTP2 ） 请求：
+         * 就是拿到 url 的协议，判断是不是 "https" && 存在 SSLSocketFactory 对象
+         * 然后 HttpsURLConnection.setSSLSocketFactory(SSLSocketFactory sf)
+         */
+        if ("https".equals(url.getProtocol()) && mSslSocketFactory != null) {
+            ((HttpsURLConnection) connection).setSSLSocketFactory(mSslSocketFactory);
+        }
+
+        return connection;
+    }
+
+
+    /**
+     * An interface for transforming URLs before use.
+     */
+
+    /*
+     * 提供一个 UrlRewriter 接口
+     * 用于在 执行 网络请求前，改变 Url
+     */
+    public interface UrlRewriter {
+        /**
+         * Returns a URL to use instead of the provided one, or null to indicate
+         * this URL should not be used at all.
+         */
+        /*
+         * 传入 原始要请求的 Url
+         * 可以写自定义的转换 Url 逻辑：比如原本要请求 xxx，可以转换为 xxx/me 等需要转换 Url 的情况
+         */
+        public String rewriteUrl(String originalUrl);
     }
 }

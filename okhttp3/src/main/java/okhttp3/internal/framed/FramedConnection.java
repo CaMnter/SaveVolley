@@ -656,6 +656,7 @@ public final class FramedConnection implements Closeable {
         });
     }
 
+
     public static class Builder {
         private Socket socket;
         private String hostname;
@@ -905,7 +906,7 @@ public final class FramedConnection implements Closeable {
                     }
                     if (!streams.isEmpty()) {
                         streamsToNotify = streams.values()
-                                                 .toArray(new FramedStream[streams.size()]);
+                                .toArray(new FramedStream[streams.size()]);
                     }
                 }
                 executor.execute(new NamedRunnable("OkHttp %s settings", hostname) {

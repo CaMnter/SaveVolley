@@ -47,6 +47,12 @@ import static org.junit.Assert.assertTrue;
     private Map<String, String> headers;
 
 
+    private static String rfc1123Date(long millis) {
+        DateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
+        return df.format(new Date(millis));
+    }
+
+
     @Before public void setUp() throws Exception {
         headers = new HashMap<String, String>();
         response = new NetworkResponse(0, null, headers, false);
@@ -231,12 +237,6 @@ import static org.junit.Assert.assertTrue;
     private void assertEqualsWithin(long expected, long value, long fudgeFactor) {
         long diff = Math.abs(expected - value);
         assertTrue(diff < fudgeFactor);
-    }
-
-
-    private static String rfc1123Date(long millis) {
-        DateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH);
-        return df.format(new Date(millis));
     }
 
     // --------------------------

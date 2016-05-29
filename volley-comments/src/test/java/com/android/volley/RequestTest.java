@@ -47,6 +47,19 @@ import static org.junit.Assert.assertTrue;
     }
 
 
+    @Test public void urlParsing() {
+        UrlParseRequest nullUrl = new UrlParseRequest(null);
+        assertEquals(0, nullUrl.getTrafficStatsTag());
+        UrlParseRequest emptyUrl = new UrlParseRequest("");
+        assertEquals(0, emptyUrl.getTrafficStatsTag());
+        UrlParseRequest noHost = new UrlParseRequest("http:///");
+        assertEquals(0, noHost.getTrafficStatsTag());
+        UrlParseRequest badProtocol = new UrlParseRequest("bad:http://foo");
+        assertEquals(0, badProtocol.getTrafficStatsTag());
+        UrlParseRequest goodProtocol = new UrlParseRequest("http://foo");
+        assertFalse(0 == goodProtocol.getTrafficStatsTag());
+    }
+
     private class TestRequest extends Request<Object> {
         private Priority mPriority = Priority.NORMAL;
 
@@ -70,21 +83,6 @@ import static org.junit.Assert.assertTrue;
             return null;
         }
     }
-
-
-    @Test public void urlParsing() {
-        UrlParseRequest nullUrl = new UrlParseRequest(null);
-        assertEquals(0, nullUrl.getTrafficStatsTag());
-        UrlParseRequest emptyUrl = new UrlParseRequest("");
-        assertEquals(0, emptyUrl.getTrafficStatsTag());
-        UrlParseRequest noHost = new UrlParseRequest("http:///");
-        assertEquals(0, noHost.getTrafficStatsTag());
-        UrlParseRequest badProtocol = new UrlParseRequest("bad:http://foo");
-        assertEquals(0, badProtocol.getTrafficStatsTag());
-        UrlParseRequest goodProtocol = new UrlParseRequest("http://foo");
-        assertFalse(0 == goodProtocol.getTrafficStatsTag());
-    }
-
 
     private class UrlParseRequest extends Request<Object> {
         public UrlParseRequest(String url) {

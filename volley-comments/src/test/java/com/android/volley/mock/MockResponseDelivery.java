@@ -25,14 +25,12 @@ public class MockResponseDelivery implements ResponseDelivery {
 
     public boolean postResponse_called = false;
     public boolean postError_called = false;
+    public Response<?> responsePosted = null;
 
 
     public boolean wasEitherResponseCalled() {
         return postResponse_called || postError_called;
     }
-
-
-    public Response<?> responsePosted = null;
 
 
     @Override public void postResponse(Request<?> request, Response<?> response) {

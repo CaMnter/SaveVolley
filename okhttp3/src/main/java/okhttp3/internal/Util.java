@@ -162,7 +162,8 @@ public final class Util {
 
 
     /**
-     * Attempts to exhaust {@code source}, returning true if successful. This is useful when reading
+     * Attempts to exhaust {@code source}, returning true if successful. This is useful when
+     * reading
      * a
      * complete source is helpful, such as when doing so completes a cache body or frees a socket
      * connection for reuse.
@@ -186,7 +187,7 @@ public final class Util {
         long originalDuration = source.timeout().hasDeadline() ?
                                 source.timeout().deadlineNanoTime() - now : Long.MAX_VALUE;
         source.timeout()
-              .deadlineNanoTime(now + Math.min(originalDuration, timeUnit.toNanos(duration)));
+                .deadlineNanoTime(now + Math.min(originalDuration, timeUnit.toNanos(duration)));
         try {
             Buffer skipBuffer = new Buffer();
             while (source.read(skipBuffer, 8192) != -1) {

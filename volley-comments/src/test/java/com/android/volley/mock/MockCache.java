@@ -21,15 +21,16 @@ import com.android.volley.Cache;
 public class MockCache implements Cache {
 
     public boolean clearCalled = false;
+    public boolean getCalled = false;
+    public boolean putCalled = false;
+    public String keyPut = null;
+    public Entry entryPut = null;
+    private Entry mFakeEntry = null;
 
 
     @Override public void clear() {
         clearCalled = true;
     }
-
-
-    public boolean getCalled = false;
-    private Entry mFakeEntry = null;
 
 
     public void setEntryToReturn(Entry entry) {
@@ -41,11 +42,6 @@ public class MockCache implements Cache {
         getCalled = true;
         return mFakeEntry;
     }
-
-
-    public boolean putCalled = false;
-    public String keyPut = null;
-    public Entry entryPut = null;
 
 
     @Override public void put(String key, Entry entry) {

@@ -49,6 +49,18 @@ import static org.junit.Assert.assertTrue;
     private static final int COPY_INDEX = 1;
 
 
+    private static String jsonObjectString() throws Exception {
+        JSONObject json = new JSONObject().put(TEXT_NAME, TEXT_VALUE).put(COPY_NAME, COPY_VALUE);
+        return json.toString();
+    }
+
+
+    private static String jsonArrayString() throws Exception {
+        JSONArray json = new JSONArray().put(TEXT_INDEX, TEXT_VALUE).put(COPY_INDEX, COPY_VALUE);
+        return json.toString();
+    }
+
+
     @Test public void defaultCharsetJsonObject() throws Exception {
         // UTF-8 is default charset for JSON
         byte[] data = jsonObjectString().getBytes(Charset.forName("UTF-8"));
@@ -104,17 +116,5 @@ import static org.junit.Assert.assertTrue;
         assertTrue(arrayResponse.isSuccess());
         assertEquals(TEXT_VALUE, arrayResponse.result.getString(TEXT_INDEX));
         // don't check the copyright symbol, ISO-8859-2 doesn't have it, but it has Czech characters
-    }
-
-
-    private static String jsonObjectString() throws Exception {
-        JSONObject json = new JSONObject().put(TEXT_NAME, TEXT_VALUE).put(COPY_NAME, COPY_VALUE);
-        return json.toString();
-    }
-
-
-    private static String jsonArrayString() throws Exception {
-        JSONArray json = new JSONArray().put(TEXT_INDEX, TEXT_VALUE).put(COPY_INDEX, COPY_VALUE);
-        return json.toString();
     }
 }

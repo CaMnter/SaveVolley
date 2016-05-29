@@ -184,9 +184,9 @@ public final class Http2xStream implements HttpStream {
 
         StatusLine statusLine = StatusLine.parse(version + " " + status);
         return new Response.Builder().protocol(Protocol.SPDY_3)
-                                     .code(statusLine.code)
-                                     .message(statusLine.message)
-                                     .headers(headersBuilder.build());
+                .code(statusLine.code)
+                .message(statusLine.message)
+                .headers(headersBuilder.build());
     }
 
 
@@ -210,9 +210,9 @@ public final class Http2xStream implements HttpStream {
 
         StatusLine statusLine = StatusLine.parse("HTTP/1.1 " + status);
         return new Response.Builder().protocol(Protocol.HTTP_2)
-                                     .code(statusLine.code)
-                                     .message(statusLine.message)
-                                     .headers(headersBuilder.build());
+                .code(statusLine.code)
+                .message(statusLine.message)
+                .headers(headersBuilder.build());
     }
 
 
@@ -239,7 +239,7 @@ public final class Http2xStream implements HttpStream {
         stream = framedConnection.newStream(requestHeaders, permitsRequestBody, hasResponseBody);
         stream.readTimeout().timeout(httpEngine.client.readTimeoutMillis(), TimeUnit.MILLISECONDS);
         stream.writeTimeout()
-              .timeout(httpEngine.client.writeTimeoutMillis(), TimeUnit.MILLISECONDS);
+                .timeout(httpEngine.client.writeTimeoutMillis(), TimeUnit.MILLISECONDS);
     }
 
 

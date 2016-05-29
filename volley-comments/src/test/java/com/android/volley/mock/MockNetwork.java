@@ -24,7 +24,7 @@ import com.android.volley.VolleyError;
 
 public class MockNetwork implements Network {
     public final static int ALWAYS_THROW_EXCEPTIONS = -1;
-
+    public Request<?> requestHandled = null;
     private int mNumExceptionsToThrow = 0;
     private byte[] mDataToReturn = null;
 
@@ -41,9 +41,6 @@ public class MockNetwork implements Network {
     public void setDataToReturn(byte[] data) {
         mDataToReturn = data;
     }
-
-
-    public Request<?> requestHandled = null;
 
 
     @Override public NetworkResponse performRequest(Request<?> request) throws VolleyError {

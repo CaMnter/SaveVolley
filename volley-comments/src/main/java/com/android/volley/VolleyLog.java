@@ -170,25 +170,6 @@ public class VolleyLog {
         /** Minimum duration from first marker to last in an marker log to warrant logging. */
         /** 从第一个标志最短持续时间要持续在标记日志，以保证记录。 */
         private static final long MIN_DURATION_FOR_LOGGING_MS = 0;
-
-        /*
-         * 私有静态内部类
-         *
-         * 用于保存 tagName + 线程Id + 时间戳
-         */
-        private static class Marker {
-            public final String name;
-            public final long thread;
-            public final long time;
-
-
-            public Marker(String name, long thread, long time) {
-                this.name = name;
-                this.thread = thread;
-                this.time = time;
-            }
-        }
-
         private final List<Marker> mMarkers = new ArrayList<Marker>();
         private boolean mFinished = false;
 
@@ -245,6 +226,7 @@ public class VolleyLog {
             }
         }
 
+
         /*
          * 这个方法的设计是
          * 捕获了请求日志，但是没有输出，就会执行 finalize()，并且抛出异常
@@ -271,6 +253,24 @@ public class VolleyLog {
             long first = mMarkers.get(0).time;
             long last = mMarkers.get(mMarkers.size() - 1).time;
             return last - first;
+        }
+
+        /*
+         * 私有静态内部类
+         *
+         * 用于保存 tagName + 线程Id + 时间戳
+         */
+        private static class Marker {
+            public final String name;
+            public final long thread;
+            public final long time;
+
+
+            public Marker(String name, long thread, long time) {
+                this.name = name;
+                this.thread = thread;
+                this.time = time;
+            }
         }
     }
 }

@@ -51,31 +51,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class RequestQueue {
 
-    /** Callback interface for completed requests. */
+    /** Number of network request dispatcher threads to start. */
     /*
-     * 提供一个请求完成接口，当一个请求完成后，会执行此回调
-     * 会在 RequestQueue.finish(Request<T> request)
+     * 最大 网络请求执行线程（ NetworkDispatcher ） 的个数
      */
-    public static interface RequestFinishedListener<T> {
-        /** Called when a request has finished processing. */
-        /*
-         * 回调 已经完成的 请求
-         * 缓存请求执行线程（ CacheDispatcher ）和 网络请求执行线程（ NetworkDispatcher ）
-         * 完成的每个请求后，都会调用 Request.finish(...)，在 Request.finish(...) 中，会调用
-         * 请求队列 RequestQueue.finish(...)。最后，再调用该接口的 onRequestFinished(...)
-         * 将请求回调出去
-         */
-        public void onRequestFinished(Request<T> request);
-    }
-
-    /** Used for generating monotonically-increasing sequence numbers for requests. */
-    /*
-     * 为 一个 Request 分配一个 队列序号
-     * 用于管理 Request 在队列中的顺序
-     * 采用原子类，是因为会涉及到 并发（ 多线程 ）
-     */
-    private AtomicInteger mSequenceGenerator = new AtomicInteger();
-
+    private static final int DEFAULT_NETWORK_THREAD_POOL_SIZE = 4;
     /**
      * Staging area for requests that already have a duplicate request in flight.
      *
@@ -91,7 +71,6 @@ public class RequestQueue {
      */
     private final Map<String, Queue<Request<?>>> mWaitingRequests
             = new HashMap<String, Queue<Request<?>>>();
-
     /**
      * The set of all requests currently being processed by this RequestQueue. A Request
      * will be in this set if it is waiting in any queue or currently being processed by
@@ -101,34 +80,24 @@ public class RequestQueue {
      * 当前正在请求队列
      */
     private final Set<Request<?>> mCurrentRequests = new HashSet<Request<?>>();
-
     /** The cache triage queue. */
     /*
      * 缓存请求队列
      */
     private final PriorityBlockingQueue<Request<?>> mCacheQueue
             = new PriorityBlockingQueue<Request<?>>();
-
     /** The queue of requests that are actually going out to the network. */
     /*
      * 网络请求队列
      */
     private final PriorityBlockingQueue<Request<?>> mNetworkQueue
             = new PriorityBlockingQueue<Request<?>>();
-
-    /** Number of network request dispatcher threads to start. */
-    /*
-     * 最大 网络请求执行线程（ NetworkDispatcher ） 的个数
-     */
-    private static final int DEFAULT_NETWORK_THREAD_POOL_SIZE = 4;
-
     /** Cache interface for retrieving and storing responses. */
     /*
      * 缓存数据
      * 在 Volley 内的实现目前只有 DiskBasedCache （ Request 的硬盘缓存 ）
      */
     private final Cache mCache;
-
     /** Network interface for performing requests. */
     /*
      * Network 接口 用于执行 网路请求
@@ -136,7 +105,6 @@ public class RequestQueue {
      * BasicNetwork 会调用 HttpStack 的子类（ HurlStack, HttpClientStack ）去完成网络请求
      */
     private final Network mNetwork;
-
     /** Response delivery mechanism. */
     /*
      * 负责将 网络请求执行线程（ NetworkDispatcher ） 和 缓存请求执行线程（ CacheDispatcher ）
@@ -146,25 +114,28 @@ public class RequestQueue {
      *    + 回调执行线程（ Runnable ）
      */
     private final ResponseDelivery mDelivery;
-
+    /** Used for generating monotonically-increasing sequence numbers for requests. */
+    /*
+     * 为 一个 Request 分配一个 队列序号
+     * 用于管理 Request 在队列中的顺序
+     * 采用原子类，是因为会涉及到 并发（ 多线程 ）
+     */
+    private AtomicInteger mSequenceGenerator = new AtomicInteger();
     /** The network dispatchers. */
     /*
      * 网络请求执行线程（ NetworkDispatcher ）组
      */
     private NetworkDispatcher[] mDispatchers;
-
     /** The cache dispatcher. */
     /*
      * 缓存请求执行线程（ CacheDispatcher ）
      */
     private CacheDispatcher mCacheDispatcher;
-
     /*
      * RequestFinishedListener 回调接口 集合
      */
     private List<RequestFinishedListener> mFinishedListeners
             = new ArrayList<RequestFinishedListener>();
-
 
     /**
      * Creates the worker pool. Processing will not begin until {@link #start()} is called.
@@ -307,21 +278,6 @@ public class RequestQueue {
      */
     public Cache getCache() {
         return mCache;
-    }
-
-
-    /**
-     * A simple predicate or filter interface for Requests, for use by
-     * {@link RequestQueue#cancelAll(RequestFilter)}.
-     */
-    /*
-     * 提供一个 Request 的过滤接口
-     * 目前，在 RequestQueue.cancelAll(RequestFilter) 内的使用
-     * 是 根据 Request 的 tag 信息 是否匹配 过滤出 相同要取消的请求的 Request
-     * 因为，这个 tag 标识的定义是用于：Request 的批量取消操作
-     */
-    public interface RequestFilter {
-        public boolean apply(Request<?> request);
     }
 
 
@@ -520,5 +476,38 @@ public class RequestQueue {
         synchronized (mFinishedListeners) {
             mFinishedListeners.remove(listener);
         }
+    }
+
+
+    /** Callback interface for completed requests. */
+    /*
+     * 提供一个请求完成接口，当一个请求完成后，会执行此回调
+     * 会在 RequestQueue.finish(Request<T> request)
+     */
+    public static interface RequestFinishedListener<T> {
+        /** Called when a request has finished processing. */
+        /*
+         * 回调 已经完成的 请求
+         * 缓存请求执行线程（ CacheDispatcher ）和 网络请求执行线程（ NetworkDispatcher ）
+         * 完成的每个请求后，都会调用 Request.finish(...)，在 Request.finish(...) 中，会调用
+         * 请求队列 RequestQueue.finish(...)。最后，再调用该接口的 onRequestFinished(...)
+         * 将请求回调出去
+         */
+        public void onRequestFinished(Request<T> request);
+    }
+
+
+    /**
+     * A simple predicate or filter interface for Requests, for use by
+     * {@link RequestQueue#cancelAll(RequestFilter)}.
+     */
+    /*
+     * 提供一个 Request 的过滤接口
+     * 目前，在 RequestQueue.cancelAll(RequestFilter) 内的使用
+     * 是 根据 Request 的 tag 信息 是否匹配 过滤出 相同要取消的请求的 Request
+     * 因为，这个 tag 标识的定义是用于：Request 的批量取消操作
+     */
+    public interface RequestFilter {
+        public boolean apply(Request<?> request);
     }
 }

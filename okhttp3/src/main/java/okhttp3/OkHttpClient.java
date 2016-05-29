@@ -697,7 +697,8 @@ public class OkHttpClient implements Cloneable, Call.Factory {
 
 
         /**
-         * Sets the verifier used to confirm that response certificates apply to requested hostnames
+         * Sets the verifier used to confirm that response certificates apply to requested
+         * hostnames
          * for
          * HTTPS connections.
          *

@@ -93,43 +93,6 @@ public abstract class AbstractHttpEntity implements HttpEntity {
 
 
     /**
-     * Obtains the Content-Encoding header.
-     * The default implementation returns the value of the
-     * {@link #contentEncoding contentEncoding} attribute.
-     *
-     * @return the Content-Encoding header, or <code>null</code>
-     */
-    public Header getContentEncoding() {
-        return this.contentEncoding;
-    }
-
-
-    /**
-     * Obtains the 'chunked' flag.
-     * The default implementation returns the value of the
-     * {@link #chunked chunked} attribute.
-     *
-     * @return the 'chunked' flag
-     */
-    public boolean isChunked() {
-        return this.chunked;
-    }
-
-
-    /**
-     * Specifies the Content-Type header.
-     * The default implementation sets the value of the
-     * {@link #contentType contentType} attribute.
-     *
-     * @param contentType the new Content-Encoding header, or
-     * <code>null</code> to unset
-     */
-    public void setContentType(final Header contentType) {
-        this.contentType = contentType;
-    }
-
-
-    /**
      * Specifies the Content-Type header, as a string.
      * The default implementation calls
      * {@link #setContentType(Header) setContentType(Header)}.
@@ -147,15 +110,14 @@ public abstract class AbstractHttpEntity implements HttpEntity {
 
 
     /**
-     * Specifies the Content-Encoding header.
-     * The default implementation sets the value of the
+     * Obtains the Content-Encoding header.
+     * The default implementation returns the value of the
      * {@link #contentEncoding contentEncoding} attribute.
      *
-     * @param contentEncoding the new Content-Encoding header, or
-     * <code>null</code> to unset
+     * @return the Content-Encoding header, or <code>null</code>
      */
-    public void setContentEncoding(final Header contentEncoding) {
-        this.contentEncoding = contentEncoding;
+    public Header getContentEncoding() {
+        return this.contentEncoding;
     }
 
 
@@ -177,6 +139,18 @@ public abstract class AbstractHttpEntity implements HttpEntity {
 
 
     /**
+     * Obtains the 'chunked' flag.
+     * The default implementation returns the value of the
+     * {@link #chunked chunked} attribute.
+     *
+     * @return the 'chunked' flag
+     */
+    public boolean isChunked() {
+        return this.chunked;
+    }
+
+
+    /**
      * Specifies the 'chunked' flag.
      * The default implementation sets the value of the
      * {@link #chunked chunked} attribute.
@@ -185,6 +159,32 @@ public abstract class AbstractHttpEntity implements HttpEntity {
      */
     public void setChunked(boolean b) {
         this.chunked = b;
+    }
+
+
+    /**
+     * Specifies the Content-Type header.
+     * The default implementation sets the value of the
+     * {@link #contentType contentType} attribute.
+     *
+     * @param contentType the new Content-Encoding header, or
+     * <code>null</code> to unset
+     */
+    public void setContentType(final Header contentType) {
+        this.contentType = contentType;
+    }
+
+
+    /**
+     * Specifies the Content-Encoding header.
+     * The default implementation sets the value of the
+     * {@link #contentEncoding contentEncoding} attribute.
+     *
+     * @param contentEncoding the new Content-Encoding header, or
+     * <code>null</code> to unset
+     */
+    public void setContentEncoding(final Header contentEncoding) {
+        this.contentEncoding = contentEncoding;
     }
 
 

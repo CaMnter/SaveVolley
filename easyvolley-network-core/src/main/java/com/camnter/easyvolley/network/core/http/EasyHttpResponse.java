@@ -102,8 +102,23 @@ public class EasyHttpResponse extends AbstractHttpMessage implements HttpRespons
 
 
     // non-javadoc, see interface HttpResponse
+    public void setStatusLine(final StatusLine statusline) {
+        if (statusline == null) {
+            throw new IllegalArgumentException("Status line may not be null");
+        }
+        this.statusline = statusline;
+    }
+
+
+    // non-javadoc, see interface HttpResponse
     public HttpEntity getEntity() {
         return this.entity;
+    }
+
+
+    // non-javadoc, see interface HttpResponse
+    public void setEntity(final HttpEntity entity) {
+        this.entity = entity;
     }
 
 
@@ -114,11 +129,14 @@ public class EasyHttpResponse extends AbstractHttpMessage implements HttpRespons
 
 
     // non-javadoc, see interface HttpResponse
-    public void setStatusLine(final StatusLine statusline) {
-        if (statusline == null) {
-            throw new IllegalArgumentException("Status line may not be null");
+    public void setLocale(Locale loc) {
+        if (loc == null) {
+            throw new IllegalArgumentException("Locale may not be null.");
         }
-        this.statusline = statusline;
+        this.locale = loc;
+        final int code = this.statusline.getStatusCode();
+        this.statusline = new EasyStatusLine(this.statusline.getProtocolVersion(), code,
+                getReason(code));
     }
 
 
@@ -152,24 +170,6 @@ public class EasyHttpResponse extends AbstractHttpMessage implements HttpRespons
         }
         this.statusline = new EasyStatusLine(this.statusline.getProtocolVersion(),
                 this.statusline.getStatusCode(), reason);
-    }
-
-
-    // non-javadoc, see interface HttpResponse
-    public void setEntity(final HttpEntity entity) {
-        this.entity = entity;
-    }
-
-
-    // non-javadoc, see interface HttpResponse
-    public void setLocale(Locale loc) {
-        if (loc == null) {
-            throw new IllegalArgumentException("Locale may not be null.");
-        }
-        this.locale = loc;
-        final int code = this.statusline.getStatusCode();
-        this.statusline = new EasyStatusLine(this.statusline.getProtocolVersion(), code,
-                getReason(code));
     }
 
 

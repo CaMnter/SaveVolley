@@ -48,6 +48,23 @@ import java.util.Map;
  */
 public class DiskBasedCache implements Cache {
 
+    /** Default maximum disk usage in bytes. */
+    // 默认最大的缓存容量 5MB
+    private static final int DEFAULT_DISK_USAGE_BYTES = 5 * 1024 * 1024;
+    /** High water mark percentage for the cache */
+    // 一个负载因子的概念，如果容量 90%，缓存就要进行扩容
+    private static final float HYSTERESIS_FACTOR = 0.9f;
+    /** Magic number for current version of cache file format. */
+    /*
+     * 这个很有意思
+     *
+     * 写入文件后
+     * 这个数值用于标识 后面的内容是一个 CacheHeader 的内容
+     * 前面的内容也是一个 CacheHeader 的内容
+     * 相当于一个分割标识
+     * 这个标识，可以说是一个 CacheHeader 的开始
+     */
+    private static final int CACHE_MAGIC = 0x20150306;
     /** Map of the Key, CacheHeader pairs */
     /*
      * 实例化了一个 LinkedHashMap，accessOrder 设置为 true
@@ -62,38 +79,15 @@ public class DiskBasedCache implements Cache {
      */
     private final Map<String, CacheHeader> mEntries = new LinkedHashMap<String, CacheHeader>(16,
             .75f, true);
-
-    /** Total amount of space currently used by the cache in bytes. */
-    // 缓存的数量，以一个 CacheHeader 为一个单位
-    private long mTotalSize = 0;
-
     /** The root directory to use for the cache. */
     // 缓存文件目录
     private final File mRootDirectory;
-
     /** The maximum size of the cache in bytes. */
     // 缓存最大的 byte 容量
     private final int mMaxCacheSizeInBytes;
-
-    /** Default maximum disk usage in bytes. */
-    // 默认最大的缓存容量 5MB
-    private static final int DEFAULT_DISK_USAGE_BYTES = 5 * 1024 * 1024;
-
-    /** High water mark percentage for the cache */
-    // 一个负载因子的概念，如果容量 90%，缓存就要进行扩容
-    private static final float HYSTERESIS_FACTOR = 0.9f;
-
-    /** Magic number for current version of cache file format. */
-    /*
-     * 这个很有意思
-     *
-     * 写入文件后
-     * 这个数值用于标识 后面的内容是一个 CacheHeader 的内容
-     * 前面的内容也是一个 CacheHeader 的内容
-     * 相当于一个分割标识
-     * 这个标识，可以说是一个 CacheHeader 的开始
-     */
-    private static final int CACHE_MAGIC = 0x20150306;
+    /** Total amount of space currently used by the cache in bytes. */
+    // 缓存的数量，以一个 CacheHeader 为一个单位
+    private long mTotalSize = 0;
 
 
     /**
@@ -127,6 +121,201 @@ public class DiskBasedCache implements Cache {
      */
     public DiskBasedCache(File rootDirectory) {
         this(rootDirectory, DEFAULT_DISK_USAGE_BYTES);
+    }
+
+
+    /**
+     * Reads the contents of an InputStream into a byte[].
+     */
+    /*
+     * 根据一个 长度 和 流
+     * 去读取一个对应长度的 byte[]
+     */
+    private static byte[] streamToBytes(InputStream in, int length) throws IOException {
+        byte[] bytes = new byte[length];
+        /*
+         * 标记读取上来的的值
+         * 下面用于判断是否为 -1，代表这个流读取完毕了
+         */
+        int count;
+        int pos = 0;
+        /*
+         * in.read(bytes, pos, length - pos)
+         * 读取上来的值
+         * 进行倒着放入这个 byte[] 内，不是从 byte[0] 开始放
+         * 1010 1111
+         * 先读取上来的肯定是 1010 ，要放入 byte[] 只能先放 byte[高位]
+         */
+        while (pos < length && ((count = in.read(bytes, pos, length - pos)) != -1)) {
+            pos += count;
+        }
+        if (pos != length) {
+            throw new IOException("Expected " + length + " bytes, read " + pos + " bytes");
+        }
+        return bytes;
+    }
+
+
+    /**
+     * Simple wrapper around {@link InputStream#read()} that throws EOFException
+     * instead of returning -1.
+     */
+    private static int read(InputStream is) throws IOException {
+        int b = is.read();
+        if (b == -1) {
+            throw new EOFException();
+        }
+        return b;
+    }
+
+
+    /**
+     * 0xff = 1111 1111 = 255
+     *
+     * 先不移动 进行 位与( & ) 运算
+     * 平移8位 进行 位与( & ) 运算
+     * 平移16位 进行 位与( & ) 运算
+     * 平移24位 进行 位与( & ) 运算
+     *
+     * 如果是一个32位的2^30：
+     * 0100 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000
+     *
+     * 第一次写入：0100 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000
+     * 第二次写入：          0100 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000
+     * 第三次写入：                                0100 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000
+     * 第四次写入：                                                                            0100 0000
+     *
+     * @param os os
+     * @param n n
+     * @throws IOException
+     */
+    static void writeInt(OutputStream os, int n) throws IOException {
+        os.write((n >> 0) & 0xff);
+        os.write((n >> 8) & 0xff);
+        os.write((n >> 16) & 0xff);
+        os.write((n >> 24) & 0xff);
+    }
+
+
+    /**
+     * @param is is
+     * @return int
+     * @throws IOException
+     */
+    static int readInt(InputStream is) throws IOException {
+        int n = 0;
+        n |= (read(is) << 0);
+        n |= (read(is) << 8);
+        n |= (read(is) << 16);
+        n |= (read(is) << 24);
+        return n;
+    }
+
+
+    static void writeLong(OutputStream os, long n) throws IOException {
+        os.write((byte) (n >>> 0));
+        os.write((byte) (n >>> 8));
+        os.write((byte) (n >>> 16));
+        os.write((byte) (n >>> 24));
+        os.write((byte) (n >>> 32));
+        os.write((byte) (n >>> 40));
+        os.write((byte) (n >>> 48));
+        os.write((byte) (n >>> 56));
+    }
+
+
+    static long readLong(InputStream is) throws IOException {
+        long n = 0;
+        n |= ((read(is) & 0xFFL) << 0);
+        n |= ((read(is) & 0xFFL) << 8);
+        n |= ((read(is) & 0xFFL) << 16);
+        n |= ((read(is) & 0xFFL) << 24);
+        n |= ((read(is) & 0xFFL) << 32);
+        n |= ((read(is) & 0xFFL) << 40);
+        n |= ((read(is) & 0xFFL) << 48);
+        n |= ((read(is) & 0xFFL) << 56);
+        return n;
+    }
+
+
+    /**
+     * 缓存一个 String
+     * 先缓存 这个 String.length
+     * 然后把 String 拆放在 byte[] 去 缓存
+     *
+     * @param os os
+     * @param s s
+     * @throws IOException
+     */
+    static void writeString(OutputStream os, String s) throws IOException {
+        byte[] b = s.getBytes("UTF-8");
+        writeLong(os, b.length);
+        os.write(b, 0, b.length);
+    }
+
+
+    /**
+     * 读取一个 String
+     * 先 readLong 读取 String.length
+     * 然后通过这个 String.length 去读取 byte[]，这就是为什么要缓存 这个 String.length
+     *
+     * @param is is
+     * @return String
+     * @throws IOException
+     */
+    static String readString(InputStream is) throws IOException {
+        int n = (int) readLong(is);
+        byte[] b = streamToBytes(is, n);
+        return new String(b, "UTF-8");
+    }
+
+
+    /**
+     * 缓存  Map<String, String>
+     *
+     * 先缓存 map 的长度
+     * 然后就是一个key 写入 一个 value写入
+     * ...
+     *
+     * @param map map
+     * @param os os
+     * @throws IOException
+     */
+    static void writeStringStringMap(Map<String, String> map, OutputStream os) throws IOException {
+        if (map != null) {
+            writeInt(os, map.size());
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                writeString(os, entry.getKey());
+                writeString(os, entry.getValue());
+            }
+        } else {
+            writeInt(os, 0);
+        }
+    }
+
+
+    /**
+     * 按照上面的 缓存原则
+     *
+     * 第一个肯定用 readInt(...) 去读取，作为 map 的长度
+     * 然后根据这个长度值 去决定调用 多少次 readString(...)，这就是为什么前面要缓存 map.size()
+     * 然后就把 key value 读取上来
+     *
+     * @param is is
+     * @return Map<String, String>
+     * @throws IOException
+     */
+    static Map<String, String> readStringStringMap(InputStream is) throws IOException {
+        int size = readInt(is);
+        Map<String, String> result = (size == 0)
+                                     ? Collections.<String, String>emptyMap()
+                                     : new HashMap<String, String>(size);
+        for (int i = 0; i < size; i++) {
+            String key = readString(is).intern();
+            String value = readString(is).intern();
+            result.put(key, value);
+        }
+        return result;
     }
 
 
@@ -266,6 +455,23 @@ public class DiskBasedCache implements Cache {
             put(key, entry);
         }
     }
+
+    /*
+     * Homebrewed simple serialization system used for reading and writing cache
+     * headers on disk. Once upon a time, this used the standard Java
+     * Object{Input,Output}Stream, but the default implementation relies heavily
+     * on reflection (even for standard types) and generates a ton of garbage.
+     *
+     */
+    /**
+     * Homebrewed 版本的简单序列化系统上进行读/写缓存的磁盘操作，使用传统的 Java Object{Input,Output}Stream
+     * 但默认的实现在很大程度上依赖于反射（即使是标准类型），并产生一吨垃圾
+     */
+
+    /**
+     * 以下读/写基本类型的操作 ( int、long )
+     * 都进行了位运算处理
+     */
 
 
     /**
@@ -453,39 +659,6 @@ public class DiskBasedCache implements Cache {
             mEntries.remove(key);
         }
     }
-
-
-    /**
-     * Reads the contents of an InputStream into a byte[].
-     */
-    /*
-     * 根据一个 长度 和 流
-     * 去读取一个对应长度的 byte[]
-     */
-    private static byte[] streamToBytes(InputStream in, int length) throws IOException {
-        byte[] bytes = new byte[length];
-        /*
-         * 标记读取上来的的值
-         * 下面用于判断是否为 -1，代表这个流读取完毕了
-         */
-        int count;
-        int pos = 0;
-        /*
-         * in.read(bytes, pos, length - pos)
-         * 读取上来的值
-         * 进行倒着放入这个 byte[] 内，不是从 byte[0] 开始放
-         * 1010 1111
-         * 先读取上来的肯定是 1010 ，要放入 byte[] 只能先放 byte[高位]
-         */
-        while (pos < length && ((count = in.read(bytes, pos, length - pos)) != -1)) {
-            pos += count;
-        }
-        if (pos != length) {
-            throw new IOException("Expected " + length + " bytes, read " + pos + " bytes");
-        }
-        return bytes;
-    }
-
 
     /**
      * Handles holding onto the cache headers for an entry.
@@ -676,184 +849,5 @@ public class DiskBasedCache implements Cache {
             }
             return result;
         }
-    }
-
-    /*
-     * Homebrewed simple serialization system used for reading and writing cache
-     * headers on disk. Once upon a time, this used the standard Java
-     * Object{Input,Output}Stream, but the default implementation relies heavily
-     * on reflection (even for standard types) and generates a ton of garbage.
-     *
-     */
-    /**
-     * Homebrewed 版本的简单序列化系统上进行读/写缓存的磁盘操作，使用传统的 Java Object{Input,Output}Stream
-     * 但默认的实现在很大程度上依赖于反射（即使是标准类型），并产生一吨垃圾
-     */
-
-    /**
-     * 以下读/写基本类型的操作 ( int、long )
-     * 都进行了位运算处理
-     */
-
-    /**
-     * Simple wrapper around {@link InputStream#read()} that throws EOFException
-     * instead of returning -1.
-     */
-    private static int read(InputStream is) throws IOException {
-        int b = is.read();
-        if (b == -1) {
-            throw new EOFException();
-        }
-        return b;
-    }
-
-
-    /**
-     * 0xff = 1111 1111 = 255
-     *
-     * 先不移动 进行 位与( & ) 运算
-     * 平移8位 进行 位与( & ) 运算
-     * 平移16位 进行 位与( & ) 运算
-     * 平移24位 进行 位与( & ) 运算
-     *
-     * 如果是一个32位的2^30：
-     * 0100 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000
-     *
-     * 第一次写入：0100 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000
-     * 第二次写入：          0100 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000
-     * 第三次写入：                                0100 0000 0000 0000 | 0000 0000 0000 0000 | 0000 0000
-     * 第四次写入：                                                                            0100 0000
-     *
-     * @param os os
-     * @param n n
-     * @throws IOException
-     */
-    static void writeInt(OutputStream os, int n) throws IOException {
-        os.write((n >> 0) & 0xff);
-        os.write((n >> 8) & 0xff);
-        os.write((n >> 16) & 0xff);
-        os.write((n >> 24) & 0xff);
-    }
-
-
-    /**
-     * @param is is
-     * @return int
-     * @throws IOException
-     */
-    static int readInt(InputStream is) throws IOException {
-        int n = 0;
-        n |= (read(is) << 0);
-        n |= (read(is) << 8);
-        n |= (read(is) << 16);
-        n |= (read(is) << 24);
-        return n;
-    }
-
-
-    static void writeLong(OutputStream os, long n) throws IOException {
-        os.write((byte) (n >>> 0));
-        os.write((byte) (n >>> 8));
-        os.write((byte) (n >>> 16));
-        os.write((byte) (n >>> 24));
-        os.write((byte) (n >>> 32));
-        os.write((byte) (n >>> 40));
-        os.write((byte) (n >>> 48));
-        os.write((byte) (n >>> 56));
-    }
-
-
-    static long readLong(InputStream is) throws IOException {
-        long n = 0;
-        n |= ((read(is) & 0xFFL) << 0);
-        n |= ((read(is) & 0xFFL) << 8);
-        n |= ((read(is) & 0xFFL) << 16);
-        n |= ((read(is) & 0xFFL) << 24);
-        n |= ((read(is) & 0xFFL) << 32);
-        n |= ((read(is) & 0xFFL) << 40);
-        n |= ((read(is) & 0xFFL) << 48);
-        n |= ((read(is) & 0xFFL) << 56);
-        return n;
-    }
-
-
-    /**
-     * 缓存一个 String
-     * 先缓存 这个 String.length
-     * 然后把 String 拆放在 byte[] 去 缓存
-     *
-     * @param os os
-     * @param s s
-     * @throws IOException
-     */
-    static void writeString(OutputStream os, String s) throws IOException {
-        byte[] b = s.getBytes("UTF-8");
-        writeLong(os, b.length);
-        os.write(b, 0, b.length);
-    }
-
-
-    /**
-     * 读取一个 String
-     * 先 readLong 读取 String.length
-     * 然后通过这个 String.length 去读取 byte[]，这就是为什么要缓存 这个 String.length
-     *
-     * @param is is
-     * @return String
-     * @throws IOException
-     */
-    static String readString(InputStream is) throws IOException {
-        int n = (int) readLong(is);
-        byte[] b = streamToBytes(is, n);
-        return new String(b, "UTF-8");
-    }
-
-
-    /**
-     * 缓存  Map<String, String>
-     *
-     * 先缓存 map 的长度
-     * 然后就是一个key 写入 一个 value写入
-     * ...
-     *
-     * @param map map
-     * @param os os
-     * @throws IOException
-     */
-    static void writeStringStringMap(Map<String, String> map, OutputStream os) throws IOException {
-        if (map != null) {
-            writeInt(os, map.size());
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                writeString(os, entry.getKey());
-                writeString(os, entry.getValue());
-            }
-        } else {
-            writeInt(os, 0);
-        }
-    }
-
-
-    /**
-     * 按照上面的 缓存原则
-     *
-     * 第一个肯定用 readInt(...) 去读取，作为 map 的长度
-     * 然后根据这个长度值 去决定调用 多少次 readString(...)，这就是为什么前面要缓存 map.size()
-     * 然后就把 key value 读取上来
-     *
-     * @param is is
-     * @return Map<String, String>
-     * @throws IOException
-     */
-    static Map<String, String> readStringStringMap(InputStream is) throws IOException {
-        int size = readInt(is);
-        Map<String, String> result = (size == 0)
-                                     ? Collections.<String, String>emptyMap()
-                                     : new HashMap<String, String>(size);
-        for (int i = 0; i < size; i++) {
-            String key = readString(is).intern();
-            String value = readString(is).intern();
-            result.put(key, value);
-        }
-        return result;
     }
 }

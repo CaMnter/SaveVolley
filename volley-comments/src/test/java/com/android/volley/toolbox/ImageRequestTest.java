@@ -36,6 +36,18 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class) public class ImageRequestTest {
 
+    private static byte[] readInputStream(InputStream in) throws IOException {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int count;
+        while ((count = in.read(buffer)) != -1) {
+            bytes.write(buffer, 0, count);
+        }
+        in.close();
+        return bytes.toByteArray();
+    }
+
+
     @Test public void parseNetworkResponse_resizing() throws Exception {
         // This is a horrible hack but Robolectric doesn't have a way to provide
         // width and height hints for decodeByteArray. It works because the byte array
@@ -146,18 +158,6 @@ import static org.junit.Assert.assertTrue;
 
         // just under 1/4 == 4
         assertEquals(4, ImageRequest.findBestSampleSize(100, 200, 24, 50));
-    }
-
-
-    private static byte[] readInputStream(InputStream in) throws IOException {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int count;
-        while ((count = in.read(buffer)) != -1) {
-            bytes.write(buffer, 0, count);
-        }
-        in.close();
-        return bytes.toByteArray();
     }
 
 

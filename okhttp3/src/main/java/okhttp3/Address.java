@@ -50,9 +50,9 @@ public final class Address {
 
     public Address(String uriHost, int uriPort, Dns dns, SocketFactory socketFactory, SSLSocketFactory sslSocketFactory, HostnameVerifier hostnameVerifier, CertificatePinner certificatePinner, Authenticator proxyAuthenticator, Proxy proxy, List<Protocol> protocols, List<ConnectionSpec> connectionSpecs, ProxySelector proxySelector) {
         this.url = new HttpUrl.Builder().scheme(sslSocketFactory != null ? "https" : "http")
-                                        .host(uriHost)
-                                        .port(uriPort)
-                                        .build();
+                .host(uriHost)
+                .port(uriPort)
+                .build();
 
         if (dns == null) throw new NullPointerException("dns == null");
         this.dns = dns;

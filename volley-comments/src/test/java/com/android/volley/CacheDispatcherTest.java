@@ -34,14 +34,13 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class) @SuppressWarnings("rawtypes")
 public class CacheDispatcherTest {
+    private static final long TIMEOUT_MILLIS = 5000;
     private CacheDispatcher mDispatcher;
     private WaitableQueue mCacheQueue;
     private WaitableQueue mNetworkQueue;
     private MockCache mCache;
     private MockResponseDelivery mDelivery;
     private MockRequest mRequest;
-
-    private static final long TIMEOUT_MILLIS = 5000;
 
 
     @Before public void setUp() throws Exception {

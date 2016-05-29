@@ -67,13 +67,10 @@ public final class DateUtils {
      * <code>asctime()</code> format.
      */
     public static final String PATTERN_ASCTIME = "EEE MMM d HH:mm:ss yyyy";
-
+    public static final TimeZone GMT = TimeZone.getTimeZone("GMT");
     private static final String[] DEFAULT_PATTERNS = new String[] { PATTERN_RFC1036,
             PATTERN_RFC1123, PATTERN_ASCTIME };
-
     private static final Date DEFAULT_TWO_DIGIT_YEAR_START;
-
-    public static final TimeZone GMT = TimeZone.getTimeZone("GMT");
 
 
     static {
@@ -82,6 +79,11 @@ public final class DateUtils {
         calendar.set(2000, Calendar.JANUARY, 1, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         DEFAULT_TWO_DIGIT_YEAR_START = calendar.getTime();
+    }
+
+
+    /** This class should not be instantiated. */
+    private DateUtils() {
     }
 
 
@@ -189,12 +191,6 @@ public final class DateUtils {
         SimpleDateFormat formatter = DateFormatHolder.formatFor(pattern);
         return formatter.format(date);
     }
-
-
-    /** This class should not be instantiated. */
-    private DateUtils() {
-    }
-
 
     /**
      * A factory for {@link SimpleDateFormat}s. The instances are stored in a

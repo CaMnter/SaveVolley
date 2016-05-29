@@ -478,6 +478,7 @@ public final class Cache implements Closeable, Flushable {
         return requestCount;
     }
 
+
     private static final class Entry {
         private final String url;
         private final Headers varyHeaders;
@@ -620,27 +621,27 @@ public final class Cache implements Closeable, Flushable {
             sink.writeDecimalLong(varyHeaders.size()).writeByte('\n');
             for (int i = 0, size = varyHeaders.size(); i < size; i++) {
                 sink.writeUtf8(varyHeaders.name(i))
-                    .writeUtf8(": ")
-                    .writeUtf8(varyHeaders.value(i))
-                    .writeByte('\n');
+                        .writeUtf8(": ")
+                        .writeUtf8(varyHeaders.value(i))
+                        .writeByte('\n');
             }
 
             sink.writeUtf8(new StatusLine(protocol, code, message).toString()).writeByte('\n');
             sink.writeDecimalLong(responseHeaders.size() + 2).writeByte('\n');
             for (int i = 0, size = responseHeaders.size(); i < size; i++) {
                 sink.writeUtf8(responseHeaders.name(i))
-                    .writeUtf8(": ")
-                    .writeUtf8(responseHeaders.value(i))
-                    .writeByte('\n');
+                        .writeUtf8(": ")
+                        .writeUtf8(responseHeaders.value(i))
+                        .writeByte('\n');
             }
             sink.writeUtf8(OkHeaders.SENT_MILLIS)
-                .writeUtf8(": ")
-                .writeDecimalLong(sentRequestMillis)
-                .writeByte('\n');
+                    .writeUtf8(": ")
+                    .writeDecimalLong(sentRequestMillis)
+                    .writeByte('\n');
             sink.writeUtf8(OkHeaders.RECEIVED_MILLIS)
-                .writeUtf8(": ")
-                .writeDecimalLong(receivedResponseMillis)
-                .writeByte('\n');
+                    .writeUtf8(": ")
+                    .writeDecimalLong(receivedResponseMillis)
+                    .writeByte('\n');
 
             if (isHttps()) {
                 sink.writeByte('\n');
@@ -708,20 +709,20 @@ public final class Cache implements Closeable, Flushable {
             String contentType = responseHeaders.get("Content-Type");
             String contentLength = responseHeaders.get("Content-Length");
             Request cacheRequest = new Request.Builder().url(url)
-                                                        .method(requestMethod, null)
-                                                        .headers(varyHeaders)
-                                                        .build();
+                    .method(requestMethod, null)
+                    .headers(varyHeaders)
+                    .build();
             return new Response.Builder().request(cacheRequest)
-                                         .protocol(protocol)
-                                         .code(code)
-                                         .message(message)
-                                         .headers(responseHeaders)
-                                         .body(new CacheResponseBody(snapshot, contentType,
-                                                 contentLength))
-                                         .handshake(handshake)
-                                         .sentRequestAtMillis(sentRequestMillis)
-                                         .receivedResponseAtMillis(receivedResponseMillis)
-                                         .build();
+                    .protocol(protocol)
+                    .code(code)
+                    .message(message)
+                    .headers(responseHeaders)
+                    .body(new CacheResponseBody(snapshot, contentType,
+                            contentLength))
+                    .handshake(handshake)
+                    .sentRequestAtMillis(sentRequestMillis)
+                    .receivedResponseAtMillis(receivedResponseMillis)
+                    .build();
         }
     }
 

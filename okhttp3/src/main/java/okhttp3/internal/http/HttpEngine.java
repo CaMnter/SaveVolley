@@ -184,8 +184,8 @@ public final class HttpEngine {
 
     private static Response stripBody(Response response) {
         return response != null && response.body() != null ? response.newBuilder()
-                                                                     .body(null)
-                                                                     .build() : response;
+                .body(null)
+                .build() : response;
     }
 
 
@@ -328,25 +328,25 @@ public final class HttpEngine {
         // If we're forbidden from using the network and the cache is insufficient, fail.
         if (networkRequest == null && cacheResponse == null) {
             userResponse = new Response.Builder().request(userRequest)
-                                                 .priorResponse(stripBody(priorResponse))
-                                                 .protocol(Protocol.HTTP_1_1)
-                                                 .code(504)
-                                                 .message("Unsatisfiable Request (only-if-cached)")
-                                                 .body(EMPTY_BODY)
-                                                 .sentRequestAtMillis(sentRequestMillis)
-                                                 .receivedResponseAtMillis(
-                                                         System.currentTimeMillis())
-                                                 .build();
+                    .priorResponse(stripBody(priorResponse))
+                    .protocol(Protocol.HTTP_1_1)
+                    .code(504)
+                    .message("Unsatisfiable Request (only-if-cached)")
+                    .body(EMPTY_BODY)
+                    .sentRequestAtMillis(sentRequestMillis)
+                    .receivedResponseAtMillis(
+                            System.currentTimeMillis())
+                    .build();
             return;
         }
 
         // If we don't need the network, we're done.
         if (networkRequest == null) {
             userResponse = cacheResponse.newBuilder()
-                                        .request(userRequest)
-                                        .priorResponse(stripBody(priorResponse))
-                                        .cacheResponse(stripBody(cacheResponse))
-                                        .build();
+                    .request(userRequest)
+                    .priorResponse(stripBody(priorResponse))
+                    .cacheResponse(stripBody(cacheResponse))
+                    .build();
             userResponse = unzip(userResponse);
             return;
         }
@@ -632,14 +632,14 @@ public final class HttpEngine {
 
         GzipSource responseBody = new GzipSource(response.body().source());
         Headers strippedHeaders = response.headers()
-                                          .newBuilder()
-                                          .removeAll("Content-Encoding")
-                                          .removeAll("Content-Length")
-                                          .build();
+                .newBuilder()
+                .removeAll("Content-Encoding")
+                .removeAll("Content-Length")
+                .build();
         return response.newBuilder()
-                       .headers(strippedHeaders)
-                       .body(new RealResponseBody(strippedHeaders, Okio.buffer(responseBody)))
-                       .build();
+                .headers(strippedHeaders)
+                .body(new RealResponseBody(strippedHeaders, Okio.buffer(responseBody)))
+                .build();
     }
 
 
@@ -727,9 +727,9 @@ public final class HttpEngine {
                         requestBodyOut instanceof RetryableSink) {
                     long contentLength = ((RetryableSink) requestBodyOut).contentLength();
                     networkRequest = networkRequest.newBuilder()
-                                                   .header("Content-Length",
-                                                           Long.toString(contentLength))
-                                                   .build();
+                            .header("Content-Length",
+                                    Long.toString(contentLength))
+                            .build();
                 }
                 httpStream.writeRequestHeaders(networkRequest);
             }
@@ -756,13 +756,13 @@ public final class HttpEngine {
         if (cacheResponse != null) {
             if (validate(cacheResponse, networkResponse)) {
                 userResponse = cacheResponse.newBuilder()
-                                            .request(userRequest)
-                                            .priorResponse(stripBody(priorResponse))
-                                            .headers(combine(cacheResponse.headers(),
-                                                    networkResponse.headers()))
-                                            .cacheResponse(stripBody(cacheResponse))
-                                            .networkResponse(stripBody(networkResponse))
-                                            .build();
+                        .request(userRequest)
+                        .priorResponse(stripBody(priorResponse))
+                        .headers(combine(cacheResponse.headers(),
+                                networkResponse.headers()))
+                        .cacheResponse(stripBody(cacheResponse))
+                        .networkResponse(stripBody(networkResponse))
+                        .build();
                 networkResponse.body().close();
                 releaseStreamAllocation();
 
@@ -779,11 +779,11 @@ public final class HttpEngine {
         }
 
         userResponse = networkResponse.newBuilder()
-                                      .request(userRequest)
-                                      .priorResponse(stripBody(priorResponse))
-                                      .cacheResponse(stripBody(cacheResponse))
-                                      .networkResponse(stripBody(networkResponse))
-                                      .build();
+                .request(userRequest)
+                .priorResponse(stripBody(priorResponse))
+                .cacheResponse(stripBody(cacheResponse))
+                .networkResponse(stripBody(networkResponse))
+                .build();
 
         if (hasBody(userResponse)) {
             maybeCache();
@@ -796,16 +796,16 @@ public final class HttpEngine {
         httpStream.finishRequest();
 
         Response networkResponse = httpStream.readResponseHeaders()
-                                             .request(networkRequest)
-                                             .handshake(streamAllocation.connection().handshake())
-                                             .sentRequestAtMillis(sentRequestMillis)
-                                             .receivedResponseAtMillis(System.currentTimeMillis())
-                                             .build();
+                .request(networkRequest)
+                .handshake(streamAllocation.connection().handshake())
+                .sentRequestAtMillis(sentRequestMillis)
+                .receivedResponseAtMillis(System.currentTimeMillis())
+                .build();
 
         if (!forWebSocket) {
             networkResponse = networkResponse.newBuilder()
-                                             .body(httpStream.openResponseBody(networkResponse))
-                                             .build();
+                    .body(httpStream.openResponseBody(networkResponse))
+                    .build();
         }
 
         if ("close".equalsIgnoreCase(networkResponse.request().header("Connection")) ||
@@ -879,9 +879,9 @@ public final class HttpEngine {
         };
 
         return response.newBuilder()
-                       .body(new RealResponseBody(response.headers(),
-                               Okio.buffer(cacheWritingSource)))
-                       .build();
+                .body(new RealResponseBody(response.headers(),
+                        Okio.buffer(cacheWritingSource)))
+                .build();
     }
 
 
@@ -995,6 +995,7 @@ public final class HttpEngine {
         return url.host().equals(followUp.host()) && url.port() == followUp.port() &&
                 url.scheme().equals(followUp.scheme());
     }
+
 
     class NetworkInterceptorChain implements Interceptor.Chain {
         private final int index;

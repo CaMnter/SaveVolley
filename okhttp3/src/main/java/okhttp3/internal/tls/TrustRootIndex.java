@@ -33,8 +33,8 @@ public abstract class TrustRootIndex {
             // From org.conscrypt.TrustManagerImpl, we want the method with this signature:
             // private TrustAnchor findTrustAnchorByIssuerAndSignature(X509Certificate lastCert);
             Method method = trustManager.getClass()
-                                        .getDeclaredMethod("findTrustAnchorByIssuerAndSignature",
-                                                X509Certificate.class);
+                    .getDeclaredMethod("findTrustAnchorByIssuerAndSignature",
+                            X509Certificate.class);
             method.setAccessible(true);
             return new AndroidTrustRootIndex(trustManager, method);
         } catch (NoSuchMethodException e) {
@@ -50,6 +50,7 @@ public abstract class TrustRootIndex {
 
     /** Returns the trusted CA certificate that signed {@code cert}. */
     abstract X509Certificate findByIssuerAndSignature(X509Certificate cert);
+
 
     /**
      * An index of trusted root certificates that exploits knowledge of Android implementation

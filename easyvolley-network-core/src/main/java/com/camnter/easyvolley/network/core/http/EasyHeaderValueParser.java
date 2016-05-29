@@ -82,27 +82,6 @@ public class EasyHeaderValueParser implements HeaderValueParser {
     }
 
 
-    // non-javadoc, see interface HeaderValueParser
-    public HeaderElement[] parseElements(final CharArrayBuffer buffer, final EasyParserCursor cursor) {
-
-        if (buffer == null) {
-            throw new IllegalArgumentException("Char array buffer may not be null");
-        }
-        if (cursor == null) {
-            throw new IllegalArgumentException("Parser cursor may not be null");
-        }
-
-        List elements = new ArrayList();
-        while (!cursor.atEnd()) {
-            HeaderElement element = parseHeaderElement(buffer, cursor);
-            if (!(element.getName().length() == 0 && element.getValue() == null)) {
-                elements.add(element);
-            }
-        }
-        return (HeaderElement[]) elements.toArray(new HeaderElement[elements.size()]);
-    }
-
-
     /**
      * Parses an element with the given parser.
      *
@@ -123,6 +102,85 @@ public class EasyHeaderValueParser implements HeaderValueParser {
         buffer.append(value);
         EasyParserCursor cursor = new EasyParserCursor(0, value.length());
         return parser.parseHeaderElement(buffer, cursor);
+    }
+
+
+    /**
+     * Parses parameters with the given parser.
+     *
+     * @param value the parameter list to parse
+     * @param parser the parser to use, or <code>null</code> for default
+     * @return array holding the parameters, never <code>null</code>
+     */
+    public final static NameValuePair[] parseParameters(final String value, HeaderValueParser parser)
+            throws ParseException {
+
+        if (value == null) {
+            throw new IllegalArgumentException("Value to parse may not be null");
+        }
+
+        if (parser == null) parser = EasyHeaderValueParser.DEFAULT;
+
+        CharArrayBuffer buffer = new CharArrayBuffer(value.length());
+        buffer.append(value);
+        EasyParserCursor cursor = new EasyParserCursor(0, value.length());
+        return parser.parseParameters(buffer, cursor);
+    }
+
+
+    /**
+     * Parses a name-value-pair with the given parser.
+     *
+     * @param value the NVP to parse
+     * @param parser the parser to use, or <code>null</code> for default
+     * @return the parsed name-value pair
+     */
+    public final static NameValuePair parseNameValuePair(final String value, HeaderValueParser parser)
+            throws ParseException {
+
+        if (value == null) {
+            throw new IllegalArgumentException("Value to parse may not be null");
+        }
+
+        if (parser == null) parser = EasyHeaderValueParser.DEFAULT;
+
+        CharArrayBuffer buffer = new CharArrayBuffer(value.length());
+        buffer.append(value);
+        EasyParserCursor cursor = new EasyParserCursor(0, value.length());
+        return parser.parseNameValuePair(buffer, cursor);
+    }
+
+
+    private static boolean isOneOf(final char ch, final char[] chs) {
+        if (chs != null) {
+            for (int i = 0; i < chs.length; i++) {
+                if (ch == chs[i]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    // non-javadoc, see interface HeaderValueParser
+    public HeaderElement[] parseElements(final CharArrayBuffer buffer, final EasyParserCursor cursor) {
+
+        if (buffer == null) {
+            throw new IllegalArgumentException("Char array buffer may not be null");
+        }
+        if (cursor == null) {
+            throw new IllegalArgumentException("Parser cursor may not be null");
+        }
+
+        List elements = new ArrayList();
+        while (!cursor.atEnd()) {
+            HeaderElement element = parseHeaderElement(buffer, cursor);
+            if (!(element.getName().length() == 0 && element.getValue() == null)) {
+                elements.add(element);
+            }
+        }
+        return (HeaderElement[]) elements.toArray(new HeaderElement[elements.size()]);
     }
 
 
@@ -156,29 +214,6 @@ public class EasyHeaderValueParser implements HeaderValueParser {
      */
     protected HeaderElement createHeaderElement(final String name, final String value, final NameValuePair[] params) {
         return new EasyHeaderElement(name, value, params);
-    }
-
-
-    /**
-     * Parses parameters with the given parser.
-     *
-     * @param value the parameter list to parse
-     * @param parser the parser to use, or <code>null</code> for default
-     * @return array holding the parameters, never <code>null</code>
-     */
-    public final static NameValuePair[] parseParameters(final String value, HeaderValueParser parser)
-            throws ParseException {
-
-        if (value == null) {
-            throw new IllegalArgumentException("Value to parse may not be null");
-        }
-
-        if (parser == null) parser = EasyHeaderValueParser.DEFAULT;
-
-        CharArrayBuffer buffer = new CharArrayBuffer(value.length());
-        buffer.append(value);
-        EasyParserCursor cursor = new EasyParserCursor(0, value.length());
-        return parser.parseParameters(buffer, cursor);
     }
 
 
@@ -222,44 +257,9 @@ public class EasyHeaderValueParser implements HeaderValueParser {
     }
 
 
-    /**
-     * Parses a name-value-pair with the given parser.
-     *
-     * @param value the NVP to parse
-     * @param parser the parser to use, or <code>null</code> for default
-     * @return the parsed name-value pair
-     */
-    public final static NameValuePair parseNameValuePair(final String value, HeaderValueParser parser)
-            throws ParseException {
-
-        if (value == null) {
-            throw new IllegalArgumentException("Value to parse may not be null");
-        }
-
-        if (parser == null) parser = EasyHeaderValueParser.DEFAULT;
-
-        CharArrayBuffer buffer = new CharArrayBuffer(value.length());
-        buffer.append(value);
-        EasyParserCursor cursor = new EasyParserCursor(0, value.length());
-        return parser.parseNameValuePair(buffer, cursor);
-    }
-
-
     // non-javadoc, see interface HeaderValueParser
     public NameValuePair parseNameValuePair(final CharArrayBuffer buffer, final EasyParserCursor cursor) {
         return parseNameValuePair(buffer, cursor, ALL_DELIMITERS);
-    }
-
-
-    private static boolean isOneOf(final char ch, final char[] chs) {
-        if (chs != null) {
-            for (int i = 0; i < chs.length; i++) {
-                if (ch == chs[i]) {
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 
 

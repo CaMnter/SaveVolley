@@ -211,10 +211,10 @@ public final class RealConnection extends FramedConnection.Listener implements C
 
             FramedConnection framedConnection = new FramedConnection.Builder(true).socket(socket,
                     route.address().url().host(), source, sink)
-                                                                                  .protocol(
-                                                                                          protocol)
-                                                                                  .listener(this)
-                                                                                  .build();
+                    .protocol(
+                            protocol)
+                    .listener(this)
+                    .build();
             framedConnection.start();
 
             // Only assign the framed connection once the preface has been sent successfully.
@@ -252,7 +252,7 @@ public final class RealConnection extends FramedConnection.Listener implements C
             // Verify that the socket's certificates are acceptable for the target host.
             if (!address.hostnameVerifier().verify(address.url().host(), sslSocket.getSession())) {
                 X509Certificate cert = (X509Certificate) unverifiedHandshake.peerCertificates()
-                                                                            .get(0);
+                        .get(0);
                 throw new SSLPeerUnverifiedException(
                         "Hostname " + address.url().host() + " not verified:" +
                                 "\n    certificate: " + CertificatePinner.pin(cert) + "\n    DN: " +
@@ -262,12 +262,12 @@ public final class RealConnection extends FramedConnection.Listener implements C
 
             // Check that the certificate pinner is satisfied by the certificates presented.
             address.certificatePinner()
-                   .check(address.url().host(), unverifiedHandshake.peerCertificates());
+                    .check(address.url().host(), unverifiedHandshake.peerCertificates());
 
             // Success! Save the handshake and the ALPN protocol.
             String maybeProtocol = connectionSpec.supportsTlsExtensions()
                                    ? Platform.get()
-                                             .getSelectedProtocol(sslSocket)
+                                           .getSelectedProtocol(sslSocket)
                                    : null;
             socket = sslSocket;
             source = Okio.buffer(Okio.source(socket));
@@ -328,8 +328,8 @@ public final class RealConnection extends FramedConnection.Listener implements C
 
                 case HTTP_PROXY_AUTH:
                     tunnelRequest = route.address()
-                                         .proxyAuthenticator()
-                                         .authenticate(route, response);
+                            .proxyAuthenticator()
+                            .authenticate(route, response);
                     if (tunnelRequest == null) {
                         throw new IOException("Failed to authenticate with proxy");
                     }
@@ -355,11 +355,11 @@ public final class RealConnection extends FramedConnection.Listener implements C
      */
     private Request createTunnelRequest() throws IOException {
         return new Request.Builder().url(route.address().url())
-                                    .header("Host", Util.hostHeader(route.address().url(), true))
-                                    .header("Proxy-Connection", "Keep-Alive")
-                                    .header("User-Agent",
-                                            Version.userAgent()) // For HTTP/1.0 proxies like Squid.
-                                    .build();
+                .header("Host", Util.hostHeader(route.address().url(), true))
+                .header("Proxy-Connection", "Keep-Alive")
+                .header("User-Agent",
+                        Version.userAgent()) // For HTTP/1.0 proxies like Squid.
+                .build();
     }
 
 

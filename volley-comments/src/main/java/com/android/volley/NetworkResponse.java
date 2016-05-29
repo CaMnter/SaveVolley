@@ -16,10 +16,9 @@
 
 package com.android.volley;
 
-import org.apache.http.HttpStatus;
-
 import java.util.Collections;
 import java.util.Map;
+import org.apache.http.HttpStatus;
 
 /**
  * Data and headers returned from {@link Network#performRequest(Request)}.
@@ -30,8 +29,25 @@ import java.util.Map;
  * 执行 performRequest(...) 得到的请求结果 和 头信息
  */
 public class NetworkResponse {
+    /** The HTTP status code. */
+    // HTTP 状态码
+    public final int statusCode;
+    /** Raw data from this response. */
+    // 请求结果 Response body
+    public final byte[] data;
+    /** Response headers. */
+    // 请求结果 头信息
+    public final Map<String, String> headers;
+    /** True if the server returned a 304 (Not Modified). */
+    // HTTP 状态码 304 -> SC_NOT_MODIFIED -> true，否则为 false
+    public final boolean notModified;
+    /** Network roundtrip time in milliseconds. */
+    // 请求时长
+    public final long networkTimeMs;
+
     /**
      * Creates a new network response.
+     *
      * @param statusCode the HTTP status code
      * @param data Response body
      * @param headers Headers returned with this response, or null for none
@@ -47,7 +63,7 @@ public class NetworkResponse {
      * networkTimeMs：请求时长
      */
     public NetworkResponse(int statusCode, byte[] data, Map<String, String> headers,
-            boolean notModified, long networkTimeMs) {
+                           boolean notModified, long networkTimeMs) {
         this.statusCode = statusCode;
         this.data = data;
         this.headers = headers;
@@ -59,7 +75,7 @@ public class NetworkResponse {
      * networkTimeMs 时长默认设置为 0
      */
     public NetworkResponse(int statusCode, byte[] data, Map<String, String> headers,
-            boolean notModified) {
+                           boolean notModified) {
         this(statusCode, data, headers, notModified, 0);
     }
 
@@ -81,25 +97,5 @@ public class NetworkResponse {
     public NetworkResponse(byte[] data, Map<String, String> headers) {
         this(HttpStatus.SC_OK, data, headers, false, 0);
     }
-
-    /** The HTTP status code. */
-    // HTTP 状态码
-    public final int statusCode;
-
-    /** Raw data from this response. */
-    // 请求结果 Response body
-    public final byte[] data;
-
-    /** Response headers. */
-    // 请求结果 头信息
-    public final Map<String, String> headers;
-
-    /** True if the server returned a 304 (Not Modified). */
-    // HTTP 状态码 304 -> SC_NOT_MODIFIED -> true，否则为 false
-    public final boolean notModified;
-
-    /** Network roundtrip time in milliseconds. */
-    // 请求时长
-    public final long networkTimeMs;
 }
 

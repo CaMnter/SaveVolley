@@ -49,7 +49,34 @@ public class ImageLoader {
      * ImageLoader 内的 请求队列
      */
     private final RequestQueue mRequestQueue;
-
+    /** The cache implementation to be used as an L1 cache before calling into volley. */
+    /*
+     * ImageCache 对象
+     * 保存外部提供的 ImageCache 实现类
+     * 用于缓存图片
+     */
+    private final ImageCache mCache;
+    /**
+     * HashMap of Cache keys -> BatchedImageRequest used to track in-flight requests so
+     * that we can coalesce multiple requests to the same URL into a single network request.
+     */
+    /*
+     * ImageLoader 中的 正在执行中的请求集合
+     */
+    private final HashMap<String, BatchedImageRequest> mInFlightRequests
+            = new HashMap<String, BatchedImageRequest>();
+    /** HashMap of the currently pending responses (waiting to be delivered). */
+    /*
+     * ImageLoader 中的 正在执行结束的请求集合
+     */
+    private final HashMap<String, BatchedImageRequest> mBatchedResponses
+            = new HashMap<String, BatchedImageRequest>();
+    /** Handler to the main thread. */
+    /*
+     * 保存一个 主 UI 线程 Handler
+     * 用于和 主 UI 线程 通信
+     */
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
     /** Amount of time to wait after first response arrives before delivering all responses. */
     /*
      * mBatchedResponses 通过 主 UI 线程 Handler 通信
@@ -62,39 +89,6 @@ public class ImageLoader {
      * mBatchResponseDelayMs 表示 主线程 Handler.postDelayed() 的延迟时间 为 0.1s
      */
     private int mBatchResponseDelayMs = 100;
-
-    /** The cache implementation to be used as an L1 cache before calling into volley. */
-    /*
-     * ImageCache 对象
-     * 保存外部提供的 ImageCache 实现类
-     * 用于缓存图片
-     */
-    private final ImageCache mCache;
-
-    /**
-     * HashMap of Cache keys -> BatchedImageRequest used to track in-flight requests so
-     * that we can coalesce multiple requests to the same URL into a single network request.
-     */
-    /*
-     * ImageLoader 中的 正在执行中的请求集合
-     */
-    private final HashMap<String, BatchedImageRequest> mInFlightRequests
-            = new HashMap<String, BatchedImageRequest>();
-
-    /** HashMap of the currently pending responses (waiting to be delivered). */
-    /*
-     * ImageLoader 中的 正在执行结束的请求集合
-     */
-    private final HashMap<String, BatchedImageRequest> mBatchedResponses
-            = new HashMap<String, BatchedImageRequest>();
-
-    /** Handler to the main thread. */
-    /*
-     * 保存一个 主 UI 线程 Handler
-     * 用于和 主 UI 线程 通信
-     */
-    private final Handler mHandler = new Handler(Looper.getMainLooper());
-
     /** Runnable for in-flight response delivery. */
     /*
      * 用于 批处理 mBatchedResponses 内的 BatchedImageRequest
@@ -103,36 +97,6 @@ public class ImageLoader {
      * 执行成功回调 或者 失败回调
      */
     private Runnable mRunnable;
-
-    /**
-     * Simple cache adapter interface. If provided to the ImageLoader, it
-     * will be used as an L1 cache before dispatch to Volley. Implementations
-     * must not block. Implementation with an LruCache is recommended.
-     */
-    /*
-     * 对外提供的图片缓存接口
-     * 然而没做任何实现
-     * 这里推荐 自己实现一套 LruCache
-     * 这里只是定义 ImageLoader 需要的方法（ getBitmap(...), putBitmap(...) ）而已
-     */
-    public interface ImageCache {
-        /**
-         * 根据 请求 url，去从缓存中获取该 url 对应的 Bitmap
-         *
-         * @param url url
-         * @return Bitmap
-         */
-        public Bitmap getBitmap(String url);
-
-        /**
-         * 缓存 该 url 对应的 Bitmap
-         *
-         * @param url url
-         * @param bitmap bitmap
-         */
-        public void putBitmap(String url, Bitmap bitmap);
-    }
-
 
     /**
      * Constructs a new ImageLoader.
@@ -176,47 +140,30 @@ public class ImageLoader {
 
 
     /**
-     * Interface for the response handlers on image requests.
+     * Creates a cache key for use with the L1 cache.
      *
-     * The call flow is this:
-     * 1. Upon being  attached to a request, onResponse(response, true) will
-     * be invoked to reflect any cached data that was already available. If the
-     * data was available, response.getBitmap() will be non-null.
-     *
-     * 2. After a network response returns, only one of the following cases will happen:
-     * - onResponse(response, false) will be called if the image was loaded.
-     * or
-     * - onErrorResponse will be called if there was an error loading the image.
+     * @param url The URL of the request.
+     * @param maxWidth The max-width of the output.
+     * @param maxHeight The max-height of the output.
+     * @param scaleType The scaleType of the imageView.
      */
     /*
-     * ImageListener 扩展了 ErrorListener
-     * 使 自身 不仅能回调错误处理，还能回调成功处理
-     * 用于回调 图片是否加载 成功 或者 失败
-     * onResponse(response, false)：图片加载成功
-     * onErrorResponse(VolleyError error)：图片加载失败
+     * 创建 一个 图片 cacheKey
+     * 根据：
+     * 1. url：该图片的 Url
+     * 2. maxWidth：该图片的 最大宽度
+     * 3. maxHeight：该图片的 最大高度
+     * 4. scaleType：该图片的 ImageView.ScaleType（ CENTER_CROP, FIT_XY ... ）
      */
-    public interface ImageListener extends ErrorListener {
-        /**
-         * Listens for non-error changes to the loading of the image request.
-         *
-         * @param response Holds all information pertaining to the request, as well
-         * as the bitmap (if it is loaded).
-         * @param isImmediate True if this was called during ImageLoader.get() variants.
-         * This can be used to differentiate between a cached image loading and a network
-         * image loading in order to, for example, run an animation to fade in network loaded
-         * images.
-         */
-        /*
-         * isImmediate 表示：是否是直接加载图片
-         * 1.目前，Volley 中 只有在 ImageLoader.get() 中会为 true，因为 ImageLoader.get() 是主线程加载图片
-         * 2.目前，Volley 中 只有 Runnable 中会为 false，因为 是子线程加载图片
-         *
-         * 所以可以根据 isImmediate 是否是主线程加载，是的话才能渲染到 View 上
-         * 不然 子线程是不允许 渲染View，需要通过 主 UI 线程 Handler
-         *
-         * 所以，可以发现 isImmediate = false，的情况，都在 主 UI 线程 Handler 中的 Runnable 中
-         */
-        public void onResponse(ImageContainer response, boolean isImmediate);
+    private static String getCacheKey(String url, int maxWidth, int maxHeight, ScaleType scaleType) {
+        return new StringBuilder(url.length() + 12).append("#W")
+                .append(maxWidth)
+                .append("#H")
+                .append(maxHeight)
+                .append("#S")
+                .append(scaleType.ordinal())
+                .append(url)
+                .toString();
     }
 
 
@@ -545,202 +492,6 @@ public class ImageLoader {
 
 
     /**
-     * Container object for all of the data surrounding an image request.
-     */
-    /*
-     * 用于 封装 图片 的相关信息：
-     * 1. 图片的 Bitmap
-     * 2. 图片的 url
-     * 3. 图片的 cacheKey
-     * 4. 图片的 ImageListener 加载回调接口
-     */
-    public class ImageContainer {
-        /**
-         * The most relevant bitmap for the container. If the image was in cache, the
-         * Holder to use for the final bitmap (the one that pairs to the requested URL).
-         */
-        // 图片的 Bitmap
-        private Bitmap mBitmap;
-
-        // 图片的 ImageListener 加载回调接口
-        private final ImageListener mListener;
-
-        /** The cache key that was associated with the request */
-        // 图片的 cacheKey
-        private final String mCacheKey;
-
-        /** The request URL that was specified */
-        // 图片的 url
-        private final String mRequestUrl;
-
-
-        /**
-         * Constructs a BitmapContainer object.
-         *
-         * @param bitmap The final bitmap (if it exists).
-         * @param requestUrl The requested URL for this container.
-         * @param cacheKey The cache key that identifies the requested URL for this container.
-         */
-        public ImageContainer(Bitmap bitmap, String requestUrl, String cacheKey, ImageListener listener) {
-            mBitmap = bitmap;
-            mRequestUrl = requestUrl;
-            mCacheKey = cacheKey;
-            mListener = listener;
-        }
-
-
-        /**
-         * Releases interest in the in-flight request (and cancels it if no one else is listening).
-         */
-        public void cancelRequest() {
-            // 如果没有 加载回调接口
-            if (mListener == null) {
-                return;
-            }
-
-            // 获取到 该 cacheKey 对应的 BatchedImageRequest
-            BatchedImageRequest request = mInFlightRequests.get(mCacheKey);
-            if (request != null) {
-                // 移除 BatchedImageRequest 内 的该 ImageContainer 数据，并取消请求
-                boolean canceled = request.removeContainerAndCancelIfNecessary(this);
-                // 移除成功了
-                if (canceled) {
-                    // 删除 对应 cacheKey 的请求
-                    mInFlightRequests.remove(mCacheKey);
-                }
-            } else {
-                // check to see if it is already batched for delivery.
-                // 检查该 cacheKey 对应的 BatchedImageRequest 是否被传递
-                request = mBatchedResponses.get(mCacheKey);
-                // 已经被传递了
-                if (request != null) {
-                    // 移除 BatchedImageRequest 内 的该 ImageContainer 数据，并取消请求
-                    request.removeContainerAndCancelIfNecessary(this);
-                    // 如果 BatchedImageRequest 没有 ImageContainer 数据，移除该 BatchedImageRequest
-                    if (request.mContainers.size() == 0) {
-                        mBatchedResponses.remove(mCacheKey);
-                    }
-                }
-            }
-        }
-
-
-        /**
-         * Returns the bitmap associated with the request URL if it has been loaded, null
-         * otherwise.
-         */
-        /*
-         * 获取 图片的 Bitmap
-         */
-        public Bitmap getBitmap() {
-            return mBitmap;
-        }
-
-
-        /**
-         * Returns the requested URL for this container.
-         */
-        /*
-         * 获取 图片的 url
-         */
-        public String getRequestUrl() {
-            return mRequestUrl;
-        }
-    }
-
-    /**
-     * Wrapper class used to map a Request to the set of active ImageContainer objects that are
-     * interested in its results.
-     */
-    private class BatchedImageRequest {
-        /** The request being tracked */
-        // Volley 请求
-        private final Request<?> mRequest;
-
-        /** The result of the request being tracked by this item */
-        // 请求结果解析 Bitmap
-        private Bitmap mResponseBitmap;
-
-        /** Error if one occurred for this response */
-        // 请求发生的错误（ VolleyError ）
-        private VolleyError mError;
-
-        /** List of all of the active ImageContainers that are interested in the request */
-        /*
-         * 该 Request 对应的 一组 ImageContainer
-         */
-        private final LinkedList<ImageContainer> mContainers = new LinkedList<ImageContainer>();
-
-
-        /**
-         * Constructs a new BatchedImageRequest object
-         *
-         * @param request The request being tracked
-         * @param container The ImageContainer of the person who initiated the request.
-         */
-        public BatchedImageRequest(Request<?> request, ImageContainer container) {
-            mRequest = request;
-            mContainers.add(container);
-        }
-
-
-        /**
-         * Set the error for this response
-         */
-        /*
-         * 设置 请求发生的错误（ VolleyError ）
-         */
-        public void setError(VolleyError error) {
-            mError = error;
-        }
-
-
-        /**
-         * Get the error for this response
-         */
-        /*
-         * 获取 请求发生的错误（ VolleyError ）
-         */
-        public VolleyError getError() {
-            return mError;
-        }
-
-
-        /**
-         * Adds another ImageContainer to the list of those interested in the results of
-         * the request.
-         */
-        /*
-         * 添加一个 ImageContainer
-         */
-        public void addContainer(ImageContainer container) {
-            mContainers.add(container);
-        }
-
-
-        /**
-         * Detatches the bitmap container from the request and cancels the request if no one is
-         * left listening.
-         *
-         * @param container The container to remove from the list
-         * @return True if the request was canceled, false otherwise.
-         */
-        /*
-         * 移除 一个 ImageContainer
-         * 当 ImageContainer 集合没有数据时，取消该 Request
-         */
-        public boolean removeContainerAndCancelIfNecessary(ImageContainer container) {
-            mContainers.remove(container);
-            if (mContainers.size() == 0) {
-                mRequest.cancel();
-                return true;
-            }
-            return false;
-        }
-    }
-
-
-    /**
      * Starts the runnable for batched delivery of responses if it is not already started.
      *
      * @param cacheKey The cacheKey of the response being delivered.
@@ -828,31 +579,266 @@ public class ImageLoader {
         }
     }
 
-
     /**
-     * Creates a cache key for use with the L1 cache.
-     *
-     * @param url The URL of the request.
-     * @param maxWidth The max-width of the output.
-     * @param maxHeight The max-height of the output.
-     * @param scaleType The scaleType of the imageView.
+     * Simple cache adapter interface. If provided to the ImageLoader, it
+     * will be used as an L1 cache before dispatch to Volley. Implementations
+     * must not block. Implementation with an LruCache is recommended.
      */
     /*
-     * 创建 一个 图片 cacheKey
-     * 根据：
-     * 1. url：该图片的 Url
-     * 2. maxWidth：该图片的 最大宽度
-     * 3. maxHeight：该图片的 最大高度
-     * 4. scaleType：该图片的 ImageView.ScaleType（ CENTER_CROP, FIT_XY ... ）
+     * 对外提供的图片缓存接口
+     * 然而没做任何实现
+     * 这里推荐 自己实现一套 LruCache
+     * 这里只是定义 ImageLoader 需要的方法（ getBitmap(...), putBitmap(...) ）而已
      */
-    private static String getCacheKey(String url, int maxWidth, int maxHeight, ScaleType scaleType) {
-        return new StringBuilder(url.length() + 12).append("#W")
-                                                   .append(maxWidth)
-                                                   .append("#H")
-                                                   .append(maxHeight)
-                                                   .append("#S")
-                                                   .append(scaleType.ordinal())
-                                                   .append(url)
-                                                   .toString();
+    public interface ImageCache {
+        /**
+         * 根据 请求 url，去从缓存中获取该 url 对应的 Bitmap
+         *
+         * @param url url
+         * @return Bitmap
+         */
+        public Bitmap getBitmap(String url);
+
+        /**
+         * 缓存 该 url 对应的 Bitmap
+         *
+         * @param url url
+         * @param bitmap bitmap
+         */
+        public void putBitmap(String url, Bitmap bitmap);
+    }
+
+
+    /**
+     * Interface for the response handlers on image requests.
+     *
+     * The call flow is this:
+     * 1. Upon being  attached to a request, onResponse(response, true) will
+     * be invoked to reflect any cached data that was already available. If the
+     * data was available, response.getBitmap() will be non-null.
+     *
+     * 2. After a network response returns, only one of the following cases will happen:
+     * - onResponse(response, false) will be called if the image was loaded.
+     * or
+     * - onErrorResponse will be called if there was an error loading the image.
+     */
+    /*
+     * ImageListener 扩展了 ErrorListener
+     * 使 自身 不仅能回调错误处理，还能回调成功处理
+     * 用于回调 图片是否加载 成功 或者 失败
+     * onResponse(response, false)：图片加载成功
+     * onErrorResponse(VolleyError error)：图片加载失败
+     */
+    public interface ImageListener extends ErrorListener {
+        /**
+         * Listens for non-error changes to the loading of the image request.
+         *
+         * @param response Holds all information pertaining to the request, as well
+         * as the bitmap (if it is loaded).
+         * @param isImmediate True if this was called during ImageLoader.get() variants.
+         * This can be used to differentiate between a cached image loading and a network
+         * image loading in order to, for example, run an animation to fade in network loaded
+         * images.
+         */
+        /*
+         * isImmediate 表示：是否是直接加载图片
+         * 1.目前，Volley 中 只有在 ImageLoader.get() 中会为 true，因为 ImageLoader.get() 是主线程加载图片
+         * 2.目前，Volley 中 只有 Runnable 中会为 false，因为 是子线程加载图片
+         *
+         * 所以可以根据 isImmediate 是否是主线程加载，是的话才能渲染到 View 上
+         * 不然 子线程是不允许 渲染View，需要通过 主 UI 线程 Handler
+         *
+         * 所以，可以发现 isImmediate = false，的情况，都在 主 UI 线程 Handler 中的 Runnable 中
+         */
+        public void onResponse(ImageContainer response, boolean isImmediate);
+    }
+
+    /**
+     * Container object for all of the data surrounding an image request.
+     */
+    /*
+     * 用于 封装 图片 的相关信息：
+     * 1. 图片的 Bitmap
+     * 2. 图片的 url
+     * 3. 图片的 cacheKey
+     * 4. 图片的 ImageListener 加载回调接口
+     */
+    public class ImageContainer {
+        // 图片的 ImageListener 加载回调接口
+        private final ImageListener mListener;
+        /** The cache key that was associated with the request */
+        // 图片的 cacheKey
+        private final String mCacheKey;
+        /** The request URL that was specified */
+        // 图片的 url
+        private final String mRequestUrl;
+        /**
+         * The most relevant bitmap for the container. If the image was in cache, the
+         * Holder to use for the final bitmap (the one that pairs to the requested URL).
+         */
+        // 图片的 Bitmap
+        private Bitmap mBitmap;
+
+
+        /**
+         * Constructs a BitmapContainer object.
+         *
+         * @param bitmap The final bitmap (if it exists).
+         * @param requestUrl The requested URL for this container.
+         * @param cacheKey The cache key that identifies the requested URL for this container.
+         */
+        public ImageContainer(Bitmap bitmap, String requestUrl, String cacheKey, ImageListener listener) {
+            mBitmap = bitmap;
+            mRequestUrl = requestUrl;
+            mCacheKey = cacheKey;
+            mListener = listener;
+        }
+
+
+        /**
+         * Releases interest in the in-flight request (and cancels it if no one else is listening).
+         */
+        public void cancelRequest() {
+            // 如果没有 加载回调接口
+            if (mListener == null) {
+                return;
+            }
+
+            // 获取到 该 cacheKey 对应的 BatchedImageRequest
+            BatchedImageRequest request = mInFlightRequests.get(mCacheKey);
+            if (request != null) {
+                // 移除 BatchedImageRequest 内 的该 ImageContainer 数据，并取消请求
+                boolean canceled = request.removeContainerAndCancelIfNecessary(this);
+                // 移除成功了
+                if (canceled) {
+                    // 删除 对应 cacheKey 的请求
+                    mInFlightRequests.remove(mCacheKey);
+                }
+            } else {
+                // check to see if it is already batched for delivery.
+                // 检查该 cacheKey 对应的 BatchedImageRequest 是否被传递
+                request = mBatchedResponses.get(mCacheKey);
+                // 已经被传递了
+                if (request != null) {
+                    // 移除 BatchedImageRequest 内 的该 ImageContainer 数据，并取消请求
+                    request.removeContainerAndCancelIfNecessary(this);
+                    // 如果 BatchedImageRequest 没有 ImageContainer 数据，移除该 BatchedImageRequest
+                    if (request.mContainers.size() == 0) {
+                        mBatchedResponses.remove(mCacheKey);
+                    }
+                }
+            }
+        }
+
+
+        /**
+         * Returns the bitmap associated with the request URL if it has been loaded, null
+         * otherwise.
+         */
+        /*
+         * 获取 图片的 Bitmap
+         */
+        public Bitmap getBitmap() {
+            return mBitmap;
+        }
+
+
+        /**
+         * Returns the requested URL for this container.
+         */
+        /*
+         * 获取 图片的 url
+         */
+        public String getRequestUrl() {
+            return mRequestUrl;
+        }
+    }
+
+    /**
+     * Wrapper class used to map a Request to the set of active ImageContainer objects that are
+     * interested in its results.
+     */
+    private class BatchedImageRequest {
+        /** The request being tracked */
+        // Volley 请求
+        private final Request<?> mRequest;
+        /** List of all of the active ImageContainers that are interested in the request */
+        /*
+         * 该 Request 对应的 一组 ImageContainer
+         */
+        private final LinkedList<ImageContainer> mContainers = new LinkedList<ImageContainer>();
+        /** The result of the request being tracked by this item */
+        // 请求结果解析 Bitmap
+        private Bitmap mResponseBitmap;
+        /** Error if one occurred for this response */
+        // 请求发生的错误（ VolleyError ）
+        private VolleyError mError;
+
+
+        /**
+         * Constructs a new BatchedImageRequest object
+         *
+         * @param request The request being tracked
+         * @param container The ImageContainer of the person who initiated the request.
+         */
+        public BatchedImageRequest(Request<?> request, ImageContainer container) {
+            mRequest = request;
+            mContainers.add(container);
+        }
+
+
+        /**
+         * Get the error for this response
+         */
+        /*
+         * 获取 请求发生的错误（ VolleyError ）
+         */
+        public VolleyError getError() {
+            return mError;
+        }
+
+
+        /**
+         * Set the error for this response
+         */
+        /*
+         * 设置 请求发生的错误（ VolleyError ）
+         */
+        public void setError(VolleyError error) {
+            mError = error;
+        }
+
+
+        /**
+         * Adds another ImageContainer to the list of those interested in the results of
+         * the request.
+         */
+        /*
+         * 添加一个 ImageContainer
+         */
+        public void addContainer(ImageContainer container) {
+            mContainers.add(container);
+        }
+
+
+        /**
+         * Detatches the bitmap container from the request and cancels the request if no one is
+         * left listening.
+         *
+         * @param container The container to remove from the list
+         * @return True if the request was canceled, false otherwise.
+         */
+        /*
+         * 移除 一个 ImageContainer
+         * 当 ImageContainer 集合没有数据时，取消该 Request
+         */
+        public boolean removeContainerAndCancelIfNecessary(ImageContainer container) {
+            mContainers.remove(container);
+            if (mContainers.size() == 0) {
+                mRequest.cancel();
+                return true;
+            }
+            return false;
+        }
     }
 }

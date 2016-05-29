@@ -835,6 +835,7 @@ public final class DiskLruCache implements Closeable, Flushable {
         };
     }
 
+
     /** A snapshot of the values for an entry. */
     public final class Snapshot implements Closeable {
         private final String key;
@@ -1094,7 +1095,8 @@ public final class DiskLruCache implements Closeable, Flushable {
 
 
         /**
-         * Returns a snapshot of this entry. This opens all streams eagerly to guarantee that we see
+         * Returns a snapshot of this entry. This opens all streams eagerly to guarantee that we
+         * see
          * a
          * single published snapshot. If we opened streams lazily then the streams could come from
          * different edits.

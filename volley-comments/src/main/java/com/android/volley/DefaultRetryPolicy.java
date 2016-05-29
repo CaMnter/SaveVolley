@@ -28,33 +28,27 @@ package com.android.volley;
  * 跟 "指数退避" 有关
  */
 public class DefaultRetryPolicy implements RetryPolicy {
-    /** The current timeout in milliseconds. */
-    // 超时时间
-    private int mCurrentTimeoutMs;
-
-    /** The current retry count. */
-    // 重试次数
-    private int mCurrentRetryCount;
-
-    /** The maximum number of attempts. */
-    // 最大重试次数
-    private final int mMaxNumRetries;
-
-    /** The backoff multiplier for the policy. */
-    // 退避乘数，可以用来实现 "指数退避"
-    private final float mBackoffMultiplier;
-
     /** The default socket timeout in milliseconds */
     // 默认的 socket 超时时间是 2.5s
     public static final int DEFAULT_TIMEOUT_MS = 2500;
-
     /** The default number of retries */
     // 默认的最大重试次数是 1
     public static final int DEFAULT_MAX_RETRIES = 1;
-
     /** The default backoff multiplier */
     // 默认 退避乘数
     public static final float DEFAULT_BACKOFF_MULT = 1f;
+    /** The maximum number of attempts. */
+    // 最大重试次数
+    private final int mMaxNumRetries;
+    /** The backoff multiplier for the policy. */
+    // 退避乘数，可以用来实现 "指数退避"
+    private final float mBackoffMultiplier;
+    /** The current timeout in milliseconds. */
+    // 超时时间
+    private int mCurrentTimeoutMs;
+    /** The current retry count. */
+    // 重试次数
+    private int mCurrentRetryCount;
 
 
     /**

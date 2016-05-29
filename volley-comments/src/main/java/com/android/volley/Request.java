@@ -43,89 +43,48 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      */
     // POST 请求或者 PUT 请求的默认编码 UTF-8
     private static final String DEFAULT_PARAMS_ENCODING = "UTF-8";
-
-    /**
-     * Supported request methods.
-     */
-    /*
-     * 定义一个 Method 接口
-     * 用于标识该请求的 请求类型 （方法类型）
-     */
-    public interface Method {
-        // GET 请求 or  POST 请求
-        int DEPRECATED_GET_OR_POST = -1;
-        // GET 请求
-        int GET = 0;
-        // POST 请求
-        int POST = 1;
-        // PUT 请求
-        int PUT = 2;
-        // DELETE 请求
-        int DELETE = 3;
-        // HEAD 请求
-        int HEAD = 4;
-        // OPTIONS 请求
-        int OPTIONS = 5;
-        // TRACE 请求
-        int TRACE = 6;
-        // PATCH 请求
-        int PATCH = 7;
-    }
-
     /** An event log tracing the lifetime of this request; for debugging. */
     // 实例化一个 MarkerLog 对象，用于 debug log
     private final MarkerLog mEventLog = MarkerLog.ENABLED ? new MarkerLog() : null;
-
     /**
      * Request method of this request.  Currently supports GET, POST, PUT, DELETE, HEAD, OPTIONS,
      * TRACE, and PATCH.
      */
     // 方法类型，Method 内的内容
     private final int mMethod;
-
     /** URL of this request. */
     // 请求的 String 类型 url
     private final String mUrl;
-
     /** Default tag for {@link TrafficStats}. */
     // 保存一个 Url host 的 hashcode
     private final int mDefaultTrafficStatsTag;
-
     /** Listener interface for errors. */
     // 实例化一个 请求结果 Response 发生错误的回调接口
     private final Response.ErrorListener mErrorListener;
-
     /** Sequence number of this request, used to enforce FIFO ordering. */
     // 标识该请求的序号，用于维持 FIFO （ 先进先出 ）队列中的顺序
     private Integer mSequence;
-
     /** The request queue this request is associated with. */
     // 保存 该 请求所在的 请求队列 （ RequestQueue ） 的引用
     private RequestQueue mRequestQueue;
-
     /** Whether or not responses to this request should be cached. */
     // 标记该请求是否 需要缓存，默认要缓存
     private boolean mShouldCache = true;
-
     /** Whether or not this request has been canceled. */
     // 标记该请求是否 被取消了，默认不取消
     private boolean mCanceled = false;
-
     /** Whether or not a response has been delivered for this request yet. */
     // 标记请求的 请求结果（ Response ） 是否已经被传递了，默认还没被传递
     private boolean mResponseDelivered = false;
-
     /** Whether the request should be retried in the event of an HTTP 5xx (server) error. */
     // 标记该请求发生 5xx 的服务端错误时，是否要重试，默认不重试
     private boolean mShouldRetryServerErrors = false;
-
     /** The retry policy for this request. */
     /*
      * 重试策略 类
      * 一般，在 Volley 中，只有 DefaultRetryPolicy
      */
     private RetryPolicy mRetryPolicy;
-
     /**
      * When a request can be retrieved from cache but must be refreshed from
      * the network, the cache entry will be stored here so that in the event of
@@ -133,11 +92,9 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      */
     // 保存 从缓存中 取出来的 请求结果 数据
     private Cache.Entry mCacheEntry = null;
-
     /** An opaque token tagging this request; used for bulk cancellation. */
     // 一个标记，用于处理批量取消
     private Object mTag;
-
 
     /**
      * Creates a new request with the given URL and error listener.  Note that
@@ -175,69 +132,6 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
 
     /**
-     * Return the method for this request.  Can be one of the values in {@link Method}.
-     */
-    /*
-     * 获取该请求的 方法类型
-     */
-    public int getMethod() {
-        return mMethod;
-    }
-
-
-    /**
-     * Set a tag on this request. Can be used to cancel all requests with this
-     * tag by {@link RequestQueue#cancelAll(Object)}.
-     *
-     * @return This Request object to allow for chaining.
-     */
-
-    /*
-     * 设置 mTag 标记，用于批处理取消
-     * 在 RequestQueue.cancelAll(Object)
-     */
-    public Request<?> setTag(Object tag) {
-        mTag = tag;
-        return this;
-    }
-
-
-    /**
-     * Returns this request's tag.
-     *
-     * @see Request#setTag(Object)
-     */
-    /*
-     * 获取 mTag 标记，用于批处理取消
-     */
-    public Object getTag() {
-        return mTag;
-    }
-
-
-    /**
-     * @return this request's {@link com.android.volley.Response.ErrorListener}.
-     */
-    /*
-     * 获取 请求结果 Response 发生错误的回调接口
-     */
-    public Response.ErrorListener getErrorListener() {
-        return mErrorListener;
-    }
-
-
-    /**
-     * @return A tag for use with {@link TrafficStats#setThreadStatsTag(int)}
-     */
-    /*
-     * 返回 保存好的 Url host 的 hashcode
-     */
-    public int getTrafficStatsTag() {
-        return mDefaultTrafficStatsTag;
-    }
-
-
-    /**
      * @return The hashcode of the URL's host component, or 0 if there is none.
      */
     /*
@@ -261,16 +155,65 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
 
     /**
-     * Sets the retry policy for this request.
+     * Return the method for this request.  Can be one of the values in {@link Method}.
+     */
+    /*
+     * 获取该请求的 方法类型
+     */
+    public int getMethod() {
+        return mMethod;
+    }
+
+
+    /**
+     * Returns this request's tag.
+     *
+     * @see Request#setTag(Object)
+     */
+    /*
+     * 获取 mTag 标记，用于批处理取消
+     */
+    public Object getTag() {
+        return mTag;
+    }
+
+
+    /**
+     * Set a tag on this request. Can be used to cancel all requests with this
+     * tag by {@link RequestQueue#cancelAll(Object)}.
      *
      * @return This Request object to allow for chaining.
      */
+
     /*
-     * 设置 重试策略 类
+     * 设置 mTag 标记，用于批处理取消
+     * 在 RequestQueue.cancelAll(Object)
      */
-    public Request<?> setRetryPolicy(RetryPolicy retryPolicy) {
-        mRetryPolicy = retryPolicy;
+    public Request<?> setTag(Object tag) {
+        mTag = tag;
         return this;
+    }
+
+
+    /**
+     * @return this request's {@link com.android.volley.Response.ErrorListener}.
+     */
+    /*
+     * 获取 请求结果 Response 发生错误的回调接口
+     */
+    public Response.ErrorListener getErrorListener() {
+        return mErrorListener;
+    }
+
+
+    /**
+     * @return A tag for use with {@link TrafficStats#setThreadStatsTag(int)}
+     */
+    /*
+     * 返回 保存好的 Url host 的 hashcode
+     */
+    public int getTrafficStatsTag() {
+        return mDefaultTrafficStatsTag;
     }
 
 
@@ -354,6 +297,20 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
 
     /**
+     * Returns the sequence number of this request.
+     */
+    /*
+     * 获取 该请求的序号，用于维持 FIFO （ 先进先出 ）队列中的顺序
+     */
+    public final int getSequence() {
+        if (mSequence == null) {
+            throw new IllegalStateException("getSequence called before setSequence");
+        }
+        return mSequence;
+    }
+
+
+    /**
      * Sets the sequence number of this request.  Used by {@link RequestQueue}.
      *
      * @return This Request object to allow for chaining.
@@ -365,20 +322,6 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     public final Request<?> setSequence(int sequence) {
         mSequence = sequence;
         return this;
-    }
-
-
-    /**
-     * Returns the sequence number of this request.
-     */
-    /*
-     * 获取 该请求的序号，用于维持 FIFO （ 先进先出 ）队列中的顺序
-     */
-    public final int getSequence() {
-        if (mSequence == null) {
-            throw new IllegalStateException("getSequence called before setSequence");
-        }
-        return mSequence;
     }
 
 
@@ -405,6 +348,17 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
 
     /**
+     * Returns the annotated cache entry, or null if there isn't one.
+     */
+    /*
+     * 返回 缓存内容 Cache.Entry
+     */
+    public Cache.Entry getCacheEntry() {
+        return mCacheEntry;
+    }
+
+
+    /**
      * Annotates this request with an entry retrieved for it from cache.
      * Used for cache coherency support.
      *
@@ -416,17 +370,6 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     public Request<?> setCacheEntry(Cache.Entry entry) {
         mCacheEntry = entry;
         return this;
-    }
-
-
-    /**
-     * Returns the annotated cache entry, or null if there isn't one.
-     */
-    /*
-     * 返回 缓存内容 Cache.Entry
-     */
-    public Cache.Entry getCacheEntry() {
-        return mCacheEntry;
     }
 
 
@@ -723,22 +666,6 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
 
     /**
-     * Priority values.  Requests will be processed from higher priorities to
-     * lower priorities, in FIFO order.
-     */
-    /*
-     * 定义一个枚举
-     * 用于标识 这个请求 Request 的优先级别
-     */
-    public enum Priority {
-        LOW,
-        NORMAL,
-        HIGH,
-        IMMEDIATE
-    }
-
-
-    /**
      * Returns the {@link Priority} of this request; {@link Priority#NORMAL} by default.
      */
     /*
@@ -770,6 +697,20 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      */
     public RetryPolicy getRetryPolicy() {
         return mRetryPolicy;
+    }
+
+
+    /**
+     * Sets the retry policy for this request.
+     *
+     * @return This Request object to allow for chaining.
+     */
+    /*
+     * 设置 重试策略 类
+     */
+    public Request<?> setRetryPolicy(RetryPolicy retryPolicy) {
+        mRetryPolicy = retryPolicy;
+        return this;
     }
 
 
@@ -882,6 +823,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
         return left == right ? this.mSequence - other.mSequence : right.ordinal() - left.ordinal();
     }
 
+
     /*
      * 输出 Request 信息内容
      */
@@ -889,5 +831,50 @@ public abstract class Request<T> implements Comparable<Request<T>> {
         String trafficStatsTag = "0x" + Integer.toHexString(getTrafficStatsTag());
         return (mCanceled ? "[X] " : "[ ] ") + getUrl() + " " + trafficStatsTag + " " +
                 getPriority() + " " + mSequence;
+    }
+
+
+    /**
+     * Priority values.  Requests will be processed from higher priorities to
+     * lower priorities, in FIFO order.
+     */
+    /*
+     * 定义一个枚举
+     * 用于标识 这个请求 Request 的优先级别
+     */
+    public enum Priority {
+        LOW,
+        NORMAL,
+        HIGH,
+        IMMEDIATE
+    }
+
+
+    /**
+     * Supported request methods.
+     */
+    /*
+     * 定义一个 Method 接口
+     * 用于标识该请求的 请求类型 （方法类型）
+     */
+    public interface Method {
+        // GET 请求 or  POST 请求
+        int DEPRECATED_GET_OR_POST = -1;
+        // GET 请求
+        int GET = 0;
+        // POST 请求
+        int POST = 1;
+        // PUT 请求
+        int PUT = 2;
+        // DELETE 请求
+        int DELETE = 3;
+        // HEAD 请求
+        int HEAD = 4;
+        // OPTIONS 请求
+        int OPTIONS = 5;
+        // TRACE 请求
+        int TRACE = 6;
+        // PATCH 请求
+        int PATCH = 7;
     }
 }

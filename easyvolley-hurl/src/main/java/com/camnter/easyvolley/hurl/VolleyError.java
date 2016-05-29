@@ -52,12 +52,12 @@ package com.camnter.easyvolley.hurl;
     }
 
 
-    /* package */ void setNetworkTimeMs(long networkTimeMs) {
-        this.networkTimeMs = networkTimeMs;
+    public long getNetworkTimeMs() {
+        return networkTimeMs;
     }
 
 
-    public long getNetworkTimeMs() {
-        return networkTimeMs;
+    /* package */ void setNetworkTimeMs(long networkTimeMs) {
+        this.networkTimeMs = networkTimeMs;
     }
 }

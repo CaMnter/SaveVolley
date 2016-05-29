@@ -25,9 +25,9 @@ public final class CacheControl {
      * will fail with a {@code 504 Unsatisfiable Request}.
      */
     public static final CacheControl FORCE_CACHE = new Builder().onlyIfCached()
-                                                                .maxStale(Integer.MAX_VALUE,
-                                                                        TimeUnit.SECONDS)
-                                                                .build();
+            .maxStale(Integer.MAX_VALUE,
+                    TimeUnit.SECONDS)
+            .build();
 
     private final boolean noCache;
     private final boolean noStore;

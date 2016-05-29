@@ -54,6 +54,34 @@ import static org.mockito.MockitoAnnotations.initMocks;
     private BasicNetwork mNetwork;
 
 
+    private static Request<String> buildRequest() {
+        return new Request<String>(Request.Method.GET, "http://foo", null) {
+
+            @Override protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                return null;
+            }
+
+
+            @Override protected void deliverResponse(String response) {
+            }
+
+
+            @Override public Map<String, String> getHeaders() {
+                Map<String, String> result = new HashMap<String, String>();
+                result.put("requestheader", "foo");
+                return result;
+            }
+
+
+            @Override public Map<String, String> getParams() {
+                Map<String, String> result = new HashMap<String, String>();
+                result.put("requestpost", "foo");
+                return result;
+            }
+        };
+    }
+
+
     @Before public void setUp() throws Exception {
         initMocks(this);
     }
@@ -252,33 +280,5 @@ import static org.mockito.MockitoAnnotations.initMocks;
             verify(mMockRetryPolicy, never()).retry(any(VolleyError.class));
             reset(mMockRetryPolicy);
         }
-    }
-
-
-    private static Request<String> buildRequest() {
-        return new Request<String>(Request.Method.GET, "http://foo", null) {
-
-            @Override protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                return null;
-            }
-
-
-            @Override protected void deliverResponse(String response) {
-            }
-
-
-            @Override public Map<String, String> getHeaders() {
-                Map<String, String> result = new HashMap<String, String>();
-                result.put("requestheader", "foo");
-                return result;
-            }
-
-
-            @Override public Map<String, String> getParams() {
-                Map<String, String> result = new HashMap<String, String>();
-                result.put("requestpost", "foo");
-                return result;
-            }
-        };
     }
 }

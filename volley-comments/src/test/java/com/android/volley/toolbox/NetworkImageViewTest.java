@@ -38,25 +38,6 @@ import static org.junit.Assert.assertNotNull;
     // // instrumentation test. Write this test once it's figured out.
     // }
 
-    private class MockImageLoader extends ImageLoader {
-        public MockImageLoader() {
-            super(null, null);
-        }
-
-
-        public String lastRequestUrl;
-        public int lastMaxWidth;
-        public int lastMaxHeight;
-
-
-        public ImageContainer get(String requestUrl, ImageListener imageListener, int maxWidth, int maxHeight, ScaleType scaleType) {
-            lastRequestUrl = requestUrl;
-            lastMaxWidth = maxWidth;
-            lastMaxHeight = maxHeight;
-            return null;
-        }
-    }
-
 
     @Test public void publicMethods() throws Exception {
         // Catch-all test to find API-breaking changes.
@@ -69,5 +50,22 @@ import static org.junit.Assert.assertNotNull;
                 NetworkImageView.class.getMethod("setImageUrl", String.class, ImageLoader.class));
         assertNotNull(NetworkImageView.class.getMethod("setDefaultImageResId", int.class));
         assertNotNull(NetworkImageView.class.getMethod("setErrorImageResId", int.class));
+    }
+
+    private class MockImageLoader extends ImageLoader {
+        public String lastRequestUrl;
+        public int lastMaxWidth;
+        public int lastMaxHeight;
+        public MockImageLoader() {
+            super(null, null);
+        }
+
+
+        public ImageContainer get(String requestUrl, ImageListener imageListener, int maxWidth, int maxHeight, ScaleType scaleType) {
+            lastRequestUrl = requestUrl;
+            lastMaxWidth = maxWidth;
+            lastMaxHeight = maxHeight;
+            return null;
+        }
     }
 }

@@ -21,7 +21,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.Response.ErrorListener;
 import com.android.volley.Response.Listener;
-
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -36,6 +35,7 @@ import java.io.UnsupportedEncodingException;
 public class StringRequest extends Request<String> {
     private final Listener<String> mListener;
 
+
     /**
      * Creates a new request with the given method.
      *
@@ -45,10 +45,11 @@ public class StringRequest extends Request<String> {
      * @param errorListener Error listener, or null to ignore errors
      */
     public StringRequest(int method, String url, Listener<String> listener,
-            ErrorListener errorListener) {
+                         ErrorListener errorListener) {
         super(method, url, errorListener);
         mListener = listener;
     }
+
 
     /**
      * Creates a new GET request.
@@ -64,6 +65,7 @@ public class StringRequest extends Request<String> {
         this(Method.GET, url, listener, errorListener);
     }
 
+
     /*
      * 扩展实现传递 数据方法
      * 由于指定了泛型 <String>，所以这里也只能 传递 String 类型数据
@@ -72,6 +74,7 @@ public class StringRequest extends Request<String> {
     protected void deliverResponse(String response) {
         mListener.onResponse(response);
     }
+
 
     /*
      * 解析网络请求 为 String 类型

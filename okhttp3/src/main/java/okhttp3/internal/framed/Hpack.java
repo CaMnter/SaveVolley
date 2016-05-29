@@ -104,6 +104,7 @@ final class Hpack {
         return name;
     }
 
+
     // http://tools.ietf.org/html/draft-ietf-httpbis-header-compression-12#section-3.1
     static final class Reader {
 

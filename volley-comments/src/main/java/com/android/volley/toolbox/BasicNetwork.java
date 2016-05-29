@@ -104,6 +104,55 @@ public class BasicNetwork implements Network {
     }
 
 
+    /**
+     * Attempts to prepare the request for a retry. If there are no more attempts remaining in the
+     * request's retry policy, a timeout exception is thrown.
+     *
+     * @param request The request to use.
+     */
+    /*
+     * 尝试 重试策略 处理
+     */
+    private static void attemptRetryOnException(String logPrefix, Request<?> request, VolleyError exception)
+            throws VolleyError {
+        // 拿到 该请求 Request 内对应的 重试策略 类
+        RetryPolicy retryPolicy = request.getRetryPolicy();
+        // 获取请求此次的超时时间
+        int oldTimeout = request.getTimeoutMs();
+
+        try {
+            /*
+             * 进行 重试：
+             * 根据 请求此次的超时时间 * 退避乘数 = 此次的实际超时时间
+             * 将 实际超时时间 累加到 重试策略类 中的 超时总时长 内
+             */
+            retryPolicy.retry(exception);
+        } catch (VolleyError e) {
+            // 打印 log
+            request.addMarker(
+                    String.format("%s-timeout-giveup [timeout=%s]", logPrefix, oldTimeout));
+            throw e;
+        }
+        // 打印 log
+        request.addMarker(String.format("%s-retry [timeout=%s]", logPrefix, oldTimeout));
+    }
+
+
+    /**
+     * Converts Headers[] to Map<String, String>.
+     */
+    /*
+     * 进行 Apache Header[] -> Map<String, String> 转换
+     */
+    protected static Map<String, String> convertHeaders(Header[] headers) {
+        Map<String, String> result = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
+        for (int i = 0; i < headers.length; i++) {
+            result.put(headers[i].getName(), headers[i].getValue());
+        }
+        return result;
+    }
+
+
     /*
      * 执行处理 Volley内的 抽象请求 Request<?>
      * 但是 HttpStack 处理后，都返回 Apache 的请求结果（ HttpResponse ）
@@ -301,40 +350,6 @@ public class BasicNetwork implements Network {
     }
 
 
-    /**
-     * Attempts to prepare the request for a retry. If there are no more attempts remaining in the
-     * request's retry policy, a timeout exception is thrown.
-     *
-     * @param request The request to use.
-     */
-    /*
-     * 尝试 重试策略 处理
-     */
-    private static void attemptRetryOnException(String logPrefix, Request<?> request, VolleyError exception)
-            throws VolleyError {
-        // 拿到 该请求 Request 内对应的 重试策略 类
-        RetryPolicy retryPolicy = request.getRetryPolicy();
-        // 获取请求此次的超时时间
-        int oldTimeout = request.getTimeoutMs();
-
-        try {
-            /*
-             * 进行 重试：
-             * 根据 请求此次的超时时间 * 退避乘数 = 此次的实际超时时间
-             * 将 实际超时时间 累加到 重试策略类 中的 超时总时长 内
-             */
-            retryPolicy.retry(exception);
-        } catch (VolleyError e) {
-            // 打印 log
-            request.addMarker(
-                    String.format("%s-timeout-giveup [timeout=%s]", logPrefix, oldTimeout));
-            throw e;
-        }
-        // 打印 log
-        request.addMarker(String.format("%s-retry [timeout=%s]", logPrefix, oldTimeout));
-    }
-
-
     /*
      * 将 Request 内 Entry 保存的
      * Response Header 数据 抽出来
@@ -357,6 +372,7 @@ public class BasicNetwork implements Network {
             headers.put("If-Modified-Since", DateUtils.formatDate(refTime));
         }
     }
+
 
     /*
      * 打印 错误
@@ -416,20 +432,5 @@ public class BasicNetwork implements Network {
             // 关闭 PoolingByteArrayOutputStream 流
             bytes.close();
         }
-    }
-
-
-    /**
-     * Converts Headers[] to Map<String, String>.
-     */
-    /*
-     * 进行 Apache Header[] -> Map<String, String> 转换
-     */
-    protected static Map<String, String> convertHeaders(Header[] headers) {
-        Map<String, String> result = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);
-        for (int i = 0; i < headers.length; i++) {
-            result.put(headers[i].getName(), headers[i].getValue());
-        }
-        return result;
     }
 }

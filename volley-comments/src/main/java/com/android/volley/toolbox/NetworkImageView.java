@@ -321,6 +321,7 @@ public class NetworkImageView extends ImageView {
         super.onDetachedFromWindow();
     }
 
+
     /*
      * 每次状态改变
      * 都重新绘制 只调用 onDraw()

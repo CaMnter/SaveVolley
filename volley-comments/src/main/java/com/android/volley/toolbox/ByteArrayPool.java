@@ -59,23 +59,6 @@ import java.util.List;
  */
 public class ByteArrayPool {
 
-    /** The buffer pool, arranged both by last use and by buffer size */
-    // 采用 LRU 的机制，最少使用的放在 index=0，最近使用的 放在 index=size()-1
-    private List<byte[]> mBuffersByLastUse = new LinkedList<byte[]>();
-    // 缓存 byte[] 缓存 List，采用根据 byte[].length 由小到大的方式排序
-    private List<byte[]> mBuffersBySize = new ArrayList<byte[]>(64);
-
-    /** The total size of the buffers in the pool */
-    // 计算当前缓存池内的所有 byte[] 总长度之和
-    private int mCurrentSize = 0;
-
-    /**
-     * The maximum aggregate size of the buffers in the pool. Old buffers are discarded to stay
-     * under this limit.
-     */
-    // 缓存池内 byte[] 总长度之和的限制长度，经常拿来与 mCurrentSize 比较
-    private final int mSizeLimit;
-
     /** Compares buffers by size */
     /*
      * 用于比较 byte[].length 的 Comparator
@@ -89,6 +72,20 @@ public class ByteArrayPool {
             return lhs.length - rhs.length;
         }
     };
+    /**
+     * The maximum aggregate size of the buffers in the pool. Old buffers are discarded to stay
+     * under this limit.
+     */
+    // 缓存池内 byte[] 总长度之和的限制长度，经常拿来与 mCurrentSize 比较
+    private final int mSizeLimit;
+    /** The buffer pool, arranged both by last use and by buffer size */
+    // 采用 LRU 的机制，最少使用的放在 index=0，最近使用的 放在 index=size()-1
+    private List<byte[]> mBuffersByLastUse = new LinkedList<byte[]>();
+    // 缓存 byte[] 缓存 List，采用根据 byte[].length 由小到大的方式排序
+    private List<byte[]> mBuffersBySize = new ArrayList<byte[]>(64);
+    /** The total size of the buffers in the pool */
+    // 计算当前缓存池内的所有 byte[] 总长度之和
+    private int mCurrentSize = 0;
 
 
     /**

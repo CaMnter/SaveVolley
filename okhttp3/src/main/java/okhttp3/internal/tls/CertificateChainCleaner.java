@@ -65,6 +65,7 @@ public abstract class CertificateChainCleaner {
     public abstract List<Certificate> clean(List<Certificate> chain, String hostname)
             throws SSLPeerUnverifiedException;
 
+
     /**
      * A certificate chain cleaner that uses a set of trusted root certificates to build the
      * trusted

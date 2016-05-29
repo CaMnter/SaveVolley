@@ -115,6 +115,7 @@ public final class Http2 implements Variant {
         return new Writer(sink, client);
     }
 
+
     static final class Reader implements FrameReader {
         // Visible for testing.
         final Hpack.Reader hpackReader;

@@ -20,26 +20,20 @@ package com.camnter.easyvolley.hurl;
  * Default retry policy for requests.
  */
 public class DefaultRetryPolicy implements RetryPolicy {
-    /** The current timeout in milliseconds. */
-    private int mCurrentTimeoutMs;
-
-    /** The current retry count. */
-    private int mCurrentRetryCount;
-
-    /** The maximum number of attempts. */
-    private final int mMaxNumRetries;
-
-    /** The backoff multiplier for the policy. */
-    private final float mBackoffMultiplier;
-
     /** The default socket timeout in milliseconds */
     public static final int DEFAULT_TIMEOUT_MS = 2500;
-
     /** The default number of retries */
     public static final int DEFAULT_MAX_RETRIES = 1;
-
     /** The default backoff multiplier */
     public static final float DEFAULT_BACKOFF_MULT = 1f;
+    /** The maximum number of attempts. */
+    private final int mMaxNumRetries;
+    /** The backoff multiplier for the policy. */
+    private final float mBackoffMultiplier;
+    /** The current timeout in milliseconds. */
+    private int mCurrentTimeoutMs;
+    /** The current retry count. */
+    private int mCurrentRetryCount;
 
 
     /**

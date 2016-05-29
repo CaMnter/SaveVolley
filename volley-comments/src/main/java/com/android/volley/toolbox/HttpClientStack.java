@@ -52,11 +52,10 @@ import org.apache.http.params.HttpParams;
  */
 public class HttpClientStack implements HttpStack {
 
-    // 保存一个 org.apache.http.HttpClient 对象，用于发起请求
-    protected final HttpClient mClient;
-
     // 设置请求头信息的 key 内容 "Content-Type"
     private final static String HEADER_CONTENT_TYPE = "Content-Type";
+    // 保存一个 org.apache.http.HttpClient 对象，用于发起请求
+    protected final HttpClient mClient;
 
 
     /*
@@ -92,37 +91,6 @@ public class HttpClientStack implements HttpStack {
             result.add(new BasicNameValuePair(key, postParams.get(key)));
         }
         return result;
-    }
-
-
-    /*
-     * 执行处理 Volley内的 抽象请求 Request<?>
-     * 这里会调用 HttpClient 去处理网络请求
-     * 但是 HttpClient 处理后，都返回 Apache 的请求结果（ HttpResponse ）
-     * performRequest(...) 接下来会将：Apache HttpResponse -> Volley NetworkResponse 进行转化
-     */
-    @Override
-    public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
-            throws IOException, AuthFailureError {
-        // 创建一个 Apache HTTP 请求
-        HttpUriRequest httpRequest = createHttpRequest(request, additionalHeaders);
-        // 添加 performRequest 方法传入的 头信息
-        addHeaders(httpRequest, additionalHeaders);
-        // 添加 Volley 抽象请求了 Request 设置的 头信息
-        addHeaders(httpRequest, request.getHeaders());
-        // 回调（ 如果被覆写的话 ） 预请求 方法
-        onPrepareRequest(httpRequest);
-        // 获取 Apache 请求的 HttpParams 对象
-        HttpParams httpParams = httpRequest.getParams();
-        int timeoutMs = request.getTimeoutMs();
-        // TODO: Reevaluate this connection timeout based on more wide-scale
-        // data collection and possibly different for wifi vs. 3G.
-        // 设置超时时间
-        HttpConnectionParams.setConnectionTimeout(httpParams, 5000);
-        // 设置 SO_TIMEOUT
-        HttpConnectionParams.setSoTimeout(httpParams, timeoutMs);
-        // 开始执行请求
-        return mClient.execute(httpRequest);
     }
 
 
@@ -254,6 +222,37 @@ public class HttpClientStack implements HttpStack {
             HttpEntity entity = new ByteArrayEntity(body);
             httpRequest.setEntity(entity);
         }
+    }
+
+
+    /*
+     * 执行处理 Volley内的 抽象请求 Request<?>
+     * 这里会调用 HttpClient 去处理网络请求
+     * 但是 HttpClient 处理后，都返回 Apache 的请求结果（ HttpResponse ）
+     * performRequest(...) 接下来会将：Apache HttpResponse -> Volley NetworkResponse 进行转化
+     */
+    @Override
+    public HttpResponse performRequest(Request<?> request, Map<String, String> additionalHeaders)
+            throws IOException, AuthFailureError {
+        // 创建一个 Apache HTTP 请求
+        HttpUriRequest httpRequest = createHttpRequest(request, additionalHeaders);
+        // 添加 performRequest 方法传入的 头信息
+        addHeaders(httpRequest, additionalHeaders);
+        // 添加 Volley 抽象请求了 Request 设置的 头信息
+        addHeaders(httpRequest, request.getHeaders());
+        // 回调（ 如果被覆写的话 ） 预请求 方法
+        onPrepareRequest(httpRequest);
+        // 获取 Apache 请求的 HttpParams 对象
+        HttpParams httpParams = httpRequest.getParams();
+        int timeoutMs = request.getTimeoutMs();
+        // TODO: Reevaluate this connection timeout based on more wide-scale
+        // data collection and possibly different for wifi vs. 3G.
+        // 设置超时时间
+        HttpConnectionParams.setConnectionTimeout(httpParams, 5000);
+        // 设置 SO_TIMEOUT
+        HttpConnectionParams.setSoTimeout(httpParams, timeoutMs);
+        // 开始执行请求
+        return mClient.execute(httpRequest);
     }
 
 

@@ -67,18 +67,18 @@ public class RequestFuture<T> implements Future<T>, Response.Listener<T>, Respon
 
 
     /*
+     * 屏蔽默认的无参构造方法
+     */
+    private RequestFuture() {}
+
+
+    /*
      * 对外只提供这个 newFuture() 方法去
      * 创建一个 RequestFuture<E> 对象
      */
     public static <E> RequestFuture<E> newFuture() {
         return new RequestFuture<E>();
     }
-
-
-    /*
-     * 屏蔽默认的无参构造方法
-     */
-    private RequestFuture() {}
 
 
     /*

@@ -88,11 +88,11 @@ public final class HTTP {
     public final static String DEFAULT_CONTENT_TYPE = OCTET_STREAM_TYPE;
 
 
-    public static boolean isWhitespace(char ch) {
-        return ch == SP || ch == HT || ch == CR || ch == LF;
+    private HTTP() {
     }
 
 
-    private HTTP() {
+    public static boolean isWhitespace(char ch) {
+        return ch == SP || ch == HT || ch == CR || ch == LF;
     }
 }

@@ -896,6 +896,7 @@ public final class HttpUrl {
         return Collections.unmodifiableList(result);
     }
 
+
     public static final class Builder {
         final List<String> encodedPathSegments = new ArrayList<>();
         String scheme;
@@ -913,7 +914,8 @@ public final class HttpUrl {
 
 
         /**
-         * Returns the index of the ':' in {@code input} that is after scheme characters. Returns -1
+         * Returns the index of the ':' in {@code input} that is after scheme characters. Returns
+         * -1
          * if
          * {@code input} does not have a scheme that starts at {@code pos}.
          */
@@ -1259,7 +1261,8 @@ public final class HttpUrl {
 
 
         /**
-         * Adds a set of encoded path segments separated by a slash (either {@code \} or {@code /}).
+         * Adds a set of encoded path segments separated by a slash (either {@code \} or {@code
+         * /}).
          * If
          * {@code encodedPathSegments} starts with a slash, the resulting URL will have empty path
          * segment.
