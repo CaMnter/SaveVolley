@@ -1,4 +1,11 @@
-
+# easyvolley-okhttp3
+   
+[easyvolley-okhttp3](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-okhttp3/src/main/java/com/camnter/easyvolley/okhttp3/volley)   
+   
+将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
+换成 **square/okhttp3** 作为实现网络请求。  
+      
+      
 # easyvolley-hurl
    
 **API >= 9**     
@@ -6,7 +13,8 @@
 [easyvolley-hurl](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-hurl/src/main/java/com/camnter/easyvolley/hurl)   
    
 移除了 **原版** **google/volley** 中的，所有相关与 HttpClient 的逻辑，全版本的网络通信接入到 **HttpUrlConnection** 内。   
-       
+      
+           
 # volley-comments 
      
 [volley-comments ](https://github.com/CaMnter/EasyVolley/tree/master/volley-comments/src/main/java/com/android/volley)      
