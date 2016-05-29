@@ -13,8 +13,18 @@
 [easyvolley-hurl](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-hurl/src/main/java/com/camnter/easyvolley/hurl)   
    
 移除了 **原版** **google/volley** 中的，所有相关与 HttpClient 的逻辑，全版本的网络通信接入到 **HttpUrlConnection** 内。   
-      
-           
+       
+        
+# easyvolley-network-core
+   
+由于，网络底层实现（ 网络请求实现 ）可以通过不同框架（ okhttp、HttpUrlConnection、Apache HttpClient ... ）去实现。     
+所以，只是拿到 **不同框架的响应结果**。     
+但是 Volley 的缓存层是 **通用的**，所以需要定义一套 通用的 **HTTP Response API**，然后将 **不同框架的响应结果** 转换为     
+通用的 **HTTP Response API**。  
+    
+这个模块还需要与 [easyvolley-network-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-adapter/src/main/java/com/camnter/easyvolley/network/adapter/core) 的子模块（ [easyvolley-network-okhttp3-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-okhttp3-adapter/src/main/java/com/camnter/easyvolley/network/okhttp3/adapter), [easyvolley-network-hurl-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-hurl-adapter/src/main/java/com/camnter/easyvolley/network/hurl/adapter) ）一起协作。
+    
+    
 # volley-comments 
      
 [volley-comments ](https://github.com/CaMnter/EasyVolley/tree/master/volley-comments/src/main/java/com/android/volley)      
