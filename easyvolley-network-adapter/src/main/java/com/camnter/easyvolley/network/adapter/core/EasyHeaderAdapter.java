@@ -24,5 +24,5 @@ import com.camnter.easyvolley.network.core.http.EasyHttpResponse;
  * Time：2016-05-27 14:01
  */
 public interface EasyHeaderAdapter<T> {
-     void adaptiveHeader(EasyHttpResponse easyHttpResponse, T t);
+    void adaptiveHeader(EasyHttpResponse easyHttpResponse, T t);
 }
