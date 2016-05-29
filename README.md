@@ -1,7 +1,5 @@
-EasyVolley
-======
 
-## easyvolley-hurl
+# easyvolley-hurl
    
 **API >= 9**     
    
@@ -9,13 +7,13 @@ EasyVolley
    
 移除了 **原版** **google/volley** 中的，所有相关与 HttpClient 的逻辑，全版本的网络通信接入到 **HttpUrlConnection** 内。   
        
-## volley-comments 
+# volley-comments 
      
 [volley-comments ](https://github.com/CaMnter/EasyVolley/tree/master/volley-comments/src/main/java/com/android/volley)      
       
 原版的 **google/volley**，全部代码加上了注释而已。     
 
-## License
+# License
 
       Copyright (C) 2016 CaMnter yuanyu.camnter@gmail.com
       Copyright (C) 2012 Square, Inc.
