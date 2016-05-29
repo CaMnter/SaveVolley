@@ -38,14 +38,16 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 
 /*
- * RequestQueue 被定义为请求队列
+ * RequestQueue 被定义为 请求队列
  * 用于操作 缓存请求执行线程（ CacheDispatcher ）和 网络请求执行线程（ NetworkDispatcher ）
  *
  * 默认的情况下：
  * 启动 1 个 缓存请求执行线程（ CacheDispatcher ）
- * 启动 4 个 网络请求执行线程（ NetworkDispatcher ），根据 DEFAULT_NETWORK_THREAD_POOL_SIZE 的值
+ * 根据 DEFAULT_NETWORK_THREAD_POOL_SIZE 的值，启动 4 个 网络请求执行线程（ NetworkDispatcher ）
  *
  * 这些线程共享 缓存请求队列 （ mCacheQueue ）和 网络请求队列（ mNetworkQueue ）
+ * 当 RequestQueue 进行 请求的 添加、结束时，都会进入同步操作，保证线程安全
+ * 所以，RequestQueue 进行 请求的 添加、结束。是直接影响 CacheDispatcher 和 NetworkDispatcher 的执行。
  */
 public class RequestQueue {
 

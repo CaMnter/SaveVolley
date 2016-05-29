@@ -23,7 +23,7 @@ package com.android.volley;
 /* @formatter:off
  *
  * NoConnectionError 继承了 NetworkError
- * 表示：网络错误
+ * 表示：网络连接错误
  *
  * 添加了
  * 1.无参构造方法

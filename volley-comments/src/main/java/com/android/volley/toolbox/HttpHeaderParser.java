@@ -18,12 +18,10 @@ package com.android.volley.toolbox;
 
 import com.android.volley.Cache;
 import com.android.volley.NetworkResponse;
-
+import java.util.Map;
 import org.apache.http.impl.cookie.DateParseException;
 import org.apache.http.impl.cookie.DateUtils;
 import org.apache.http.protocol.HTTP;
-
-import java.util.Map;
 
 /**
  * Utility methods for parsing HTTP headers.
@@ -32,7 +30,8 @@ import java.util.Map;
  * Http header 的解析工具类
  *
  * 主要作用：
- * 解析 Header，判断返回结果是否需要缓存。需要缓存的话，返回 Header 中相关信息
+ * 解析 Header，判断返回结果是否需要缓存。需要缓存的话，从网络请求回来的请求结果 NetworkResponse 的 Header 中提取出一个用于缓存的 Cache.Entry
+ * 解析编码集，在 Content-Type 中获取编码集（ charset ），可以根据 编码 解析 Response.data 的 byte[] 数据
  */
 public class HttpHeaderParser {
 
@@ -142,8 +141,8 @@ public class HttpHeaderParser {
             softExpire = now + maxAge * 1000;
             // 记录过期时间
             finalExpire = mustRevalidate
-                    ? softExpire
-                    : softExpire + staleWhileRevalidate * 1000;
+                          ? softExpire
+                          : softExpire + staleWhileRevalidate * 1000;
         } else if (serverDate > 0 && serverExpires >= serverDate) {
             // Default semantic for Expire header in HTTP specification is softExpire.
             // 默认语义头在 HTTP 规范 softExpire 到期。
@@ -168,6 +167,7 @@ public class HttpHeaderParser {
         return entry;
     }
 
+
     /**
      * Parse date in RFC1123 format, and return its value as epoch
      */
@@ -184,6 +184,7 @@ public class HttpHeaderParser {
             return 0;
         }
     }
+
 
     /**
      * Retrieve a charset from headers
@@ -212,6 +213,7 @@ public class HttpHeaderParser {
 
         return defaultCharset;
     }
+
 
     /**
      * Returns the charset specified in the Content-Type of this header,

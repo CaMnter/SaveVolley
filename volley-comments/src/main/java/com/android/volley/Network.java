@@ -21,13 +21,13 @@ package com.android.volley;
  */
 
 /*
- * Volley 中 用于 处理 网络请求 的接口
+ * 在 Volley 中，是处理 网络请求 的表层使用接口
  * 只有一个方法：performRequest(...) 执行请求
  *
  * performRequest(...) 的要做的事情是：
- * 1. 调用  HttpStack 接口的实现类 （ HurlStack, HttpClientStack ） 去执行网络请求
- *    拿到一个 Apache HttpResponse
- * 2. 将 Apache HttpResponse -> Volley NetworkResponse 进行转化，并返回
+ * 1. 调用  HttpStack 接口的实现类 （ HurlStack, HttpClientStack ） 去执行网络请求实现，
+ *    会拿到一个 Apache HttpResponse
+ * 2. 然后将 Apache HttpResponse -> Volley NetworkResponse 进行转化，并返回
  *
  * Network 的 实现类有 BasicNetwork
  */

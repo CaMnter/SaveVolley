@@ -30,7 +30,7 @@ import com.android.volley.AuthFailureError;
  */
 /*
  * AndroidAuthenticator 实现了 Authenticator 接口
- * 基于 AccountManager，实现了认证交互
+ * 基于 Android 上的 AccountManager，实现了认证交互
  */
 public class AndroidAuthenticator implements Authenticator {
     // 用于进行 Android "账户" 的授权

@@ -36,7 +36,7 @@ import com.android.volley.VolleyLog;
  * 继承扩展了 Request，指定了泛型为 <Bitmap>
  * 会将请求结果解析成 Bitmap 类型数据
  * 并且需要你传入：
- * 1. Response.Listener<Bitmap>：将解析结果数据 进行回调8
+ * 1. Response.Listener<Bitmap>：将解析结果数据 进行回调
  * 2. maxWidth：最大宽度
  * 3. maxHeight：最大高度
  * 4. ScaleType：ImageView 的 ScaleType（ CENTER_CROP, FIT_XY ... ）

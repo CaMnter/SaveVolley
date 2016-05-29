@@ -53,7 +53,8 @@ import org.apache.http.impl.cookie.DateUtils;
  */
 
 /*
- * BasicNetwork 是 目前 Volley 内，Network 接口的唯一实现
+ * BasicNetwork 是 目前 Volley 内，Network 接口的唯一实现类
+ * 在 Volley 内，处理了 网络请求 的表层使用接口
  *
  * performRequest(...) 的要做的事情是：
  * 1. 调用  HttpStack 接口的实现类 （ HurlStack, HttpClientStack ） 去执行网络请求

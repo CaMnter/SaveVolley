@@ -28,6 +28,7 @@ import java.io.File;
 /**
  * Volley 框架对外暴露的 API
  * 也是 Volley 框架使用的入口
+ * 用于创建一个 RequestQueue
  *
  * RequestQueue queue = Volley.newRequestQueue(this);
  * queue.add(request);

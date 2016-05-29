@@ -24,7 +24,7 @@ import com.android.volley.AuthFailureError;
 /*
  * Authenticator 是一个身份认证接口
  * 用于基本认证或者摘要认证
- * Volley内，是用于和身份认证，比如 OAuth
+ * 在 Volley 内，是用于和身份认证，比如 OAuth
  */
 public interface Authenticator {
     /**

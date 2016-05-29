@@ -47,8 +47,8 @@ import org.apache.http.message.BasicStatusLine;
 
 /*
  * HurlStack 实现了 HttpStack 接口
- * 基于 javax.net.ssl.HttpsURLConnection 提供的网络实现，
- * 处理了 2.3 版本以上的各种网络请求
+ * 封装了基于 javax.net.ssl.HttpsURLConnection 提供的网络实现（ performRequest(...) ）
+ * 处理了 2.3 版本以上的 各种网络请求（ GET、POST、DEL ... ）的实现
  */
 public class HurlStack implements HttpStack {
 

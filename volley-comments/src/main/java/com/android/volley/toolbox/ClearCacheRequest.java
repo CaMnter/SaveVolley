@@ -28,7 +28,8 @@ import com.android.volley.Response;
  */
 
 /*
- * ClearCacheRequest 用于情况 HTTP 缓存的请求
+ * ClearCacheRequest 继承自 Request<Object>
+ * 用于清空 HTTP 缓存的请求
  *
  * 如果该请求被添加到请求队列（ RequestQueue ）中，由于覆写了 getPriority() 方法
  * 将优先级设置为 Priority.IMMEDIATE （ 立即执行 ）

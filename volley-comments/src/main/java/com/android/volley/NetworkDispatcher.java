@@ -33,8 +33,8 @@ import java.util.concurrent.BlockingQueue;
  */
 
 /*
- *  NetworkDispatcher 会将 网络 Request 队列的 Request 逐个抽出
- *  然后进行网络请求后
+ *  NetworkDispatcher 是用于处理 Volley 中的网络请求 的 网络线程。 会将 网络 Request 队列的 Request 逐个抽出
+ *  然后进行网络请求：
  *  1. 成功，拿到数据进行解析，然后将 Response 进行硬盘缓存，缓存成 Cache.Entry 的形式，最后
  *     传递 Request 和 Response
  *  2. 失败，失败的话，一般会抛出异常，然后进行 记录请求时长 和 传递错误（ VolleyError ）

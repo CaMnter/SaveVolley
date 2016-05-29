@@ -17,7 +17,8 @@
 package com.android.volley;
 
 /*
- * ResponseDelivery 接口的作用：从 内存缓存 或者 服务器 取得请求的数据，由 ResponseDelivery 去做结果分发及回调处理。
+ * ResponseDelivery 接口的作用：从 内存缓存 或者 服务器 取得请求结果数据
+ * 由 ResponseDelivery 去做 结果分发 以及 回调处理。
  *
  * 默认基本实现在 : ExecutorDelivery
  */

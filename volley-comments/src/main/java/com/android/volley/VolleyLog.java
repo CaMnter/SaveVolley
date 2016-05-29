@@ -39,8 +39,8 @@ public class VolleyLog {
 
     /*
      * VolleyLog 开关
-     * level >= INFO时 isLoggable 返回 true，反之则返回 false
-     * 所以，改开关 默认 关闭
+     * level >= INFO 时 isLoggable 返回 true，反之则返回 false
+     * 所以，该开关 默认 关闭
      *
      * public static final int VERBOSE = 2;
      * public static final int DEBUG = 3;
@@ -158,7 +158,9 @@ public class VolleyLog {
      */
 
     /*
-     * 提供的一个简单的静态内部 Log 类
+     * VolleyLog 提供的一个简单的静态内部 Log 类
+     * 可以通过 add(...) 添加一个 MarkerLog 的 Log 单位（ Marker ）
+     * 然后调用 finish(...) 打印已经添加的所有 Log
      */
     static class MarkerLog {
 

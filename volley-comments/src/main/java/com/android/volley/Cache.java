@@ -24,9 +24,9 @@ import java.util.Map;
  */
 
 /*
- * 缓存的接口
- * 提供一些接口方法需要是钱
- * 全 Volley 中主要实现了一个 DiskBasedCache
+ * Volley 缓存的接口
+ * 提供一些接口方法，需要子类去实现
+ * 全 Volley 中主要实现类，只有一个 DiskBasedCache
  */
 public interface Cache {
     /**

@@ -25,7 +25,7 @@ package com.android.volley;
  * TimeoutError 继承了 VolleyError
  * 表示：请求超时错误
  *
- * 但是什么都没有实现
+ * 但是什么都没有实现，作为一个标识存在
  */
 @SuppressWarnings("serial")
 public class TimeoutError extends VolleyError { }

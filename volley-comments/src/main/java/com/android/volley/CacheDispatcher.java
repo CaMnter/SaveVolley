@@ -30,11 +30,14 @@ import java.util.concurrent.BlockingQueue;
  */
 
 /*
- * 从 缓存 Request 队列中取出 缓存 Request
+ * CacheDispatcher 是用于处理 Volley 中的缓存数据 的 缓存线程
+ * 1.1 检查缓存。从 缓存 Request 队列中取出 缓存 Request
  * 然后 根据 缓存 Request CacheKey 去硬盘缓存（ DiskBasedCache ）映射过来的内存缓存中寻找 是否存在 Entry （ Response ）
- * 1. 存在的话，通过 DefaultRetryPolicy 回传相关数据
- * 2. 存在但缓存需要刷新的话，放入 网络 Request 队列内，会在 NetworkDispatcher 的循环体中被用来重新请求
- * 3. 不存在的话，将该 Request，放入 网络 Request 队列内，会在 NetworkDispatcher 的循环体中被用来重新请求
+ * 1.2. 存在的话，通过 DefaultRetryPolicy 回传相关数据
+ * 1.3. 存在但缓存需要刷新的话，放入 网络 Request 队列 内，会在 NetworkDispatcher 的循环体中被用来 重新请求
+ * 1.4. 不存在的话，将该 Request，放入 网络 Request 队列 内，会在 NetworkDispatcher 的循环体中被用来 重新请求
+ * 2. CacheDispatcher 只做缓存相关的操作，不做网络的操作。所以 CacheDispatcher，只
+ * 涉及到 缓存 Response 的增删改查 以及 查询成功后的数据分发（ 传递 ）
  */
 public class CacheDispatcher extends Thread {
 

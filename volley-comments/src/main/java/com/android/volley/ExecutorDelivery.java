@@ -38,7 +38,7 @@ import java.util.concurrent.Executor;
  * 1. Handler 作为参数的构造方法。全 Volley 只有 RequestQueue 内使用，并且传入一个 UI 线程的 Handler
  *    可以简单得出：这个构造方法可以指定（ 不只是 UI 线程 ）线程的 Handler 去处理这个 Runnable
  *    看过 Handler 源码的都知道：你给我一个 Runnable，我会 拿到这个 Handler 实例化时的 Looper，再拿到
- *    MessageQueue 去添加一条 Message ，Runnable 则作为 这个 Message.callback 保存在这，然后在
+ *    MessageQueue 去添加一条 Message ，Runnable 则作为 这个 Message.callback 保存在这，然后再
  *    Handler.dispatchMessage(...) 的时候，会执行 Message.callback.run()
  *
  *    所以，这里（不只是 UI 线程）线程的 Handler，说明了可以给其他线程传递（ 通信 ）。
@@ -47,7 +47,7 @@ import java.util.concurrent.Executor;
  *    可定制性。Handler 作为参数的构造方法 就是 这个 Executor 作为参数的构造方法 的升级版。
  *
  *    因为，ExecutorDelivery 需要 Executor 和 Handler。
- *    Handler 作为参数的构造方法：实例化了 Executor，Handler由外部提供，这里 Executor 是默认执行
+ *    Handler 作为参数的构造方法：实例化了 Executor，Handler 由外部提供，这里 Executor 是默认执行
  *                             handler.post(Runnable command)
  *    Executor 作为参数的构造方法：都需要外部提供。
  *

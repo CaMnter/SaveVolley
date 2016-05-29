@@ -24,6 +24,12 @@ package com.android.volley;
 
 /*
  * Response  请求结果（响应）类
+ * 1.存放请求结果数据 和 缓存 key；2.或者 存放错误信息（ VolleyError ）
+ * 提供一个 Listener 接口。当接受到 请求结果（响应）时，将 解析结果 返回
+ * 再提供一个 ErrorListener 接口。发生错误时，将调用该方法，将返回 VolleyError
+ *
+ * 提供一个静态方法 success(...)，实例一个有 请求结果数据 的 Response 对象
+ * 再提供一个静态方法 error(...)，实例一个只有 错误信息（ VolleyError ） 的 Response 对象
  */
 public class Response<T> {
 

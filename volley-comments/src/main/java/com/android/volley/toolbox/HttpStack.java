@@ -26,7 +26,7 @@ import org.apache.http.HttpResponse;
  * An HTTP stack abstraction.
  */
 /*
- * HttpStack 是 Volley 内 处理网络请求的接口
+ * HttpStack 是 Volley 内 执行 网络请求 的底层实现接口
  * 实现类有：
  * 1. HttpClientStack：基于 org.apache.http 的网络请求实现。负责 系统版本 2.3 以下的网络请求。
  * 2. HurlStack：基于 HttpURLConnection 的网络请求实现。负责 系统版本 2.3 以上的网络请求。

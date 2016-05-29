@@ -25,7 +25,7 @@ import java.io.IOException;
  */
 
 /*
- * PoolingByteArrayOutputStream 继承了 原声的 ByteArrayOutputStream
+ * PoolingByteArrayOutputStream 继承了 原生的 ByteArrayOutputStream
  * 使用了 ByteArrayPool 回收利用一些 byte[]
  * 防止了 byte[] 的重复内存分配和回收
  */

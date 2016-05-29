@@ -38,8 +38,8 @@ import org.json.JSONObject;
  * 要求 返回请求结果数据的 格式 ( Response.body ) 指定为 json ( Content-Type：application/json; charset=utf-8 )
  * 再将 请求结果数据 ( Response.body ) 转换为 utf-8 的 byte[]
  *
- * 所以，JsonRequest<T> 没有解析 body 内的数据为 真正的 Json 数据
- * 这里的 JsonObjectRequest 要单独将 body 内的数据解析为 JSONObject 类型
+ * 由于，JsonRequest<T> 没有解析 body 内的数据为 真正的 Json 数据
+ * 所以，这里的 JsonObjectRequest 要单独将 body 内的数据解析为 JSONObject 类型
  */
 public class JsonObjectRequest extends JsonRequest<JSONObject> {
 
