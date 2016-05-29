@@ -16,21 +16,21 @@
 
 package com.camnter.easyvolley.samples.request;
 
-import com.camnter.easyvolley.okhttp3.volley.NetworkResponse;
-import com.camnter.easyvolley.okhttp3.volley.ParseError;
-import com.camnter.easyvolley.okhttp3.volley.Request;
-import com.camnter.easyvolley.okhttp3.volley.Response;
-import com.camnter.easyvolley.okhttp3.volley.VolleyError;
-import com.camnter.easyvolley.okhttp3.volley.toolbox.HttpHeaderParser;
+import com.camnter.easyvolley.hurl.NetworkResponse;
+import com.camnter.easyvolley.hurl.ParseError;
+import com.camnter.easyvolley.hurl.Request;
+import com.camnter.easyvolley.hurl.Response;
+import com.camnter.easyvolley.hurl.VolleyError;
+import com.camnter.easyvolley.hurl.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Description：OkHttp3GsonRequest
+ * Description：HurlGsonRequest
  * Created by：CaMnter
- * Time：2016-05-27 17:22
+ * Time：2016-05-29 22:14
  */
-public abstract class OkHttp3GsonRequest<T> extends Request<T>
+public abstract class HurlGsonRequest<T> extends Request<T>
         implements Response.Listener<T>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
@@ -40,12 +40,12 @@ public abstract class OkHttp3GsonRequest<T> extends Request<T>
     private Class<T> mClass;
 
 
-    public OkHttp3GsonRequest(String url, Class<T> clazz) {
-        this(Method.GET, url, clazz);
+    public HurlGsonRequest(String url, Class<T> clazz) {
+        this(com.camnter.easyvolley.okhttp3.volley.Request.Method.GET, url, clazz);
     }
 
 
-    public OkHttp3GsonRequest(int method, String url, Class<T> clazz) {
+    public HurlGsonRequest(int method, String url, Class<T> clazz) {
         super(method, url, null);
         this.mGson = new Gson();
         this.mClass = clazz;
@@ -53,11 +53,13 @@ public abstract class OkHttp3GsonRequest<T> extends Request<T>
     }
 
 
-    @Override protected Response<T> parseNetworkResponse(NetworkResponse response) {
+    @Override
+    protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
                     HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-            return Response.success(this.mGson.fromJson(jsonString, this.mClass),
+            return Response.success(
+                    this.mGson.fromJson(jsonString, this.mClass),
                     HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
