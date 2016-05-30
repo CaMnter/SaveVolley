@@ -25,6 +25,12 @@
 这个模块还需要与 [easyvolley-network-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-adapter/src/main/java/com/camnter/easyvolley/network/adapter/core) 的子模块（ [easyvolley-network-okhttp3-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-okhttp3-adapter/src/main/java/com/camnter/easyvolley/network/okhttp3/adapter), [easyvolley-network-hurl-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-hurl-adapter/src/main/java/com/camnter/easyvolley/network/hurl/adapter) ）一起协作。
     
     
+# easyvolley-network-adapter
+   
+目的是为了定义一些接口： 不同框架的响应结果 -> 通用的 **HTTP Response API**。   
+子模块有： [easyvolley-network-okhttp3-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-okhttp3-adapter/src/main/java/com/camnter/easyvolley/network/okhttp3/adapter), [easyvolley-network-hurl-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-hurl-adapter/src/main/java/com/camnter/easyvolley/network/hurl/adapter) 。   
+   
+   
 # volley-comments 
      
 [volley-comments ](https://github.com/CaMnter/EasyVolley/tree/master/volley-comments/src/main/java/com/android/volley)      
