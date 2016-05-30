@@ -27,7 +27,7 @@
     
 # easyvolley-network-adapter
    
-目的是为了定义一些接口： 不同框架的响应结果 -> 通用的 **HTTP Response API**。   
+目的是为了定义一些接口： **不同框架的响应结果** -> 通用的 **HTTP Response API**。   
 子模块有： [easyvolley-network-okhttp3-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-okhttp3-adapter/src/main/java/com/camnter/easyvolley/network/okhttp3/adapter), [easyvolley-network-hurl-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-hurl-adapter/src/main/java/com/camnter/easyvolley/network/hurl/adapter) 。   
    
    
