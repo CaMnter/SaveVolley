@@ -1,52 +1,52 @@
-# easyvolley-okhttp3
+# savevolley-okhttp3
    
-[easyvolley-okhttp3](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-okhttp3/src/main/java/com/camnter/easyvolley/okhttp3/volley)      
+[savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
    
 将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
 换成 **square/okhttp3** 作为实现网络请求。  
       
       
-# easyvolley-hurl
+# savevolley-hurl
    
 **API >= 9**     
    
-[easyvolley-hurl](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-hurl/src/main/java/com/camnter/easyvolley/hurl)      
+[savevolley-hurl](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-hurl/src/main/java/com/camnter/savevolley/hurl)         
    
 移除了 **原版** **google/volley** 中的，所有相关与 HttpClient 的逻辑，全版本的网络通信接入到 **HttpUrlConnection** 内。   
        
         
-# easyvolley-network-core
+# savevolley-network-core
    
-[easyvolley-network-core](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-core/src/main/java/com/camnter/easyvolley/network/core)
+[savevolley-network-core](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-core/src/main/java/com/camnter/savevolley/network/core)   
    
 由于，网络底层实现（ 网络请求实现 ）可以通过不同框架（ okhttp、HttpUrlConnection、Apache HttpClient ... ）去实现。     
 所以，只是拿到 **不同框架的响应结果**。     
 但是 Volley 的缓存层是 **通用的**，所以需要定义一套 通用的 **HTTP Response API**，然后将 **不同框架的响应结果** 转换为     
 通用的 **HTTP Response API**。  
     
-这个模块还需要与 [easyvolley-network-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-adapter/src/main/java/com/camnter/easyvolley/network/adapter/core) 的子模块（ [easyvolley-network-okhttp3-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-okhttp3-adapter/src/main/java/com/camnter/easyvolley/network/okhttp3/adapter), [easyvolley-network-hurl-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-hurl-adapter/src/main/java/com/camnter/easyvolley/network/hurl/adapter) ）一起协作。
+这个模块还需要与 [savevolley-network-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-adapter/src/main/java/com/camnter/savevolley/network/adapter/core) 的子模块（ [savevolley-network-okhttp3-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-okhttp3-adapter/src/main/java/com/camnter/savevolley/network/okhttp3/adapter), [savevolley-network-hurl-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-hurl-adapter/src/main/java/com/camnter/savevolley/network/hurl/adapter) ）一起协作。
     
     
-# easyvolley-network-adapter
+# savevolley-network-adapter
    
-[easyvolley-network-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-adapter/src/main/java/com/camnter/easyvolley/network/adapter/core)      
+[savevolley-network-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-adapter/src/main/java/com/camnter/savevolley/network/adapter/core)      
    
 目的是为了定义一些接口： **不同框架的响应结果** -> **通用的 HTTP Response API**。   
-子模块有： [easyvolley-network-okhttp3-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-okhttp3-adapter/src/main/java/com/camnter/easyvolley/network/okhttp3/adapter), [easyvolley-network-hurl-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-hurl-adapter/src/main/java/com/camnter/easyvolley/network/hurl/adapter) 。   
+子模块有： [savevolley-network-okhttp3-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-okhttp3-adapter/src/main/java/com/camnter/savevolley/network/okhttp3/adapter), [savevolley-network-hurl-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-hurl-adapter/src/main/java/com/camnter/savevolley/network/hurl/adapter) 。   
    
    
-# easyvolley-network-okhttp3-adapter
+# savevolley-network-okhttp3-adapter
    
-[easyvolley-network-okhttp3-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-okhttp3-adapter/src/main/java/com/camnter/easyvolley/network/okhttp3/adapter)   
+[savevolley-network-okhttp3-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-okhttp3-adapter/src/main/java/com/camnter/savevolley/network/okhttp3/adapter)   
    
-**easyvolley-network-adapter** 的子模块，**square/okhttp Response** -> **通用的 HTTP Response API**。 
+**savevolley-network-adapter** 的子模块，**square/okhttp Response** -> **通用的 HTTP Response API**。 
    
    
-# easyvolley-network-hurl-adapter
+# savevolley-network-hurl-adapter
    
-[easyvolley-network-hurl-adapter](https://github.com/CaMnter/EasyVolley/tree/master/easyvolley-network-hurl-adapter/src/main/java/com/camnter/easyvolley/network/hurl/adapter)   
+[savevolley-network-hurl-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-hurl-adapter/src/main/java/com/camnter/savevolley/network/hurl/adapter)   
    
-**easyvolley-network-adapter** 的子模块，**HttpConnection** -> **通用的 HTTP Response API**。
+**savevolley-network-adapter** 的子模块，**HttpConnection** -> **通用的 HTTP Response API**。
    
    
 # okhttp3
