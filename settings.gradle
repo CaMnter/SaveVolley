@@ -1,9 +1,9 @@
-include ':samples', ':agera', ':okhttp3', ':easyvolley-network-okhttp3-adapter',
-        ':easyvolley-network-hurl-adapter',
-        ':easyvolley-okhttp3-agera',
-        ':easyvolley-hurl-agera',
+include ':samples', ':agera', ':okhttp3', ':savevolley-network-okhttp3-adapter',
+        ':savevolley-network-hurl-adapter',
+        ':savevolley-okhttp3-agera',
+        ':savevolley-hurl-agera',
         ':volley-comments',
-        ':easyvolley-hurl',
-        ':easyvolley-network-adapter',
-        ':easyvolley-okhttp3',
-        ':easyvolley-network-core'
+        ':savevolley-hurl',
+        ':savevolley-network-adapter',
+        ':savevolley-okhttp3',
+        ':savevolley-network-core'
