@@ -17,7 +17,7 @@
 package com.camnter.savevolley.network.okhttp3.adapter;
 
 import com.camnter.savevolley.network.adapter.core.EasyHttpEntityAdapter;
-import com.camnter.savevolley.network.core.http.EasyHttpEntity;
+import com.camnter.savevolley.network.core.http.SaveHttpEntity;
 import okhttp3.MediaType;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
@@ -46,8 +46,8 @@ public class OkHttp3HttpEntityAdapter implements EasyHttpEntityAdapter<okhttp3.R
     }
 
 
-    @Override public EasyHttpEntity adaptiveEntity(Response response) {
-        EasyHttpEntity entity = new EasyHttpEntity();
+    @Override public SaveHttpEntity adaptiveEntity(Response response) {
+        SaveHttpEntity entity = new SaveHttpEntity();
         ResponseBody body = response.body();
         if (body != null) {
             entity.setContent(body.byteStream());

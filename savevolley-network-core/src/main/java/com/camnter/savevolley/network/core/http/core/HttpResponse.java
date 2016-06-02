@@ -31,7 +31,7 @@
 
 package com.camnter.savevolley.network.core.http.core;
 
-import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 import java.util.Locale;
 
 /**
@@ -68,7 +68,7 @@ public interface HttpResponse extends HttpMessage {
      * @param ver the HTTP version
      * @param code the status code
      */
-    void setStatusLine(EasyProtocolVersion ver, int code);
+    void setStatusLine(SaveProtocolVersion ver, int code);
 
     /**
      * Sets the status line of this response with a reason phrase.
@@ -77,7 +77,7 @@ public interface HttpResponse extends HttpMessage {
      * @param code the status code
      * @param reason the reason phrase, or <code>null</code> to omit
      */
-    void setStatusLine(EasyProtocolVersion ver, int code, String reason);
+    void setStatusLine(SaveProtocolVersion ver, int code, String reason);
 
     /**
      * Updates the status line of this response with a new status code.
@@ -92,7 +92,7 @@ public interface HttpResponse extends HttpMessage {
      * @throws IllegalStateException if the status line has not be set
      * @see HttpStatus
      * @see #setStatusLine(StatusLine)
-     * @see #setStatusLine(EasyProtocolVersion, int)
+     * @see #setStatusLine(SaveProtocolVersion, int)
      */
     void setStatusCode(int code) throws IllegalStateException;
 
@@ -105,7 +105,7 @@ public interface HttpResponse extends HttpMessage {
      * <code>null</code> to unset the reason phrase
      * @throws IllegalStateException if the status line has not be set
      * @see #setStatusLine(StatusLine)
-     * @see #setStatusLine(EasyProtocolVersion, int)
+     * @see #setStatusLine(SaveProtocolVersion, int)
      */
     void setReasonPhrase(String reason) throws IllegalStateException;
 

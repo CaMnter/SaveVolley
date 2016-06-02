@@ -31,7 +31,7 @@
 
 package com.camnter.savevolley.network.core.http.core;
 
-import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 
 /**
  * A generic HTTP message.
@@ -46,7 +46,7 @@ public interface HttpMessage {
     /**
      * Returns the protocol version this message is compatible with.
      */
-    EasyProtocolVersion getProtocolVersion();
+    SaveProtocolVersion getProtocolVersion();
 
     /**
      * Checks if a certain header is present in this message. Header values are

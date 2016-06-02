@@ -31,7 +31,7 @@
 
 package com.camnter.savevolley.network.core.http.core;
 
-import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 import com.camnter.savevolley.network.core.util.CharArrayBuffer;
 
 /**
@@ -80,7 +80,7 @@ public interface LineFormatter {
      * If the <code>buffer</code> argument is not <code>null</code>,
      * the returned buffer is the argument buffer.
      */
-    CharArrayBuffer appendProtocolVersion(CharArrayBuffer buffer, EasyProtocolVersion version);
+    CharArrayBuffer appendProtocolVersion(CharArrayBuffer buffer, SaveProtocolVersion version);
 
     /**
      * Formats a request line.

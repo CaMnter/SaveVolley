@@ -34,7 +34,7 @@ import java.util.Map;
  * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
  * @version $Revision: 610464 $
  */
-public final class EasyHttpParams extends AbstractHttpParams implements Serializable, Cloneable {
+public final class SaveHttpParams extends AbstractHttpParams implements Serializable, Cloneable {
 
     private static final long serialVersionUID = -7086398485908701455L;
 
@@ -42,7 +42,7 @@ public final class EasyHttpParams extends AbstractHttpParams implements Serializ
     private HashMap parameters;
 
 
-    public EasyHttpParams() {
+    public SaveHttpParams() {
         super();
     }
 
@@ -113,21 +113,21 @@ public final class EasyHttpParams extends AbstractHttpParams implements Serializ
 
     /**
      * Creates a copy of these parameters.
-     * The implementation here instantiates {@link EasyHttpParams},
+     * The implementation here instantiates {@link SaveHttpParams},
      * then calls {@link #copyParams(HttpParams)} to populate the copy.
      *
      * @return a new set of params holding a copy of the
      * <i>local</i> parameters in this object.
      */
     public HttpParams copy() {
-        EasyHttpParams clone = new EasyHttpParams();
+        SaveHttpParams clone = new SaveHttpParams();
         copyParams(clone);
         return clone;
     }
 
 
     public Object clone() throws CloneNotSupportedException {
-        EasyHttpParams clone = (EasyHttpParams) super.clone();
+        SaveHttpParams clone = (SaveHttpParams) super.clone();
         copyParams(clone);
         return clone;
     }

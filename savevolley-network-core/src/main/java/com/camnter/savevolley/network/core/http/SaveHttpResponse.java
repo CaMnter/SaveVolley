@@ -32,7 +32,7 @@ import java.util.Locale;
  * @version $Revision: 573864 $
  * @since 4.0
  */
-public class EasyHttpResponse extends AbstractHttpMessage implements HttpResponse {
+public class SaveHttpResponse extends AbstractHttpMessage implements HttpResponse {
 
     private StatusLine statusline;
     private HttpEntity entity;
@@ -51,7 +51,7 @@ public class EasyHttpResponse extends AbstractHttpMessage implements HttpRespons
      * @param locale the locale for looking up reason phrases, or
      * <code>null</code> for the system locale
      */
-    public EasyHttpResponse(final StatusLine statusline, final ReasonPhraseCatalog catalog, final Locale locale) {
+    public SaveHttpResponse(final StatusLine statusline, final ReasonPhraseCatalog catalog, final Locale locale) {
         super();
         if (statusline == null) {
             throw new IllegalArgumentException("Status line may not be null.");
@@ -69,7 +69,7 @@ public class EasyHttpResponse extends AbstractHttpMessage implements HttpRespons
      *
      * @param statusline the status line
      */
-    public EasyHttpResponse(final StatusLine statusline) {
+    public SaveHttpResponse(final StatusLine statusline) {
         this(statusline, null, null);
     }
 
@@ -84,13 +84,13 @@ public class EasyHttpResponse extends AbstractHttpMessage implements HttpRespons
      * @param reason the reason phrase to the status code, or
      * <code>null</code>
      */
-    public EasyHttpResponse(final EasyProtocolVersion ver, final int code, final String reason) {
-        this(new EasyStatusLine(ver, code, reason), null, null);
+    public SaveHttpResponse(final SaveProtocolVersion ver, final int code, final String reason) {
+        this(new SaveStatusLine(ver, code, reason), null, null);
     }
 
 
     // non-javadoc, see interface HttpMessage
-    public EasyProtocolVersion getProtocolVersion() {
+    public SaveProtocolVersion getProtocolVersion() {
         return this.statusline.getProtocolVersion();
     }
 
@@ -135,30 +135,30 @@ public class EasyHttpResponse extends AbstractHttpMessage implements HttpRespons
         }
         this.locale = loc;
         final int code = this.statusline.getStatusCode();
-        this.statusline = new EasyStatusLine(this.statusline.getProtocolVersion(), code,
+        this.statusline = new SaveStatusLine(this.statusline.getProtocolVersion(), code,
                 getReason(code));
     }
 
 
     // non-javadoc, see interface HttpResponse
-    public void setStatusLine(final EasyProtocolVersion ver, final int code) {
+    public void setStatusLine(final SaveProtocolVersion ver, final int code) {
         // arguments checked in BasicStatusLine constructor
-        this.statusline = new EasyStatusLine(ver, code, getReason(code));
+        this.statusline = new SaveStatusLine(ver, code, getReason(code));
     }
 
 
     // non-javadoc, see interface HttpResponse
-    public void setStatusLine(final EasyProtocolVersion ver, final int code, final String reason) {
+    public void setStatusLine(final SaveProtocolVersion ver, final int code, final String reason) {
         // arguments checked in BasicStatusLine constructor
-        this.statusline = new EasyStatusLine(ver, code, reason);
+        this.statusline = new SaveStatusLine(ver, code, reason);
     }
 
 
     // non-javadoc, see interface HttpResponse
     public void setStatusCode(int code) {
         // argument checked in BasicStatusLine constructor
-        EasyProtocolVersion ver = this.statusline.getProtocolVersion();
-        this.statusline = new EasyStatusLine(ver, code, getReason(code));
+        SaveProtocolVersion ver = this.statusline.getProtocolVersion();
+        this.statusline = new SaveStatusLine(ver, code, getReason(code));
     }
 
 
@@ -168,7 +168,7 @@ public class EasyHttpResponse extends AbstractHttpMessage implements HttpRespons
         if ((reason != null) && ((reason.indexOf('\n') >= 0) || (reason.indexOf('\r') >= 0))) {
             throw new IllegalArgumentException("Line break in reason phrase.");
         }
-        this.statusline = new EasyStatusLine(this.statusline.getProtocolVersion(),
+        this.statusline = new SaveStatusLine(this.statusline.getProtocolVersion(),
                 this.statusline.getStatusCode(), reason);
     }
 

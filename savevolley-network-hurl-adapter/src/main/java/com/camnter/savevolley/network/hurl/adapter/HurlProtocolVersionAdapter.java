@@ -17,7 +17,7 @@
 package com.camnter.savevolley.network.hurl.adapter;
 
 import com.camnter.savevolley.network.adapter.core.EasyProtocolVersionAdapter;
-import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 
 /**
  * Description：HurlProtocolVersionAdapter
@@ -43,7 +43,7 @@ public class HurlProtocolVersionAdapter implements EasyProtocolVersionAdapter {
     }
 
 
-    @Override public EasyProtocolVersion adaptiveProtocolVersion(Object o) {
-        return new EasyProtocolVersion("HTTP", 1, 1);
+    @Override public SaveProtocolVersion adaptiveProtocolVersion(Object o) {
+        return new SaveProtocolVersion("HTTP", 1, 1);
     }
 }

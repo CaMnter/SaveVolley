@@ -87,7 +87,7 @@ import com.camnter.savevolley.network.core.util.LangUtils;
  *
  * @author <a href="mailto:oleg at ural.com">Oleg Kalnichevski</a>
  */
-public class EasyNameValuePair implements NameValuePair, Cloneable {
+public class SaveNameValuePair implements NameValuePair, Cloneable {
 
     private final String name;
     private final String value;
@@ -99,7 +99,7 @@ public class EasyNameValuePair implements NameValuePair, Cloneable {
      * @param name The name.
      * @param value The value.
      */
-    public EasyNameValuePair(final String name, final String value) {
+    public SaveNameValuePair(final String name, final String value) {
         super();
         if (name == null) {
             throw new IllegalArgumentException("Name may not be null");
@@ -154,7 +154,7 @@ public class EasyNameValuePair implements NameValuePair, Cloneable {
         if (object == null) return false;
         if (this == object) return true;
         if (object instanceof NameValuePair) {
-            EasyNameValuePair that = (EasyNameValuePair) object;
+            SaveNameValuePair that = (SaveNameValuePair) object;
             return this.name.equals(that.name) && LangUtils.equals(this.value, that.value);
         } else {
             return false;

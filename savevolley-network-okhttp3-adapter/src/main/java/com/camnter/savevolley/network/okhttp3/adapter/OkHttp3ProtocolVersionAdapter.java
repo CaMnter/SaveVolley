@@ -17,7 +17,7 @@
 package com.camnter.savevolley.network.okhttp3.adapter;
 
 import com.camnter.savevolley.network.adapter.core.EasyProtocolVersionAdapter;
-import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 import okhttp3.Protocol;
 
 /**
@@ -44,17 +44,17 @@ public class OkHttp3ProtocolVersionAdapter implements EasyProtocolVersionAdapter
     }
 
 
-    @Override public EasyProtocolVersion adaptiveProtocolVersion(okhttp3.Response response) {
+    @Override public SaveProtocolVersion adaptiveProtocolVersion(okhttp3.Response response) {
         if (response == null || response.protocol() == null) return null;
         Protocol protocol = response.protocol();
         if (protocol == Protocol.HTTP_1_0) {
-            return new EasyProtocolVersion("HTTP", 1, 0);
+            return new SaveProtocolVersion("HTTP", 1, 0);
         } else if (protocol == Protocol.HTTP_1_1) {
-            return new EasyProtocolVersion("HTTP", 1, 1);
+            return new SaveProtocolVersion("HTTP", 1, 1);
         } else if (protocol == Protocol.SPDY_3) {
-            return new EasyProtocolVersion("SPDY", 3, 1);
+            return new SaveProtocolVersion("SPDY", 3, 1);
         } else if (protocol == Protocol.HTTP_2) {
-            return new EasyProtocolVersion("HTTP", 2, 0);
+            return new SaveProtocolVersion("HTTP", 2, 0);
         } else {
             throw new IllegalStateException("Unknown protocol type.");
         }

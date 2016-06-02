@@ -17,8 +17,8 @@
 package com.camnter.savevolley.network.hurl.adapter;
 
 import com.camnter.savevolley.network.adapter.core.EasyHeaderAdapter;
-import com.camnter.savevolley.network.core.http.EasyHeader;
-import com.camnter.savevolley.network.core.http.EasyHttpResponse;
+import com.camnter.savevolley.network.core.http.SaveHeader;
+import com.camnter.savevolley.network.core.http.SaveHttpResponse;
 import com.camnter.savevolley.network.core.http.core.Header;
 import java.net.HttpURLConnection;
 import java.util.List;
@@ -49,12 +49,12 @@ public class HurlHeaderAdapter implements EasyHeaderAdapter<HttpURLConnection> {
 
 
     @Override
-    public void adaptiveHeader(EasyHttpResponse easyHttpResponse, HttpURLConnection httpURLConnection) {
+    public void adaptiveHeader(SaveHttpResponse saveHttpResponse, HttpURLConnection httpURLConnection) {
         for (Map.Entry<String, List<String>> header : httpURLConnection.getHeaderFields()
                 .entrySet()) {
             if (header.getKey() != null) {
-                Header h = new EasyHeader(header.getKey(), header.getValue().get(0));
-                easyHttpResponse.addHeader(h);
+                Header h = new SaveHeader(header.getKey(), header.getValue().get(0));
+                saveHttpResponse.addHeader(h);
             }
         }
     }

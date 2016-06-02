@@ -16,8 +16,8 @@
 
 package com.camnter.savevolley.okhttp3.volley.toolbox;
 
-import com.camnter.savevolley.network.core.http.EasyHttpResponse;
-import com.camnter.savevolley.network.core.http.EasyStatusLine;
+import com.camnter.savevolley.network.core.http.SaveHttpResponse;
+import com.camnter.savevolley.network.core.http.SaveStatusLine;
 import com.camnter.savevolley.network.core.http.core.HttpResponse;
 import com.camnter.savevolley.network.okhttp3.adapter.OkHttp3HeaderAdapter;
 import com.camnter.savevolley.network.okhttp3.adapter.OkHttp3HttpEntityAdapter;
@@ -133,16 +133,16 @@ public class OkHttp3Stack implements HttpStack {
         okhttp3.Request okHttp3Request = okHttpRequestBuilder.url(request.getUrl()).build();
         okhttp3.Response okHttpResponse = okHttpClient.newCall(okHttp3Request).execute();
 
-        EasyStatusLine easyStatusLine = OkHttp3StatusLineAdapter.getInstance()
+        SaveStatusLine saveStatusLine = OkHttp3StatusLineAdapter.getInstance()
                 .adaptiveStatusLine(
                         OkHttp3ProtocolVersionAdapter
                                 .getInstance(),
                         okHttpResponse);
 
-        EasyHttpResponse easyHttpResponse = new EasyHttpResponse(easyStatusLine);
-        easyHttpResponse.setEntity(
+        SaveHttpResponse saveHttpResponse = new SaveHttpResponse(saveStatusLine);
+        saveHttpResponse.setEntity(
                 OkHttp3HttpEntityAdapter.getInstance().adaptiveEntity(okHttpResponse));
-        OkHttp3HeaderAdapter.getInstance().adaptiveHeader(easyHttpResponse, okHttpResponse);
-        return easyHttpResponse;
+        OkHttp3HeaderAdapter.getInstance().adaptiveHeader(saveHttpResponse, okHttpResponse);
+        return saveHttpResponse;
     }
 }

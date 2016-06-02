@@ -42,15 +42,15 @@ import java.util.List;
  * @version $Revision: 595670 $
  * @since 4.0
  */
-public class EasyHeaderValueParser implements HeaderValueParser {
+public class SaveHeaderValueParser implements HeaderValueParser {
 
     /**
      * A default instance of this class, for use as default or fallback.
-     * Note that {@link EasyHeaderValueParser} is not a singleton, there
+     * Note that {@link SaveHeaderValueParser} is not a singleton, there
      * can be many instances of the class itself and of derived classes.
      * The instance here provides non-customized, default behavior.
      */
-    public final static EasyHeaderValueParser DEFAULT = new EasyHeaderValueParser();
+    public final static SaveHeaderValueParser DEFAULT = new SaveHeaderValueParser();
 
     private final static char PARAM_DELIMITER = ';';
     private final static char ELEM_DELIMITER = ',';
@@ -73,11 +73,11 @@ public class EasyHeaderValueParser implements HeaderValueParser {
             throw new IllegalArgumentException("Value to parse may not be null");
         }
 
-        if (parser == null) parser = EasyHeaderValueParser.DEFAULT;
+        if (parser == null) parser = SaveHeaderValueParser.DEFAULT;
 
         CharArrayBuffer buffer = new CharArrayBuffer(value.length());
         buffer.append(value);
-        EasyParserCursor cursor = new EasyParserCursor(0, value.length());
+        SaveParserCursor cursor = new SaveParserCursor(0, value.length());
         return parser.parseElements(buffer, cursor);
     }
 
@@ -96,11 +96,11 @@ public class EasyHeaderValueParser implements HeaderValueParser {
             throw new IllegalArgumentException("Value to parse may not be null");
         }
 
-        if (parser == null) parser = EasyHeaderValueParser.DEFAULT;
+        if (parser == null) parser = SaveHeaderValueParser.DEFAULT;
 
         CharArrayBuffer buffer = new CharArrayBuffer(value.length());
         buffer.append(value);
-        EasyParserCursor cursor = new EasyParserCursor(0, value.length());
+        SaveParserCursor cursor = new SaveParserCursor(0, value.length());
         return parser.parseHeaderElement(buffer, cursor);
     }
 
@@ -119,11 +119,11 @@ public class EasyHeaderValueParser implements HeaderValueParser {
             throw new IllegalArgumentException("Value to parse may not be null");
         }
 
-        if (parser == null) parser = EasyHeaderValueParser.DEFAULT;
+        if (parser == null) parser = SaveHeaderValueParser.DEFAULT;
 
         CharArrayBuffer buffer = new CharArrayBuffer(value.length());
         buffer.append(value);
-        EasyParserCursor cursor = new EasyParserCursor(0, value.length());
+        SaveParserCursor cursor = new SaveParserCursor(0, value.length());
         return parser.parseParameters(buffer, cursor);
     }
 
@@ -142,11 +142,11 @@ public class EasyHeaderValueParser implements HeaderValueParser {
             throw new IllegalArgumentException("Value to parse may not be null");
         }
 
-        if (parser == null) parser = EasyHeaderValueParser.DEFAULT;
+        if (parser == null) parser = SaveHeaderValueParser.DEFAULT;
 
         CharArrayBuffer buffer = new CharArrayBuffer(value.length());
         buffer.append(value);
-        EasyParserCursor cursor = new EasyParserCursor(0, value.length());
+        SaveParserCursor cursor = new SaveParserCursor(0, value.length());
         return parser.parseNameValuePair(buffer, cursor);
     }
 
@@ -164,7 +164,7 @@ public class EasyHeaderValueParser implements HeaderValueParser {
 
 
     // non-javadoc, see interface HeaderValueParser
-    public HeaderElement[] parseElements(final CharArrayBuffer buffer, final EasyParserCursor cursor) {
+    public HeaderElement[] parseElements(final CharArrayBuffer buffer, final SaveParserCursor cursor) {
 
         if (buffer == null) {
             throw new IllegalArgumentException("Char array buffer may not be null");
@@ -185,7 +185,7 @@ public class EasyHeaderValueParser implements HeaderValueParser {
 
 
     // non-javadoc, see interface HeaderValueParser
-    public HeaderElement parseHeaderElement(final CharArrayBuffer buffer, final EasyParserCursor cursor) {
+    public HeaderElement parseHeaderElement(final CharArrayBuffer buffer, final SaveParserCursor cursor) {
 
         if (buffer == null) {
             throw new IllegalArgumentException("Char array buffer may not be null");
@@ -213,12 +213,12 @@ public class EasyHeaderValueParser implements HeaderValueParser {
      * @return a header element representing the argument
      */
     protected HeaderElement createHeaderElement(final String name, final String value, final NameValuePair[] params) {
-        return new EasyHeaderElement(name, value, params);
+        return new SaveHeaderElement(name, value, params);
     }
 
 
     // non-javadoc, see interface HeaderValueParser
-    public NameValuePair[] parseParameters(final CharArrayBuffer buffer, final EasyParserCursor cursor) {
+    public NameValuePair[] parseParameters(final CharArrayBuffer buffer, final SaveParserCursor cursor) {
 
         if (buffer == null) {
             throw new IllegalArgumentException("Char array buffer may not be null");
@@ -258,12 +258,12 @@ public class EasyHeaderValueParser implements HeaderValueParser {
 
 
     // non-javadoc, see interface HeaderValueParser
-    public NameValuePair parseNameValuePair(final CharArrayBuffer buffer, final EasyParserCursor cursor) {
+    public NameValuePair parseNameValuePair(final CharArrayBuffer buffer, final SaveParserCursor cursor) {
         return parseNameValuePair(buffer, cursor, ALL_DELIMITERS);
     }
 
 
-    public NameValuePair parseNameValuePair(final CharArrayBuffer buffer, final EasyParserCursor cursor, final char[] delimiters) {
+    public NameValuePair parseNameValuePair(final CharArrayBuffer buffer, final SaveParserCursor cursor, final char[] delimiters) {
 
         if (buffer == null) {
             throw new IllegalArgumentException("Char array buffer may not be null");
@@ -360,7 +360,7 @@ public class EasyHeaderValueParser implements HeaderValueParser {
      * @return a name-value pair representing the arguments
      */
     protected NameValuePair createNameValuePair(final String name, final String value) {
-        return new EasyNameValuePair(name, value);
+        return new SaveNameValuePair(name, value);
     }
 }
 

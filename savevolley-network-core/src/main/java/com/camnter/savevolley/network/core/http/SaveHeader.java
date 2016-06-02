@@ -48,7 +48,7 @@ import com.camnter.savevolley.network.core.http.exception.ParseException;
  * @version $Revision: 652956 $ $Date: 2008-05-02 17:13:05 -0700 (Fri, 02 May 2008) $
  * @since 4.0
  */
-public class EasyHeader implements Header, Cloneable {
+public class SaveHeader implements Header, Cloneable {
 
     /**
      * Header name.
@@ -67,7 +67,7 @@ public class EasyHeader implements Header, Cloneable {
      * @param name the header name
      * @param value the header value
      */
-    public EasyHeader(final String name, final String value) {
+    public SaveHeader(final String name, final String value) {
         super();
         if (name == null) {
             throw new IllegalArgumentException("Name may not be null");
@@ -104,7 +104,7 @@ public class EasyHeader implements Header, Cloneable {
      */
     public String toString() {
         // no need for non-default formatting in toString()
-        return EasyLineFormatter.DEFAULT.formatHeader(null, this).toString();
+        return SaveLineFormatter.DEFAULT.formatHeader(null, this).toString();
     }
 
 
@@ -113,13 +113,13 @@ public class EasyHeader implements Header, Cloneable {
      *
      * @return an array of header elements
      * @throws ParseException in case of a parse error
-     * @see com.camnter.savevolley.network.core.http.EasyHeaderValueParser parseElements(String,
+     * @see SaveHeaderValueParser parseElements(String,
      * HeaderValueParser)
      */
     public HeaderElement[] getElements() throws ParseException {
         if (this.value != null) {
             // result intentionally not cached, it's probably not used again
-            return EasyHeaderValueParser.parseElements(this.value, null);
+            return SaveHeaderValueParser.parseElements(this.value, null);
         } else {
             return new HeaderElement[] {};
         }

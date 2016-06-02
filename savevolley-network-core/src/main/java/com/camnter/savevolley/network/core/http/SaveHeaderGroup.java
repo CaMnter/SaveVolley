@@ -32,7 +32,7 @@ import java.util.Locale;
  * @author Michael Becke
  * @since 4.0
  */
-public class EasyHeaderGroup implements Cloneable {
+public class SaveHeaderGroup implements Cloneable {
 
     /** The list of headers for this group, in the order in which they were added */
     private List headers;
@@ -41,7 +41,7 @@ public class EasyHeaderGroup implements Cloneable {
     /**
      * Constructor for HeaderGroup.
      */
-    public EasyHeaderGroup() {
+    public SaveHeaderGroup() {
         this.headers = new ArrayList(16);
     }
 
@@ -147,7 +147,7 @@ public class EasyHeaderGroup implements Cloneable {
                 valueBuffer.append(headers[i].getValue());
             }
 
-            return new EasyHeader(name.toLowerCase(Locale.ENGLISH), valueBuffer.toString());
+            return new SaveHeader(name.toLowerCase(Locale.ENGLISH), valueBuffer.toString());
         }
     }
 
@@ -253,7 +253,7 @@ public class EasyHeaderGroup implements Cloneable {
      * @since 4.0
      */
     public HeaderIterator iterator() {
-        return new EasyListHeaderIterator(this.headers, null);
+        return new SaveListHeaderIterator(this.headers, null);
     }
 
 
@@ -266,7 +266,7 @@ public class EasyHeaderGroup implements Cloneable {
      * @since 4.0
      */
     public HeaderIterator iterator(final String name) {
-        return new EasyListHeaderIterator(this.headers, name);
+        return new SaveListHeaderIterator(this.headers, name);
     }
 
 
@@ -275,15 +275,15 @@ public class EasyHeaderGroup implements Cloneable {
      *
      * @return copy of this object
      */
-    public EasyHeaderGroup copy() {
-        EasyHeaderGroup clone = new EasyHeaderGroup();
+    public SaveHeaderGroup copy() {
+        SaveHeaderGroup clone = new SaveHeaderGroup();
         clone.headers.addAll(this.headers);
         return clone;
     }
 
 
     public Object clone() throws CloneNotSupportedException {
-        EasyHeaderGroup clone = (EasyHeaderGroup) super.clone();
+        SaveHeaderGroup clone = (SaveHeaderGroup) super.clone();
         clone.headers = new ArrayList(this.headers);
         return clone;
     }

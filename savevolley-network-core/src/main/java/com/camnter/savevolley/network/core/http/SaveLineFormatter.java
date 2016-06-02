@@ -45,15 +45,15 @@ import com.camnter.savevolley.network.core.util.CharArrayBuffer;
  * @version $Revision: 574185 $
  * @since 4.0
  */
-public class EasyLineFormatter implements LineFormatter {
+public class SaveLineFormatter implements LineFormatter {
 
     /**
      * A default instance of this class, for use as default or fallback.
-     * Note that {@link EasyLineFormatter} is not a singleton, there can
+     * Note that {@link SaveLineFormatter} is not a singleton, there can
      * be many instances of the class itself and of derived classes.
      * The instance here provides non-customized, default behavior.
      */
-    public final static EasyLineFormatter DEFAULT = new EasyLineFormatter();
+    public final static SaveLineFormatter DEFAULT = new SaveLineFormatter();
 
     // public default constructor
 
@@ -67,8 +67,8 @@ public class EasyLineFormatter implements LineFormatter {
      * {@link #DEFAULT default}
      * @return the formatted protocol version
      */
-    public final static String formatProtocolVersion(final EasyProtocolVersion version, LineFormatter formatter) {
-        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
+    public final static String formatProtocolVersion(final SaveProtocolVersion version, LineFormatter formatter) {
+        if (formatter == null) formatter = SaveLineFormatter.DEFAULT;
         return formatter.appendProtocolVersion(null, version).toString();
     }
 
@@ -83,7 +83,7 @@ public class EasyLineFormatter implements LineFormatter {
      * @return the formatted request line
      */
     public final static String formatRequestLine(final RequestLine reqline, LineFormatter formatter) {
-        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
+        if (formatter == null) formatter = SaveLineFormatter.DEFAULT;
         return formatter.formatRequestLine(null, reqline).toString();
     }
 
@@ -98,7 +98,7 @@ public class EasyLineFormatter implements LineFormatter {
      * @return the formatted status line
      */
     public final static String formatStatusLine(final StatusLine statline, LineFormatter formatter) {
-        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
+        if (formatter == null) formatter = SaveLineFormatter.DEFAULT;
         return formatter.formatStatusLine(null, statline).toString();
     }
 
@@ -113,7 +113,7 @@ public class EasyLineFormatter implements LineFormatter {
      * @return the formatted header
      */
     public final static String formatHeader(final Header header, LineFormatter formatter) {
-        if (formatter == null) formatter = EasyLineFormatter.DEFAULT;
+        if (formatter == null) formatter = SaveLineFormatter.DEFAULT;
         return formatter.formatHeader(null, header).toString();
     }
 
@@ -136,7 +136,7 @@ public class EasyLineFormatter implements LineFormatter {
 
 
     // non-javadoc, see interface LineFormatter
-    public CharArrayBuffer appendProtocolVersion(final CharArrayBuffer buffer, final EasyProtocolVersion version) {
+    public CharArrayBuffer appendProtocolVersion(final CharArrayBuffer buffer, final SaveProtocolVersion version) {
         if (version == null) {
             throw new IllegalArgumentException("Protocol version may not be null");
         }
@@ -168,7 +168,7 @@ public class EasyLineFormatter implements LineFormatter {
      * @return the estimated length of the formatted protocol version,
      * in characters
      */
-    protected int estimateProtocolVersionLen(final EasyProtocolVersion version) {
+    protected int estimateProtocolVersionLen(final SaveProtocolVersion version) {
         return version.getProtocol().length() + 4; // room for "HTTP/1.1"
     }
 

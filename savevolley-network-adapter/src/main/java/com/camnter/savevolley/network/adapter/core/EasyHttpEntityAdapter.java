@@ -16,7 +16,7 @@
 
 package com.camnter.savevolley.network.adapter.core;
 
-import com.camnter.savevolley.network.core.http.EasyHttpEntity;
+import com.camnter.savevolley.network.core.http.SaveHttpEntity;
 
 /**
  * Description：EasyHttpEntityAdapter
@@ -24,5 +24,5 @@ import com.camnter.savevolley.network.core.http.EasyHttpEntity;
  * Time：2016-05-27 14:10
  */
 public interface EasyHttpEntityAdapter<T> {
-    EasyHttpEntity adaptiveEntity(T t);
+    SaveHttpEntity adaptiveEntity(T t);
 }

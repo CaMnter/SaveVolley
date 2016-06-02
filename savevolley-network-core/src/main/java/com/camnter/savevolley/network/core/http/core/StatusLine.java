@@ -31,7 +31,7 @@
 
 package com.camnter.savevolley.network.core.http.core;
 
-import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 
 /**
  * Represents a status line as returned from a HTTP server.
@@ -47,7 +47,7 @@ import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
  */
 public interface StatusLine {
 
-    EasyProtocolVersion getProtocolVersion();
+    SaveProtocolVersion getProtocolVersion();
 
     int getStatusCode();
 

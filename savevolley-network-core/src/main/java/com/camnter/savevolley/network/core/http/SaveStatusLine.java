@@ -29,12 +29,12 @@ import com.camnter.savevolley.network.core.http.core.StatusLine;
  * @version $Id: BasicStatusLine.java 604625 2007-12-16 14:11:11Z olegk $
  * @since 4.0
  */
-public class EasyStatusLine implements StatusLine, Cloneable {
+public class SaveStatusLine implements StatusLine, Cloneable {
 
     // ----------------------------------------------------- Instance Variables
 
     /** The protocol version. */
-    private final EasyProtocolVersion protoVersion;
+    private final SaveProtocolVersion protoVersion;
 
     /** The status code. */
     private final int statusCode;
@@ -53,7 +53,7 @@ public class EasyStatusLine implements StatusLine, Cloneable {
      * @param reasonPhrase the reason phrase to the status code, or
      * <code>null</code>
      */
-    public EasyStatusLine(final EasyProtocolVersion version, int statusCode, final String reasonPhrase) {
+    public SaveStatusLine(final SaveProtocolVersion version, int statusCode, final String reasonPhrase) {
         super();
         if (version == null) {
             throw new IllegalArgumentException("Protocol version may not be null.");
@@ -80,7 +80,7 @@ public class EasyStatusLine implements StatusLine, Cloneable {
     /**
      * @return the HTTP-Version
      */
-    public EasyProtocolVersion getProtocolVersion() {
+    public SaveProtocolVersion getProtocolVersion() {
         return this.protoVersion;
     }
 
@@ -95,7 +95,7 @@ public class EasyStatusLine implements StatusLine, Cloneable {
 
     public String toString() {
         // no need for non-default formatting in toString()
-        return EasyLineFormatter.DEFAULT.formatStatusLine(null, this).toString();
+        return SaveLineFormatter.DEFAULT.formatStatusLine(null, this).toString();
     }
 
 

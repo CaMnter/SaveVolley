@@ -28,14 +28,14 @@ import com.camnter.savevolley.network.core.util.CharArrayBuffer;
  *
  * @author <a href="mailto:oleg at ural.com">Oleg Kalnichevski</a>
  */
-public class EasyParserCursor {
+public class SaveParserCursor {
 
     private final int lowerBound;
     private final int upperBound;
     private int pos;
 
 
-    public EasyParserCursor(int lowerBound, int upperBound) {
+    public SaveParserCursor(int lowerBound, int upperBound) {
         super();
         if (lowerBound < 0) {
             throw new IndexOutOfBoundsException("Lower bound cannot be negative");

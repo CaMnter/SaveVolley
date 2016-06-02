@@ -31,7 +31,7 @@
 
 package com.camnter.savevolley.network.core.http.core;
 
-import com.camnter.savevolley.network.core.http.EasyParserCursor;
+import com.camnter.savevolley.network.core.http.SaveParserCursor;
 import com.camnter.savevolley.network.core.http.exception.ParseException;
 import com.camnter.savevolley.network.core.util.CharArrayBuffer;
 
@@ -82,7 +82,7 @@ public interface HeaderValueParser {
      * @return an array holding all elements of the header value
      * @throws ParseException in case of a parse error
      */
-    HeaderElement[] parseElements(CharArrayBuffer buffer, EasyParserCursor cursor)
+    HeaderElement[] parseElements(CharArrayBuffer buffer, SaveParserCursor cursor)
             throws ParseException;
 
     /**
@@ -96,7 +96,7 @@ public interface HeaderValueParser {
      * @return the parsed element
      * @throws ParseException in case of a parse error
      */
-    HeaderElement parseHeaderElement(CharArrayBuffer buffer, EasyParserCursor cursor)
+    HeaderElement parseHeaderElement(CharArrayBuffer buffer, SaveParserCursor cursor)
             throws ParseException;
 
     /**
@@ -179,7 +179,7 @@ public interface HeaderValueParser {
      * @return an array holding all items of the name-value list
      * @throws ParseException in case of a parse error
      */
-    NameValuePair[] parseParameters(CharArrayBuffer buffer, EasyParserCursor cursor)
+    NameValuePair[] parseParameters(CharArrayBuffer buffer, SaveParserCursor cursor)
             throws ParseException;
 
     /**
@@ -191,7 +191,7 @@ public interface HeaderValueParser {
      * @return the name-value pair, where the value is <code>null</code>
      * if no value is specified
      */
-    NameValuePair parseNameValuePair(CharArrayBuffer buffer, EasyParserCursor cursor)
+    NameValuePair parseNameValuePair(CharArrayBuffer buffer, SaveParserCursor cursor)
             throws ParseException;
 }
 

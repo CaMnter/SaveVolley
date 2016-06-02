@@ -17,8 +17,8 @@
 package com.camnter.savevolley.network.okhttp3.adapter;
 
 import com.camnter.savevolley.network.adapter.core.EasyHeaderAdapter;
-import com.camnter.savevolley.network.core.http.EasyHeader;
-import com.camnter.savevolley.network.core.http.EasyHttpResponse;
+import com.camnter.savevolley.network.core.http.SaveHeader;
+import com.camnter.savevolley.network.core.http.SaveHttpResponse;
 import okhttp3.Headers;
 import okhttp3.Response;
 
@@ -46,14 +46,14 @@ public class OkHttp3HeaderAdapter implements EasyHeaderAdapter<okhttp3.Response>
     }
 
 
-    @Override public void adaptiveHeader(EasyHttpResponse easyHttpResponse, Response response) {
+    @Override public void adaptiveHeader(SaveHttpResponse saveHttpResponse, Response response) {
         Headers headers;
         if (response == null || (headers = response.headers()) == null) return;
 
         for (int i = 0, len = headers.size(); i < len; i++) {
             final String name = headers.name(i), value = headers.value(i);
             if (name != null) {
-                easyHttpResponse.addHeader(new EasyHeader(name, value));
+                saveHttpResponse.addHeader(new SaveHeader(name, value));
             }
         }
     }

@@ -16,7 +16,7 @@
 
 package com.camnter.savevolley.network.adapter.core;
 
-import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 
 /**
  * Description：EasyProtocolVersionAdapter
@@ -24,5 +24,5 @@ import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
  * Time：2016-05-27 14:14
  */
 public interface EasyProtocolVersionAdapter<T> {
-    EasyProtocolVersion adaptiveProtocolVersion(T t);
+    SaveProtocolVersion adaptiveProtocolVersion(T t);
 }

@@ -31,7 +31,7 @@
 
 package com.camnter.savevolley.network.core.http.core;
 
-import com.camnter.savevolley.network.core.http.EasyProtocolVersion;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 
 /**
  * The first line of an Http Request.
@@ -46,7 +46,7 @@ public interface RequestLine {
 
     String getMethod();
 
-    EasyProtocolVersion getProtocolVersion();
+    SaveProtocolVersion getProtocolVersion();
 
     String getUri();
 }

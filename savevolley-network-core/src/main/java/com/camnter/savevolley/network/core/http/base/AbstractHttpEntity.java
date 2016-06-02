@@ -31,7 +31,7 @@
 
 package com.camnter.savevolley.network.core.http.base;
 
-import com.camnter.savevolley.network.core.http.EasyHeader;
+import com.camnter.savevolley.network.core.http.SaveHeader;
 import com.camnter.savevolley.network.core.http.core.Header;
 import com.camnter.savevolley.network.core.http.core.HttpEntity;
 import com.camnter.savevolley.network.core.http.protocol.HTTP;
@@ -103,7 +103,7 @@ public abstract class AbstractHttpEntity implements HttpEntity {
     public void setContentType(final String ctString) {
         Header h = null;
         if (ctString != null) {
-            h = new EasyHeader(HTTP.CONTENT_TYPE, ctString);
+            h = new SaveHeader(HTTP.CONTENT_TYPE, ctString);
         }
         setContentType(h);
     }
@@ -132,7 +132,7 @@ public abstract class AbstractHttpEntity implements HttpEntity {
     public void setContentEncoding(final String ceString) {
         Header h = null;
         if (ceString != null) {
-            h = new EasyHeader(HTTP.CONTENT_ENCODING, ceString);
+            h = new SaveHeader(HTTP.CONTENT_ENCODING, ceString);
         }
         setContentEncoding(h);
     }

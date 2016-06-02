@@ -24,11 +24,11 @@ import java.util.NoSuchElementException;
 
 /**
  * Implementation of a {@link HeaderIterator} based on a {@link List}.
- * For use by {@link EasyHeaderGroup}.
+ * For use by {@link SaveHeaderGroup}.
  *
  * @version $Revision: 584542 $
  */
-public class EasyListHeaderIterator implements HeaderIterator {
+public class SaveListHeaderIterator implements HeaderIterator {
 
     /**
      * A list of headers to iterate over.
@@ -62,7 +62,7 @@ public class EasyListHeaderIterator implements HeaderIterator {
      * @param name the name of the headers over which to iterate, or
      * <code>null</code> for any
      */
-    public EasyListHeaderIterator(List headers, String name) {
+    public SaveListHeaderIterator(List headers, String name) {
         if (headers == null) {
             throw new IllegalArgumentException("Header list must not be null.");
         }

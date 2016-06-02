@@ -31,9 +31,9 @@
 
 package com.camnter.savevolley.network.core.http.base;
 
-import com.camnter.savevolley.network.core.http.EasyHeader;
-import com.camnter.savevolley.network.core.http.EasyHeaderGroup;
-import com.camnter.savevolley.network.core.http.EasyHttpParams;
+import com.camnter.savevolley.network.core.http.SaveHeader;
+import com.camnter.savevolley.network.core.http.SaveHeaderGroup;
+import com.camnter.savevolley.network.core.http.SaveHttpParams;
 import com.camnter.savevolley.network.core.http.core.Header;
 import com.camnter.savevolley.network.core.http.core.HeaderIterator;
 import com.camnter.savevolley.network.core.http.core.HttpMessage;
@@ -49,14 +49,14 @@ import java.util.Iterator;
  */
 public abstract class AbstractHttpMessage implements HttpMessage {
 
-    protected EasyHeaderGroup headergroup;
+    protected SaveHeaderGroup headergroup;
 
     protected HttpParams params;
 
 
     protected AbstractHttpMessage(final HttpParams params) {
         super();
-        this.headergroup = new EasyHeaderGroup();
+        this.headergroup = new SaveHeaderGroup();
         this.params = params;
     }
 
@@ -107,7 +107,7 @@ public abstract class AbstractHttpMessage implements HttpMessage {
         if (name == null) {
             throw new IllegalArgumentException("Header name may not be null");
         }
-        this.headergroup.addHeader(new EasyHeader(name, value));
+        this.headergroup.addHeader(new SaveHeader(name, value));
     }
 
 
@@ -122,7 +122,7 @@ public abstract class AbstractHttpMessage implements HttpMessage {
         if (name == null) {
             throw new IllegalArgumentException("Header name may not be null");
         }
-        this.headergroup.updateHeader(new EasyHeader(name, value));
+        this.headergroup.updateHeader(new SaveHeader(name, value));
     }
 
 
@@ -167,7 +167,7 @@ public abstract class AbstractHttpMessage implements HttpMessage {
     // non-javadoc, see interface HttpMessage
     public HttpParams getParams() {
         if (this.params == null) {
-            this.params = new EasyHttpParams();
+            this.params = new SaveHttpParams();
         }
         return this.params;
     }

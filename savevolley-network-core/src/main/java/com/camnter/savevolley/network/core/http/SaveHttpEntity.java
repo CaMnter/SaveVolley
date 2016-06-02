@@ -29,7 +29,7 @@ import java.io.OutputStream;
  * @version $Revision: 496070 $
  * @since 4.0
  */
-public class EasyHttpEntity extends AbstractHttpEntity {
+public class SaveHttpEntity extends AbstractHttpEntity {
 
     private InputStream content;
     private boolean contentObtained;
@@ -41,7 +41,7 @@ public class EasyHttpEntity extends AbstractHttpEntity {
      * The content is initially missing, the content length
      * is set to a negative number.
      */
-    public EasyHttpEntity() {
+    public SaveHttpEntity() {
         super();
         this.length = -1;
     }

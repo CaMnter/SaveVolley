@@ -37,7 +37,7 @@ import java.io.Serializable;
  * @author <a href="mailto:rolandw at apache.org">Roland Weber</a>
  * @version $Revision: 609106 $
  */
-public class EasyProtocolVersion implements Serializable, Cloneable {
+public class SaveProtocolVersion implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 8950662842175091068L;
 
@@ -58,7 +58,7 @@ public class EasyProtocolVersion implements Serializable, Cloneable {
      * @param major the major version number of the protocol
      * @param minor the minor version number of the protocol
      */
-    public EasyProtocolVersion(String protocol, int major, int minor) {
+    public SaveProtocolVersion(String protocol, int major, int minor) {
         if (protocol == null) {
             throw new IllegalArgumentException("Protocol name must not be null.");
         }
@@ -111,7 +111,7 @@ public class EasyProtocolVersion implements Serializable, Cloneable {
      * of the base class, and to define constants for commonly used versions.
      * <br/>
      * The default implementation in this class returns <code>this</code>
-     * if the version matches, and creates a new {@link EasyProtocolVersion}
+     * if the version matches, and creates a new {@link SaveProtocolVersion}
      * otherwise.
      *
      * @param major the major version
@@ -119,14 +119,14 @@ public class EasyProtocolVersion implements Serializable, Cloneable {
      * @return a protocol version with the same protocol name
      * and the argument version
      */
-    public EasyProtocolVersion forVersion(int major, int minor) {
+    public SaveProtocolVersion forVersion(int major, int minor) {
 
         if ((major == this.major) && (minor == this.minor)) {
             return this;
         }
 
         // argument checking is done in the constructor
-        return new EasyProtocolVersion(this.protocol, major, minor);
+        return new SaveProtocolVersion(this.protocol, major, minor);
     }
 
 
@@ -156,10 +156,10 @@ public class EasyProtocolVersion implements Serializable, Cloneable {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof EasyProtocolVersion)) {
+        if (!(obj instanceof SaveProtocolVersion)) {
             return false;
         }
-        EasyProtocolVersion that = (EasyProtocolVersion) obj;
+        SaveProtocolVersion that = (SaveProtocolVersion) obj;
 
         return ((this.protocol.equals(that.protocol)) &&
                 (this.major == that.major) &&
@@ -176,7 +176,7 @@ public class EasyProtocolVersion implements Serializable, Cloneable {
      * @return <code>true</code> if {@link #compareToVersion compareToVersion}
      * can be called with the argument, <code>false</code> otherwise
      */
-    public boolean isComparable(EasyProtocolVersion that) {
+    public boolean isComparable(SaveProtocolVersion that) {
         return (that != null) && this.protocol.equals(that.protocol);
     }
 
@@ -195,7 +195,7 @@ public class EasyProtocolVersion implements Serializable, Cloneable {
      * object,
      * or if the argument is <code>null</code>
      */
-    public int compareToVersion(EasyProtocolVersion that) {
+    public int compareToVersion(SaveProtocolVersion that) {
         if (that == null) {
             throw new IllegalArgumentException("Protocol version must not be null.");
         }
@@ -222,7 +222,7 @@ public class EasyProtocolVersion implements Serializable, Cloneable {
      * and {@link #compareToVersion compares} as greater or equal,
      * <code>false</code> otherwise
      */
-    public final boolean greaterEquals(EasyProtocolVersion version) {
+    public final boolean greaterEquals(SaveProtocolVersion version) {
         return isComparable(version) && (compareToVersion(version) >= 0);
     }
 
@@ -236,7 +236,7 @@ public class EasyProtocolVersion implements Serializable, Cloneable {
      * and {@link #compareToVersion compares} as less or equal,
      * <code>false</code> otherwise
      */
-    public final boolean lessEquals(EasyProtocolVersion version) {
+    public final boolean lessEquals(SaveProtocolVersion version) {
         return isComparable(version) && (compareToVersion(version) <= 0);
     }
 

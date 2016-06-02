@@ -65,7 +65,7 @@ import com.camnter.savevolley.network.core.util.LangUtils;
  * @version $Revision: 604625 $ $Date: 2007-12-16 06:11:11 -0800 (Sun, 16 Dec 2007) $
  * @since 4.0
  */
-public class EasyHeaderElement implements HeaderElement, Cloneable {
+public class SaveHeaderElement implements HeaderElement, Cloneable {
 
     private final String name;
     private final String value;
@@ -80,7 +80,7 @@ public class EasyHeaderElement implements HeaderElement, Cloneable {
      * @param parameters header element parameters. May be <tt>null</tt>.
      * Parameters are copied by reference, not by value
      */
-    public EasyHeaderElement(final String name, final String value, final NameValuePair[] parameters) {
+    public SaveHeaderElement(final String name, final String value, final NameValuePair[] parameters) {
         super();
         if (name == null) {
             throw new IllegalArgumentException("Name may not be null");
@@ -101,7 +101,7 @@ public class EasyHeaderElement implements HeaderElement, Cloneable {
      * @param name header element name
      * @param value header element value. May be <tt>null</tt>
      */
-    public EasyHeaderElement(final String name, final String value) {
+    public SaveHeaderElement(final String name, final String value) {
         this(name, value, null);
     }
 
@@ -187,7 +187,7 @@ public class EasyHeaderElement implements HeaderElement, Cloneable {
         if (object == null) return false;
         if (this == object) return true;
         if (object instanceof HeaderElement) {
-            EasyHeaderElement that = (EasyHeaderElement) object;
+            SaveHeaderElement that = (SaveHeaderElement) object;
             return this.name.equals(that.name) && LangUtils.equals(this.value, that.value) &&
                     LangUtils.equals(this.parameters, that.parameters);
         } else {

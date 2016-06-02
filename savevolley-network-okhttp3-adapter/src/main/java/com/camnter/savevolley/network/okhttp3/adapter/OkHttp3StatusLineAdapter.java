@@ -18,7 +18,7 @@ package com.camnter.savevolley.network.okhttp3.adapter;
 
 import com.camnter.savevolley.network.adapter.core.EasyProtocolVersionAdapter;
 import com.camnter.savevolley.network.adapter.core.EasyStatusLineAdapter;
-import com.camnter.savevolley.network.core.http.EasyStatusLine;
+import com.camnter.savevolley.network.core.http.SaveStatusLine;
 
 /**
  * Description：OkHttp3StatusLineAdapter
@@ -45,8 +45,8 @@ public class OkHttp3StatusLineAdapter implements EasyStatusLineAdapter<okhttp3.R
 
 
     @Override
-    public EasyStatusLine adaptiveStatusLine(EasyProtocolVersionAdapter<okhttp3.Response> easyProtocolVersionAdapter, okhttp3.Response response) {
-        return new EasyStatusLine(easyProtocolVersionAdapter.adaptiveProtocolVersion(response),
+    public SaveStatusLine adaptiveStatusLine(EasyProtocolVersionAdapter<okhttp3.Response> easyProtocolVersionAdapter, okhttp3.Response response) {
+        return new SaveStatusLine(easyProtocolVersionAdapter.adaptiveProtocolVersion(response),
                 response.code(), response.message());
     }
 }
