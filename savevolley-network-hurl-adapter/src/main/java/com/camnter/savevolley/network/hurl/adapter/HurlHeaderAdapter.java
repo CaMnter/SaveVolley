@@ -16,7 +16,7 @@
 
 package com.camnter.savevolley.network.hurl.adapter;
 
-import com.camnter.savevolley.network.adapter.core.EasyHeaderAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveHeaderAdapter;
 import com.camnter.savevolley.network.core.http.SaveHeader;
 import com.camnter.savevolley.network.core.http.SaveHttpResponse;
 import com.camnter.savevolley.network.core.http.core.Header;
@@ -29,7 +29,7 @@ import java.util.Map;
  * Created by：CaMnter
  * Time：2016-05-29 22:45
  */
-public class HurlHeaderAdapter implements EasyHeaderAdapter<HttpURLConnection> {
+public class HurlHeaderAdapter implements SaveHeaderAdapter<HttpURLConnection> {
 
     private volatile static HurlHeaderAdapter instance = null;
 

@@ -16,13 +16,13 @@
 
 package com.camnter.savevolley.network.adapter.core;
 
-import com.camnter.savevolley.network.core.http.SaveStatusLine;
+import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 
 /**
- * Description：EasyStatusLineAdapter
+ * Description：SaveProtocolVersionAdapter
  * Created by：CaMnter
- * Time：2016-05-27 14:15
+ * Time：2016-05-27 14:14
  */
-public interface EasyStatusLineAdapter<T> {
-    SaveStatusLine adaptiveStatusLine(EasyProtocolVersionAdapter<T> easyProtocolVersionAdapter, T t);
+public interface SaveProtocolVersionAdapter<T> {
+    SaveProtocolVersion adaptiveProtocolVersion(T t);
 }

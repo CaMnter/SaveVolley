@@ -16,7 +16,7 @@
 
 package com.camnter.savevolley.network.hurl.adapter;
 
-import com.camnter.savevolley.network.adapter.core.EasyProtocolVersionAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveProtocolVersionAdapter;
 import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 
 /**
@@ -24,7 +24,7 @@ import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
  * Created by：CaMnter
  * Time：2016-05-29 22:53
  */
-public class HurlProtocolVersionAdapter implements EasyProtocolVersionAdapter {
+public class HurlProtocolVersionAdapter implements SaveProtocolVersionAdapter {
 
     private volatile static HurlProtocolVersionAdapter instance = null;
 

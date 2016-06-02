@@ -16,16 +16,17 @@
 
 package com.camnter.savevolley.network.okhttp3.adapter;
 
-import com.camnter.savevolley.network.adapter.core.EasyProtocolVersionAdapter;
-import com.camnter.savevolley.network.adapter.core.EasyStatusLineAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveProtocolVersionAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveStatusLineAdapter;
 import com.camnter.savevolley.network.core.http.SaveStatusLine;
+import okhttp3.Response;
 
 /**
  * Description：OkHttp3StatusLineAdapter
  * Created by：CaMnter
  * Time：2016-05-27 16:24
  */
-public class OkHttp3StatusLineAdapter implements EasyStatusLineAdapter<okhttp3.Response> {
+public class OkHttp3StatusLineAdapter implements SaveStatusLineAdapter<Response> {
 
     private volatile static OkHttp3StatusLineAdapter instance = null;
 
@@ -45,8 +46,8 @@ public class OkHttp3StatusLineAdapter implements EasyStatusLineAdapter<okhttp3.R
 
 
     @Override
-    public SaveStatusLine adaptiveStatusLine(EasyProtocolVersionAdapter<okhttp3.Response> easyProtocolVersionAdapter, okhttp3.Response response) {
-        return new SaveStatusLine(easyProtocolVersionAdapter.adaptiveProtocolVersion(response),
+    public SaveStatusLine adaptiveStatusLine(SaveProtocolVersionAdapter<Response> saveProtocolVersionAdapter, okhttp3.Response response) {
+        return new SaveStatusLine(saveProtocolVersionAdapter.adaptiveProtocolVersion(response),
                 response.code(), response.message());
     }
 }

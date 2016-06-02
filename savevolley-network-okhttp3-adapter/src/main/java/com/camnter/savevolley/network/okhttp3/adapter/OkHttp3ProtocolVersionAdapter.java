@@ -16,16 +16,17 @@
 
 package com.camnter.savevolley.network.okhttp3.adapter;
 
-import com.camnter.savevolley.network.adapter.core.EasyProtocolVersionAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveProtocolVersionAdapter;
 import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
 import okhttp3.Protocol;
+import okhttp3.Response;
 
 /**
  * Description：OkHttp3ProtocolVersionAdapter
  * Created by：CaMnter
  * Time：2016-05-27 16:16
  */
-public class OkHttp3ProtocolVersionAdapter implements EasyProtocolVersionAdapter<okhttp3.Response> {
+public class OkHttp3ProtocolVersionAdapter implements SaveProtocolVersionAdapter<Response> {
 
     private volatile static OkHttp3ProtocolVersionAdapter instance = null;
 

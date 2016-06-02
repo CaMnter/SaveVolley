@@ -16,8 +16,8 @@
 
 package com.camnter.savevolley.network.hurl.adapter;
 
-import com.camnter.savevolley.network.adapter.core.EasyProtocolVersionAdapter;
-import com.camnter.savevolley.network.adapter.core.EasyStatusLineAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveProtocolVersionAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveStatusLineAdapter;
 import com.camnter.savevolley.network.core.http.SaveStatusLine;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -27,7 +27,7 @@ import java.net.HttpURLConnection;
  * Created by：CaMnter
  * Time：2016-05-29 22:36
  */
-public class HurlStatusLineAdapter implements EasyStatusLineAdapter<HttpURLConnection> {
+public class HurlStatusLineAdapter implements SaveStatusLineAdapter<HttpURLConnection> {
 
     private volatile static HurlStatusLineAdapter instance = null;
 
@@ -47,10 +47,10 @@ public class HurlStatusLineAdapter implements EasyStatusLineAdapter<HttpURLConne
 
 
     @Override
-    public SaveStatusLine adaptiveStatusLine(EasyProtocolVersionAdapter<HttpURLConnection> easyProtocolVersionAdapter, HttpURLConnection httpURLConnection) {
+    public SaveStatusLine adaptiveStatusLine(SaveProtocolVersionAdapter<HttpURLConnection> saveProtocolVersionAdapter, HttpURLConnection httpURLConnection) {
         try {
             return new SaveStatusLine(
-                    easyProtocolVersionAdapter.adaptiveProtocolVersion(httpURLConnection),
+                    saveProtocolVersionAdapter.adaptiveProtocolVersion(httpURLConnection),
                     httpURLConnection.getResponseCode(), httpURLConnection.getResponseMessage());
         } catch (IOException e) {
             e.printStackTrace();

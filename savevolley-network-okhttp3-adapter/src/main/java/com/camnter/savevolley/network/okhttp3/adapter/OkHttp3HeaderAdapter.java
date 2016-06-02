@@ -16,7 +16,7 @@
 
 package com.camnter.savevolley.network.okhttp3.adapter;
 
-import com.camnter.savevolley.network.adapter.core.EasyHeaderAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveHeaderAdapter;
 import com.camnter.savevolley.network.core.http.SaveHeader;
 import com.camnter.savevolley.network.core.http.SaveHttpResponse;
 import okhttp3.Headers;
@@ -27,7 +27,7 @@ import okhttp3.Response;
  * Created by：CaMnter
  * Time：2016-05-27 16:46
  */
-public class OkHttp3HeaderAdapter implements EasyHeaderAdapter<okhttp3.Response> {
+public class OkHttp3HeaderAdapter implements SaveHeaderAdapter<Response> {
 
     private volatile static OkHttp3HeaderAdapter instance = null;
 

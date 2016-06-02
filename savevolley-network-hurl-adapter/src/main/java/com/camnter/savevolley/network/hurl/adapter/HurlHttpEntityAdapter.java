@@ -16,7 +16,7 @@
 
 package com.camnter.savevolley.network.hurl.adapter;
 
-import com.camnter.savevolley.network.adapter.core.EasyHttpEntityAdapter;
+import com.camnter.savevolley.network.adapter.core.SaveHttpEntityAdapter;
 import com.camnter.savevolley.network.core.http.SaveHttpEntity;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +27,7 @@ import java.net.HttpURLConnection;
  * Created by：CaMnter
  * Time：2016-05-29 22:59
  */
-public class HurlHttpEntityAdapter implements EasyHttpEntityAdapter<HttpURLConnection> {
+public class HurlHttpEntityAdapter implements SaveHttpEntityAdapter<HttpURLConnection> {
 
     private volatile static HurlHttpEntityAdapter instance = null;
 

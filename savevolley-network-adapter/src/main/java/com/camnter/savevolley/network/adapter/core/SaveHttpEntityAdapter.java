@@ -16,13 +16,13 @@
 
 package com.camnter.savevolley.network.adapter.core;
 
-import com.camnter.savevolley.network.core.http.SaveHttpResponse;
+import com.camnter.savevolley.network.core.http.SaveHttpEntity;
 
 /**
- * Description：EasyHeaderAdapter
+ * Description：SaveHttpEntityAdapter
  * Created by：CaMnter
- * Time：2016-05-27 14:01
+ * Time：2016-05-27 14:10
  */
-public interface EasyHeaderAdapter<T> {
-    void adaptiveHeader(SaveHttpResponse saveHttpResponse, T t);
+public interface SaveHttpEntityAdapter<T> {
+    SaveHttpEntity adaptiveEntity(T t);
 }
