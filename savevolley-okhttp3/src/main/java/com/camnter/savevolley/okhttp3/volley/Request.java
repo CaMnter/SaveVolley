@@ -81,7 +81,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * is provided by subclasses, who have a better idea of how to deliver an
      * already-parsed response.
      *
-     * @deprecated Use {@link #Request(int, String, com.camnter.savevolley.hurl.Response.ErrorListener)}.
+     * @deprecated Use {@link #Request(int, String, com.camnter.savevolley.okhttp3.volley.Response.ErrorListener)}.
      */
     @Deprecated public Request(String url, Response.ErrorListener listener) {
         this(Method.DEPRECATED_GET_OR_POST, url, listener);
@@ -152,7 +152,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
 
 
     /**
-     * @return this request's {@link com.camnter.savevolley.hurl.Response.ErrorListener}.
+     * @return this request's {@link com.camnter.savevolley.okhttp3.volley.Response.ErrorListener}.
      */
     public Response.ErrorListener getErrorListener() {
         return mErrorListener;
