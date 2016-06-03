@@ -8,7 +8,7 @@ include ':samples', ':agera', ':okhttp3', ':savevolley-network-okhttp3-adapter',
         ':savevolley-okhttp3',
         ':savevolley-network-core'
 
-gradle.ext.versionCode = 1
+gradle.ext.versionCode = 106
 gradle.ext.versionName = '1.0.0'
 
 gradle.ext.bintrayRepo = 'SaveVolley'
