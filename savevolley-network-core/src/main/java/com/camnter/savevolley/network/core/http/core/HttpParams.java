@@ -34,7 +34,7 @@ package com.camnter.savevolley.network.core.http.core;
 /**
  * Represents a collection of HTTP protocol and framework parameters.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 610763 $
  * @since 4.0
  */

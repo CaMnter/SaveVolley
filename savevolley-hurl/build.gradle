@@ -32,6 +32,10 @@ android {
         sourceCompatibility gradle.javaVersion
         targetCompatibility gradle.javaVersion
     }
+    lintOptions {
+        abortOnError false
+    }
+
 }
 
 publish {
@@ -41,7 +45,7 @@ publish {
     groupId = gradle.group
     artifactId = 'savevolley-hurl'
     version = gradle.versionName
-    autoPublish = false
+    autoPublish = true
 }
 
 install {

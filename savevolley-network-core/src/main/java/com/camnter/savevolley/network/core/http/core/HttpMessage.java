@@ -37,7 +37,7 @@ import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
  * A generic HTTP message.
  * Holds what is common between requests and responses.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 610823 $
  * @since 4.0
  */

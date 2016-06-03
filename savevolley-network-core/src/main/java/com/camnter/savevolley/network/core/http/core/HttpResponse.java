@@ -37,7 +37,7 @@ import java.util.Locale;
 /**
  * An HTTP response.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 652956 $
  * @since 4.0
  */
@@ -83,7 +83,6 @@ public interface HttpResponse extends HttpMessage {
      * Updates the status line of this response with a new status code.
      * The status line can only be updated if it is available. It must
      * have been set either explicitly or in a constructor.
-     * <br/>
      * The reason phrase will be updated according to the new status code,
      * based on the current {@link #getLocale locale}. It can be set
      * explicitly using {@link #setReasonPhrase setReasonPhrase}.

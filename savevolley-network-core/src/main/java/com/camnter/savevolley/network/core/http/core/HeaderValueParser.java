@@ -114,47 +114,40 @@ public interface HeaderValueParser {
      * of
      * <a href="http://www.w3.org/Protocols/rfc2616/rfc2616.txt">RFC 2616</a>.
      * </p>
-     * <h>2.2 Basic Rules</h>
+     * 2.2 Basic Rules
      * <p>
      * The following rules are used throughout this specification to
      * describe basic parsing constructs.
      * The US-ASCII coded character set is defined by ANSI X3.4-1986.
      * </p>
      * <pre>
-     *     OCTET          = <any 8-bit sequence of data>
-     *     CHAR           = <any US-ASCII character (octets 0 - 127)>
-     *     UPALPHA        = <any US-ASCII uppercase letter "A".."Z">
-     *     LOALPHA        = <any US-ASCII lowercase letter "a".."z">
+     *     OCTET          = any 8-bit sequence of data
+     *     CHAR           = any US-ASCII character (octets 0 - 127)
+     *     UPALPHA        = any US-ASCII uppercase letter "A".."Z"
+     *     LOALPHA        = any US-ASCII lowercase letter "a".."z"
      *     ALPHA          = UPALPHA | LOALPHA
-     *     DIGIT          = <any US-ASCII digit "0".."9">
-     *     CTL            = <any US-ASCII control character
+     *     DIGIT          = any US-ASCII digit "0".."9">
+     *     CTL            = any US-ASCII control character
      *                      (octets 0 - 31) and DEL (127)>
-     *     CR             = <US-ASCII CR, carriage return (13)>
-     *     LF             = <US-ASCII LF, linefeed (10)>
-     *     SP             = <US-ASCII SP, space (32)>
-     *     HT             = <US-ASCII HT, horizontal-tab (9)>
-     *     <">            = <US-ASCII double-quote mark (34)>
+     *     CR             = US-ASCII CR, carriage return (13)
+     *     LF             = US-ASCII LF, linefeed (10)
+     *     SP             = US-ASCII SP, space (32)
+     *     HT             = US-ASCII HT, horizontal-tab (9)
+     *     <">            = US-ASCII double-quote mark (34)
      * </pre>
      * <p>
      * Many HTTP/1.1 header field values consist of words separated
      * by LWS or special characters. These special characters MUST be
      * in a quoted string to be used within
      * a parameter value (as defined in section 3.6).
-     * <p>
      * <pre>
-     * token          = 1*<any CHAR except CTLs or separators>
-     * separators     = "(" | ")" | "<" | ">" | "@"
-     *                | "," | ";" | ":" | "\" | <">
-     *                | "/" | "[" | "]" | "?" | "="
-     *                | "{" | "}" | SP | HT
+     * token          = 1*any CHAR except CTLs or separators
      * </pre>
      * <p>
      * A string of text is parsed as a single word if it is quoted using
      * double-quote marks.
      * </p>
      * <pre>
-     * quoted-string  = ( <"> *(qdtext | quoted-pair ) <"> )
-     * qdtext         = <any TEXT except <">>
      * </pre>
      * <p>
      * The backslash character ("\") MAY be used as a single-character

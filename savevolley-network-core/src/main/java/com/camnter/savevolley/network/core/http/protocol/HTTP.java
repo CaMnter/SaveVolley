@@ -34,7 +34,7 @@ package com.camnter.savevolley.network.core.http.protocol;
 /**
  * Constants and static helpers related to the HTTP protocol.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 555989 $
  * @since 4.0
  */

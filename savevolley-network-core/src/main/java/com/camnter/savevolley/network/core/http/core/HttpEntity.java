@@ -38,15 +38,12 @@ import java.io.OutputStream;
 /**
  * An entity that can be sent or received with an HTTP message.
  * Entities can be found in some
- * {@link HttpEntityEnclosingRequest requests} and in
- * {@link HttpResponse responses}, where they are optional.
  * <p>
  * In some places, the JavaDoc distinguishes three kinds of entities,
  * depending on where their {@link #getContent content} originates:
  * <ul>
  * <li><b>streamed</b>: The content is received from a stream, or
  * generated on the fly. In particular, this category includes
- * entities being received from a {@link HttpConnection connection}.
  * {@link #isStreaming Streamed} entities are generally not
  * {@link #isRepeatable repeatable}.
  * </li>
@@ -64,7 +61,7 @@ import java.io.OutputStream;
  * to consider non-repeatable entities as streamed, and those that are
  * repeatable (without a huge effort) as self-contained.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 645824 $
  * @since 4.0
  */
@@ -85,7 +82,6 @@ public interface HttpEntity {
      * chunked encoding should be used when the entity is sent.
      * For entities that are received, it can also indicate whether
      * the entity was received with chunked encoding.
-     * <br/>
      * The behavior of wrapping entities is implementation dependent,
      * but should respect the primary purpose.
      *
@@ -155,7 +151,6 @@ public interface HttpEntity {
      * content has been consumed, <code>false</code> afterwards.
      * Self-contained entities should return <code>false</code>.
      * Wrapping entities should delegate this call to the wrapped entity.
-     * <br/>
      * The content of a streamed entity is consumed when the stream
      * returned by {@link #getContent getContent} has been read to EOF,
      * or after {@link #consumeContent consumeContent} has been called.
@@ -171,14 +166,12 @@ public interface HttpEntity {
     /**
      * TODO: The name of this method is misnomer. It will be renamed to
      * #finish() in the next major release.
-     * <br/>
      * This method is called to indicate that the content of this entity
      * is no longer required. All entity implementations are expected to
      * release all allocated resources as a result of this method
      * invocation. Content streaming entities are also expected to
      * dispose of the remaining content, if any. Wrapping entities should
      * delegate this call to the wrapped entity.
-     * <br/>
      * This method is of particular importance for entities being
      * received from a {Http Connection}. The entity
      * needs to be consumed completely in order to re-use the connection

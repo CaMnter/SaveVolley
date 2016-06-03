@@ -106,7 +106,7 @@ public class BasicNetwork implements Network {
 
 
     /**
-     * Converts Headers[] to Map<String, String>.
+     * Converts Headers array to Map
      */
     protected static Map<String, String> convertHeaders(Header[] headers) {
         Map<String, String> result = new TreeMap<String, String>(String.CASE_INSENSITIVE_ORDER);

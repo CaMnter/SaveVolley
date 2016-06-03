@@ -55,7 +55,7 @@ import com.camnter.savevolley.network.core.util.CharArrayBuffer;
  * MUST NOT be modified.
  * </p>
  *
- * @author <a href="mailto:rolandw AT apache.org">Roland Weber</a>
+ * @author Roland Weber
  *
  *
  *         <!-- empty lines above to avoid 'svn diff' context problems -->
@@ -101,7 +101,6 @@ public interface LineFormatter {
      * The buffer will be cleared before use.
      * @param statline the status line to format
      * @return the formatted status line
-     * @throws ParseException in case of a parse error
      */
     CharArrayBuffer formatStatusLine(CharArrayBuffer buffer, StatusLine statline);
 
@@ -111,7 +110,6 @@ public interface LineFormatter {
      * In order to generate well-formed HTTP, the lines in the result
      * must be separated by the HTTP line break sequence CR-LF.
      * There is <i>no</i> trailing CR-LF in the result.
-     * <br/>
      * See the class comment for details about the buffer argument.
      *
      * @param buffer a buffer available for formatting, or
@@ -120,7 +118,6 @@ public interface LineFormatter {
      * @param header the header to format
      * @return a buffer holding the formatted header, never <code>null</code>.
      * The returned buffer may be different from the argument buffer.
-     * @throws ParseException in case of a parse error
      */
     CharArrayBuffer formatHeader(CharArrayBuffer buffer, Header header);
 }
