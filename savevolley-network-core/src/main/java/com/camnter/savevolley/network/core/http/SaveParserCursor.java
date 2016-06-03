@@ -26,7 +26,7 @@ import com.camnter.savevolley.network.core.util.CharArrayBuffer;
  * <li>the bounds limiting the scope of the parsing operation</li>
  * </ul>
  *
- * @author <a href="mailto:oleg at ural.com">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  */
 public class SaveParserCursor {
 

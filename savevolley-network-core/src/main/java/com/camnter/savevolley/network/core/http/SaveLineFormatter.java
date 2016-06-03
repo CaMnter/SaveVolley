@@ -34,10 +34,10 @@ import com.camnter.savevolley.network.core.util.CharArrayBuffer;
  * on any specific IO mechanism.
  * Instances of this interface are expected to be stateless and thread-safe.
  *
- * @author <a href="mailto:remm@apache.org">Remy Maucherat</a>
- * @author <a href="mailto:mbowler@GargoyleSoftware.com">Mike Bowler</a>
- * @author <a href="mailto:jsdever@apache.org">Jeff Dever</a>
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Remy Maucherat
+ * @author Mike Bowler
+ * @author Jeff Dever
+ * @author Oleg Kalnichevski
  * @author and others
  *
  *

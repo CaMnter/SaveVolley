@@ -42,7 +42,7 @@ import java.io.IOException;
  * Provides the commonly used attributes for streamed and self-contained
  * implementations of {@link HttpEntity HttpEntity}.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 496070 $
  * @since 4.0
  */
@@ -110,6 +110,19 @@ public abstract class AbstractHttpEntity implements HttpEntity {
 
 
     /**
+     * Specifies the Content-Type header.
+     * The default implementation sets the value of the
+     * {@link #contentType contentType} attribute.
+     *
+     * @param contentType the new Content-Encoding header, or
+     * <code>null</code> to unset
+     */
+    public void setContentType(final Header contentType) {
+        this.contentType = contentType;
+    }
+
+
+    /**
      * Obtains the Content-Encoding header.
      * The default implementation returns the value of the
      * {@link #contentEncoding contentEncoding} attribute.
@@ -139,6 +152,19 @@ public abstract class AbstractHttpEntity implements HttpEntity {
 
 
     /**
+     * Specifies the Content-Encoding header.
+     * The default implementation sets the value of the
+     * {@link #contentEncoding contentEncoding} attribute.
+     *
+     * @param contentEncoding the new Content-Encoding header, or
+     * <code>null</code> to unset
+     */
+    public void setContentEncoding(final Header contentEncoding) {
+        this.contentEncoding = contentEncoding;
+    }
+
+
+    /**
      * Obtains the 'chunked' flag.
      * The default implementation returns the value of the
      * {@link #chunked chunked} attribute.
@@ -159,32 +185,6 @@ public abstract class AbstractHttpEntity implements HttpEntity {
      */
     public void setChunked(boolean b) {
         this.chunked = b;
-    }
-
-
-    /**
-     * Specifies the Content-Type header.
-     * The default implementation sets the value of the
-     * {@link #contentType contentType} attribute.
-     *
-     * @param contentType the new Content-Encoding header, or
-     * <code>null</code> to unset
-     */
-    public void setContentType(final Header contentType) {
-        this.contentType = contentType;
-    }
-
-
-    /**
-     * Specifies the Content-Encoding header.
-     * The default implementation sets the value of the
-     * {@link #contentEncoding contentEncoding} attribute.
-     *
-     * @param contentEncoding the new Content-Encoding header, or
-     * <code>null</code> to unset
-     */
-    public void setContentEncoding(final Header contentEncoding) {
-        this.contentEncoding = contentEncoding;
     }
 
 

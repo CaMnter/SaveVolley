@@ -38,8 +38,8 @@ import com.camnter.savevolley.network.core.http.core.HttpParams;
  * Type specific setters and getters are mapped to the abstract,
  * generic getters and setters.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
- * @author <a href="mailto:rolandw at apache.org">Roland Weber</a>
+ * @author Oleg Kalnichevski
+ * @author Roland Weber
  * @version $Revision: 542224 $
  */
 public abstract class AbstractHttpParams implements HttpParams {

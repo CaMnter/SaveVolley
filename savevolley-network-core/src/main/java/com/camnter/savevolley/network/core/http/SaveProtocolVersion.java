@@ -33,8 +33,8 @@ import java.io.Serializable;
  * Note that {@link #equals} and {@link #hashCode} are defined as
  * final here, they cannot be overridden in derived classes.
  *
- * @author <a href="mailto:oleg@ural.ru">Oleg Kalnichevski</a>
- * @author <a href="mailto:rolandw at apache.org">Roland Weber</a>
+ * @author Oleg Kalnichevski
+ * @author Roland Weber
  * @version $Revision: 609106 $
  */
 public class SaveProtocolVersion implements Serializable, Cloneable {
@@ -109,7 +109,6 @@ public class SaveProtocolVersion implements Serializable, Cloneable {
      * Obtains a specific version of this protocol.
      * This can be used by derived classes to instantiate themselves instead
      * of the base class, and to define constants for commonly used versions.
-     * <br/>
      * The default implementation in this class returns <code>this</code>
      * if the version matches, and creates a new {@link SaveProtocolVersion}
      * otherwise.

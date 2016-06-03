@@ -55,10 +55,10 @@ import com.camnter.savevolley.network.core.util.LangUtils;
  * a set of additional parameters.
  * </p>
  *
- * @author <a href="mailto:bcholmes@interlog.com">B.C. Holmes</a>
- * @author <a href="mailto:jericho@thinkfree.com">Park, Sung-Gu</a>
- * @author <a href="mailto:mbowler@GargoyleSoftware.com">Mike Bowler</a>
- * @author <a href="mailto:oleg at ural.com">Oleg Kalnichevski</a>
+ * @author B.C. Holmes
+ * @author Park, Sung-Gu
+ * @author Mike Bowler
+ * @author Oleg Kalnichevski
  *
  *
  *         <!-- empty lines above to avoid 'svn diff' context problems -->

@@ -120,21 +120,6 @@ public interface HeaderValueParser {
      * describe basic parsing constructs.
      * The US-ASCII coded character set is defined by ANSI X3.4-1986.
      * </p>
-     * <pre>
-     *     OCTET          = any 8-bit sequence of data
-     *     CHAR           = any US-ASCII character (octets 0 - 127)
-     *     UPALPHA        = any US-ASCII uppercase letter "A".."Z"
-     *     LOALPHA        = any US-ASCII lowercase letter "a".."z"
-     *     ALPHA          = UPALPHA | LOALPHA
-     *     DIGIT          = any US-ASCII digit "0".."9">
-     *     CTL            = any US-ASCII control character
-     *                      (octets 0 - 31) and DEL (127)>
-     *     CR             = US-ASCII CR, carriage return (13)
-     *     LF             = US-ASCII LF, linefeed (10)
-     *     SP             = US-ASCII SP, space (32)
-     *     HT             = US-ASCII HT, horizontal-tab (9)
-     *     <">            = US-ASCII double-quote mark (34)
-     * </pre>
      * <p>
      * Many HTTP/1.1 header field values consist of words separated
      * by LWS or special characters. These special characters MUST be
@@ -156,7 +141,7 @@ public interface HeaderValueParser {
      * <pre>
      * quoted-pair    = "\" CHAR
      * </pre>
-     * <h>3.6 Transfer Codings</h>
+     * 3.6 Transfer Codings
      * <p>
      * Parameters are in the form of attribute/value pairs.
      * </p>

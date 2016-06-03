@@ -31,10 +31,10 @@ import java.util.List;
  * Instances of this class are stateless and thread-safe.
  * Derived classes are expected to maintain these properties.
  *
- * @author <a href="mailto:bcholmes@interlog.com">B.C. Holmes</a>
- * @author <a href="mailto:jericho@thinkfree.com">Park, Sung-Gu</a>
- * @author <a href="mailto:mbowler@GargoyleSoftware.com">Mike Bowler</a>
- * @author <a href="mailto:oleg at ural.com">Oleg Kalnichevski</a>
+ * @author B.C. Holmes
+ * @author Park, Sung-Gu
+ * @author Mike Bowler
+ * @author Oleg Kalnichevski
  * @author and others
  *
  *

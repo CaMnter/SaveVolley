@@ -35,7 +35,7 @@ package com.camnter.savevolley.network.core.util;
  * A set of utility methods to help produce consistent
  * {@link Object#equals equals} and {@link Object#hashCode hashCode} methods.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @since 4.0
  */
 public final class LangUtils {

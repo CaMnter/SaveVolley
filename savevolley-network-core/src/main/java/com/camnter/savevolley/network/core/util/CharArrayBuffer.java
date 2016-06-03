@@ -36,7 +36,7 @@ import com.camnter.savevolley.network.core.http.protocol.HTTP;
 /**
  * A resizable char array.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 496070 $
  * @since 4.0
  */

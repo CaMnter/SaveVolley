@@ -34,7 +34,7 @@ package com.camnter.savevolley.network.core.http.core;
 /**
  * One element of an HTTP {@link Header header} value.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  *
  *
  *         <!-- empty lines above to avoid 'svn diff' context problems -->

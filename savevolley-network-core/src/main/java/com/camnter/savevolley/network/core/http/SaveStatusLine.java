@@ -24,8 +24,8 @@ import com.camnter.savevolley.network.core.http.core.StatusLine;
  * See <a href="http://www.ietf.org/rfc/rfc2616.txt">RFC2616</a> section 6.1.
  * This class is immutable and therefore inherently thread safe.
  *
- * @author <a href="mailto:jsdever@apache.org">Jeff Dever</a>
- * @author <a href="mailto:mbowler@GargoyleSoftware.com">Mike Bowler</a>
+ * @author Jeff Dever
+ * @author Mike Bowler
  * @version $Id: BasicStatusLine.java 604625 2007-12-16 14:11:11Z olegk $
  * @since 4.0
  */

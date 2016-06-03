@@ -159,7 +159,7 @@ public class SaveHeaderGroup implements Cloneable {
      * <p>Header name comparison is case insensitive.
      *
      * @param name the name of the header(s) to get
-     * @return an array of length >= 0
+     * @return an array of length
      */
     public Header[] getHeaders(String name) {
         ArrayList headersFound = new ArrayList();
@@ -218,7 +218,7 @@ public class SaveHeaderGroup implements Cloneable {
     /**
      * Gets all of the headers contained within this group.
      *
-     * @return an array of length >= 0
+     * @return an array of length
      */
     public Header[] getAllHeaders() {
         return (Header[]) headers.toArray(new Header[headers.size()]);

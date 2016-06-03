@@ -25,7 +25,7 @@ import java.io.OutputStream;
 /**
  * A generic streamed entity being received on a connection.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 496070 $
  * @since 4.0
  */

@@ -43,7 +43,7 @@ import java.util.Iterator;
 /**
  * Basic implementation of an HTTP message that can be modified.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 620287 $
  * @since 4.0
  */

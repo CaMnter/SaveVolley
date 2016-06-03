@@ -38,7 +38,7 @@ import com.camnter.savevolley.network.core.http.SaveProtocolVersion;
  * It contains the method, URI, and HTTP version of the request.
  * For details, see RFC 2616.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 573864 $
  * @since 4.0
  */

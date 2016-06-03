@@ -28,7 +28,7 @@ import java.util.Locale;
  * Basic implementation of an HTTP response that can be modified.
  * This implementation makes sure that there always is a status line.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 573864 $
  * @since 4.0
  */

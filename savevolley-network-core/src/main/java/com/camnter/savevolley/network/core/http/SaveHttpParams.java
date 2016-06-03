@@ -31,7 +31,7 @@ import java.util.Map;
  * in the collection itself, its value will be drawn from the parent
  * collection of parameters.
  *
- * @author <a href="mailto:oleg at ural.ru">Oleg Kalnichevski</a>
+ * @author Oleg Kalnichevski
  * @version $Revision: 610464 $
  */
 public final class SaveHttpParams extends AbstractHttpParams implements Serializable, Cloneable {
