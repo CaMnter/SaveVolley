@@ -139,7 +139,7 @@ public class BasicNetwork implements Network {
 
 
     /**
-     * Converts Headers[] to Map<String, String>.
+     * Converts Headers array to Map.
      */
     /*
      * 进行 Apache Header[] -> Map<String, String> 转换
