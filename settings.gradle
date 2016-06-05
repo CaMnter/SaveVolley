@@ -11,9 +11,9 @@ include ':samples', ':agera', ':okhttp3', ':savevolley-network-okhttp3-adapter',
 gradle.ext.versionCode = 106
 gradle.ext.versionName = '1.0.0'
 
-gradle.ext.bintrayRepo = 'SaveVolley'
+gradle.ext.bintrayRepo = 'maven'
 gradle.ext.bintrayName = 'SaveVolley'
-gradle.ext.bintrayUser = 'CaMnter'
+gradle.ext.bintrayUser = 'camnter'
 
 gradle.ext.description = 'Save volley from anything'
 gradle.ext.group = 'com.camnter.savevolley'

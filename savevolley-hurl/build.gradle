@@ -43,7 +43,7 @@ publish {
     uploadName = gradle.bintrayName
     repoName = gradle.bintrayRepo
     groupId = gradle.group
-    artifactId = 'savevolley-hurl'
+    artifactId = 'hurl'
     version = gradle.versionName
     autoPublish = true
 }

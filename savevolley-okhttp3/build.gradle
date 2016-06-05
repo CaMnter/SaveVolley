@@ -44,7 +44,7 @@ publish {
     uploadName = gradle.bintrayName
     repoName = gradle.bintrayRepo
     groupId = gradle.group
-    artifactId = 'savevolley-okhttp3'
+    artifactId = 'okhttp3'
     version = gradle.versionName
     autoPublish = true
 }
