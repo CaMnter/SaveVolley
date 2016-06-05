@@ -1,5 +1,11 @@
 # savevolley-okhttp3
    
+## gradle
+   
+```grovvy
+compile 'com.camnter.savevolley:okhttp3:1.0.0'
+```
+   
 [savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
    
 将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
@@ -7,6 +13,13 @@
       
       
 # savevolley-hurl
+   
+## gradle
+   
+```grovvy
+compile 'com.camnter.savevolley:hurl:1.0.0'
+```
+   
    
 **API >= 9**     
    
