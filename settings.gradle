@@ -1,5 +1,5 @@
 include ':samples',
-        ':google-agera-1.1.0-beta2',
+        ':google-agera',
         ':square-okhttp3',
         ':savevolley-network-okhttp3-adapter',
         ':savevolley-network-hurl-adapter',
