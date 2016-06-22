@@ -3,7 +3,7 @@
 ## gradle
    
 ```grovvy
-compile 'com.camnter.savevolley:okhttp3:1.0.2'
+compile 'com.camnter.savevolley:okhttp3:1.0.3'
 ```
    
 [savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
@@ -17,7 +17,7 @@ compile 'com.camnter.savevolley:okhttp3:1.0.2'
 ## gradle
    
 ```grovvy
-compile 'com.camnter.savevolley:hurl:1.0.2'
+compile 'com.camnter.savevolley:hurl:1.0.3'
 ```
    
    
@@ -62,12 +62,12 @@ compile 'com.camnter.savevolley:hurl:1.0.2'
 **savevolley-network-adapter** 的子模块，**HttpConnection** -> **通用的 HTTP Response API**。
    
    
-# okhttp3
+# square-okhttp3
    
 [square/okhttp](https://github.com/square/okhttp)  Version: **3.3.1**   
    
    
-# agera
+# google-agera
    
 [google/agera](https://github.com/google/agera)  Version: **1.0.0-rc2**   
    
@@ -76,7 +76,7 @@ compile 'com.camnter.savevolley:hurl:1.0.2'
    
 # volley-comments 
      
-[volley-comments ](https://github.com/CaMnter/SaveVolley/tree/master/volley-comments/src/main/java/com/android/volley)      
+[volley-comments](https://github.com/CaMnter/SaveVolley/tree/master/volley-comments/src/main/java/com/android/volley)      
       
 原版的 **google/volley**，全部代码加上了注释。
       

@@ -47,7 +47,7 @@ publish {
     uploadName = gradle.bintrayName
     repoName = gradle.bintrayRepo
     groupId = gradle.group
-    artifactId = 'okhttp3'
+    artifactId = 'square-okhttp3'
     version = gradle.versionName
     autoPublish = true
 }
@@ -57,7 +57,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'SaveVolley okhttp3'
+                name 'SaveVolley square-okhttp3'
                 url gradle.url
                 licenses {
                     license {

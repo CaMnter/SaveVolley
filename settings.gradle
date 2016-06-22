@@ -1,6 +1,6 @@
 include ':samples',
-        ':agera',
-        ':okhttp3',
+        ':google-agera',
+        ':square-okhttp3',
         ':savevolley-network-okhttp3-adapter',
         ':savevolley-network-hurl-adapter',
         ':savevolley-okhttp3-agera',
@@ -11,8 +11,8 @@ include ':samples',
         ':savevolley-okhttp3',
         ':savevolley-network-core'
 
-gradle.ext.versionCode = 108
-gradle.ext.versionName = '1.0.2'
+gradle.ext.versionCode = 109
+gradle.ext.versionName = '1.0.3'
 
 gradle.ext.bintrayRepo = 'maven'
 gradle.ext.bintrayName = 'SaveVolley'
