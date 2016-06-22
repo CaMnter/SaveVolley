@@ -3,7 +3,7 @@
 ## gradle
    
 ```grovvy
-compile 'com.camnter.savevolley:okhttp3:1.0.0'
+compile 'com.camnter.savevolley:okhttp3:1.0.2'
 ```
    
 [savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
@@ -17,7 +17,7 @@ compile 'com.camnter.savevolley:okhttp3:1.0.0'
 ## gradle
    
 ```grovvy
-compile 'com.camnter.savevolley:hurl:1.0.0'
+compile 'com.camnter.savevolley:hurl:1.0.2'
 ```
    
    
