@@ -12,7 +12,7 @@ include ':samples',
         ':savevolley-network-core'
 
 gradle.ext.versionCode = 106
-gradle.ext.versionName = '1.0.0'
+gradle.ext.versionName = '1.0.1'
 
 gradle.ext.bintrayRepo = 'maven'
 gradle.ext.bintrayName = 'SaveVolley'
