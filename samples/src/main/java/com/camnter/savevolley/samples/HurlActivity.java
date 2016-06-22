@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.camnter.savevolley.hurl.RequestQueue;
 import com.camnter.savevolley.hurl.VolleyError;
 import com.camnter.savevolley.hurl.toolbox.Volley;
+import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.request.HurlGsonRequest;
 
 /**
@@ -31,7 +32,7 @@ import com.camnter.savevolley.samples.request.HurlGsonRequest;
 public class HurlActivity extends Okhttp3Activity {
     @Override protected void initData() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(new HurlGsonRequest<GankData>("http://gank.io/api/data/Android/1/1",
+        queue.add(new HurlGsonRequest<GankData>(TEST_URL,
                 GankData.class) {
             @Override public void onResponse(GankData response) {
                 mGetContentText.setText(response.toString());

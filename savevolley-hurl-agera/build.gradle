@@ -21,4 +21,5 @@ android {
 dependencies {
     testCompile 'junit:junit:4.12'
     provided 'com.camnter.savevolley:hurl:1.0.3'
+    provided 'com.google.android.agera:agera:1.1.0-beta2'
 }

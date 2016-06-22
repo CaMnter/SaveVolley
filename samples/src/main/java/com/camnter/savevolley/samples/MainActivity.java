@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         this.classes = new ArrayList<>();
         this.classes.add(HurlActivity.class);
         this.classes.add(Okhttp3Activity.class);
+        this.classes.add(Okhttp3AgeraActivity.class);
 
         this.mainAdapter = new MainAdapter();
         this.mainAdapter.setList(this.classes);
