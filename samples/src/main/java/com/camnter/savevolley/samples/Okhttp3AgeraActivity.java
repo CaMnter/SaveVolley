@@ -11,6 +11,7 @@ import com.google.android.agera.Repository;
 import com.google.android.agera.Reservoir;
 import com.google.android.agera.Reservoirs;
 import com.google.android.agera.Result;
+import com.google.android.agera.Updatable;
 import java.util.concurrent.Executor;
 
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
@@ -28,8 +29,7 @@ public class Okhttp3AgeraActivity extends Okhttp3Activity {
 
     @Override protected void initData() {
         final Reservoir<Object> reservoir = Reservoirs.reservoir();
-        Volleys
-            .getRequestQueue(this)
+        Volleys.getRequestQueue(this)
             .add(new OkHttp3GsonRequest<GankData>(TEST_URL, GankData.class) {
                 @Override public void onResponse(GankData response) {
                     reservoir.accept(response);
@@ -41,7 +41,7 @@ public class Okhttp3AgeraActivity extends Okhttp3Activity {
                     reservoir.accept(error);
                 }
             });
-        Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
+        final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
             INITIAL_VALUE)
             .observe(reservoir)
             .onUpdatesPerLoop()
@@ -54,16 +54,20 @@ public class Okhttp3AgeraActivity extends Okhttp3Activity {
                  */
                 @NonNull @Override public Result<GankResultData> apply(@NonNull Object input) {
                     if (input instanceof GankData) {
-                        Result.success(((GankData) input).results.get(0));
+                        return Result.success(((GankData) input).results.get(0));
                     } else if (input instanceof VolleyError) {
-                        Result.failure((VolleyError) input);
+                        return Result.failure((VolleyError) input);
                     }
                     return Result.failure();
                 }
             })
             .orSkip()
             .compile();
-        mGetContentText.setText(repository.get().toString());
 
+        repository.addUpdatable(new Updatable() {
+            @Override public void update() {
+                mGetContentText.setText(repository.get().toString());
+            }
+        });
     }
 }
