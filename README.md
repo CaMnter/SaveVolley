@@ -69,9 +69,9 @@ compile 'com.camnter.savevolley:hurl:1.0.3'
    
 # google-agera
    
-[google/agera](https://github.com/google/agera)  Version: **1.0.0-rc2**   
+[google/agera](https://github.com/google/agera)  Version: **1.1.0-beta2**   
    
-**お楽しみ**
+
    
    
 # volley-comments 
