@@ -20,6 +20,7 @@ android {
 
 dependencies {
     testCompile 'junit:junit:4.12'
+    provided 'com.google.code.gson:gson:2.7'
     provided 'com.camnter.savevolley:okhttp3:1.0.3'
     provided 'com.google.android.agera:agera:1.1.0-beta2'
 }

@@ -3,7 +3,7 @@ package com.camnter.savevolley.samples;
 import android.content.Context;
 import com.camnter.savevolley.okhttp3.volley.RequestQueue;
 import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
-import com.camnter.savevolley.samples.compiler.GsonReservoirRequest;
+import com.savevolley.okhttp3.agera.GsonReservoirRequest;
 
 /**
  * Description：Volleys

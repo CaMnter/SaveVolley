@@ -1,4 +1,4 @@
-package com.camnter.savevolley.samples.compiler;
+package com.savevolley.okhttp3.agera;
 
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
@@ -9,21 +9,21 @@ import com.camnter.savevolley.okhttp3.volley.toolbox.HttpHeaderParser;
 import com.google.android.agera.Reservoir;
 import com.google.android.agera.Reservoirs;
 import java.io.UnsupportedEncodingException;
+import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import static com.camnter.savevolley.samples.compiler.GsonReservoirRequest.PROTOCOL_CHARSET;
 
 /**
- * Description：JsonReservoirRequest
+ * Description：JsonArrayReservoirRequest
  * Created by：CaMnter
- * Time：2016-06-23 16:00
+ * Time：2016-06-23 16:09
  */
 
-public class JsonReservoirRequest extends Request<JSONObject>
-    implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class JsonArrayReservoirRequest extends Request<JSONArray>
+    implements Response.Listener<JSONArray>, Response.ErrorListener {
 
-    private final Response.Listener<JSONObject> mResponseListener;
+    protected static final String PROTOCOL_CHARSET = "utf-8";
+
+    private final Response.Listener<JSONArray> mResponseListener;
     private final Reservoir<Object> mReservoir;
 
 
@@ -32,23 +32,23 @@ public class JsonReservoirRequest extends Request<JSONObject>
     }
 
 
-    public JsonReservoirRequest(String url) {
+    public JsonArrayReservoirRequest(String url) {
         this(Method.GET, url);
     }
 
 
-    public JsonReservoirRequest(int method, String url) {
+    public JsonArrayReservoirRequest(int method, String url) {
         super(method, url, null);
         this.mResponseListener = this;
         this.mReservoir = Reservoirs.reservoir();
     }
 
 
-    @Override protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+    @Override protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
                 HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-            return Response.success(new JSONObject(jsonString),
+            return Response.success(new JSONArray(jsonString),
                 HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
@@ -58,7 +58,7 @@ public class JsonReservoirRequest extends Request<JSONObject>
     }
 
 
-    @Override protected void deliverResponse(JSONObject response) {
+    @Override protected void deliverResponse(JSONArray response) {
         this.mResponseListener.onResponse(response);
     }
 
@@ -73,7 +73,7 @@ public class JsonReservoirRequest extends Request<JSONObject>
     }
 
 
-    @Override public void onResponse(JSONObject response) {
+    @Override public void onResponse(JSONArray response) {
         this.mReservoir.accept(response);
     }
 

@@ -1,4 +1,4 @@
-package com.camnter.savevolley.samples.compiler;
+package com.savevolley.okhttp3.agera;
 
 import android.content.Context;
 import android.os.Looper;
@@ -10,11 +10,10 @@ import com.camnter.savevolley.okhttp3.volley.RequestQueue;
 import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
 import com.google.android.agera.Reservoir;
 
-import static com.camnter.savevolley.samples.compiler.SaveVolleyCompilerStates.GSON;
-import static com.camnter.savevolley.samples.compiler.SaveVolleyCompilerStates.JSON_ARRAY;
-import static com.camnter.savevolley.samples.compiler.SaveVolleyCompilerStates.JSON_OBJECT;
-import static com.camnter.savevolley.samples.compiler.SaveVolleyCompilerStates.ParseStyle;
-import static com.google.android.agera.Preconditions.checkNotNull;
+import static com.savevolley.okhttp3.agera.Preconditions.checkNotNull;
+import static com.savevolley.okhttp3.agera.SaveVolleyCompilerStates.GSON;
+import static com.savevolley.okhttp3.agera.SaveVolleyCompilerStates.JSON_ARRAY;
+import static com.savevolley.okhttp3.agera.SaveVolleyCompilerStates.JSON_OBJECT;
 
 /**
  * Description：SaveVolleyCompiler
@@ -63,8 +62,7 @@ public final class SaveVolleyCompiler<RType> implements
     static <RType> SaveVolleyCompiler<RType> request(
         @NonNull final String url) {
         checkNotNull(Looper.myLooper());
-        Preconditions.checkNotNull(url,
-            "The url was null, url == null");
+        checkNotNull(url, "The url was null, url == null");
         SaveVolleyCompiler compiler = compilers.get();
         if (compiler == null) {
             compiler = new SaveVolleyCompiler();
@@ -83,7 +81,7 @@ public final class SaveVolleyCompiler<RType> implements
 
     @NonNull @Override
     public SaveVolleyCompiler<RType> parseStyle(
-        @Nullable @ParseStyle Integer parseStyle) {
+        @Nullable @SaveVolleyCompilerStates.ParseStyle Integer parseStyle) {
         this.requestParseStyle = parseStyle != null ? parseStyle : GSON;
         return this;
     }
@@ -98,7 +96,7 @@ public final class SaveVolleyCompiler<RType> implements
     @NonNull @Override public SaveVolleyCompiler<RType> create() {
         switch (this.requestParseStyle) {
             case GSON:
-                Preconditions.checkNotNull(this.requestTypeClass,
+                checkNotNull(this.requestTypeClass,
                     "The parse style of response was null, requestTypeClass == null");
                 this.request = new GsonReservoirRequest<>(this.requestMethod, this.requestUrl,
                     this.requestTypeClass);
@@ -115,8 +113,7 @@ public final class SaveVolleyCompiler<RType> implements
 
 
     @Override public SaveVolley execute(@NonNull Context context) {
-        Preconditions.checkNotNull(this.request,
-            "The request was null, request == null");
+        checkNotNull(this.request, "The request was null, request == null");
         requestQueue(context).add(this.request);
         if (this.request instanceof GsonReservoirRequest) {
             this.reservoir = ((GsonReservoirRequest) this.request).getReservoir();
