@@ -1,6 +1,6 @@
 # SaveVolley
 
-**Save volley from anything By Agera to save . Thus , derived AgeraVolley** . **(｡>﹏<｡)**   
+**Save volley from anything, By Agera to save. Thus, derived the AgeraVolley** . **(｡>﹏<｡)**   
 
 
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE)
