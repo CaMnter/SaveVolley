@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.samples;
+package com.camnter.savevolley.samples.gson;
 
 import android.support.annotation.NonNull;
-import com.camnter.savevolley.okhttp3.agera.SaveVolley;
-import com.camnter.savevolley.okhttp3.agera.SaveVolleys;
-import com.camnter.savevolley.okhttp3.volley.Request;
-import com.camnter.savevolley.okhttp3.volley.VolleyError;
+import com.camnter.savevolley.hurl.Request.Method;
+import com.camnter.savevolley.hurl.VolleyError;
+import com.camnter.savevolley.hurl.agera.SaveVolley;
+import com.camnter.savevolley.hurl.agera.SaveVolleys;
 import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.bean.GankResultData;
 import com.google.android.agera.Function;
@@ -34,12 +34,12 @@ import static com.camnter.savevolley.okhttp3.agera.SaveVolleyCompilerStates.GSON
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
- * Description：Okhttp3AgeraActivity
+ * Description：HurlAgeraGsonActivity
  * Created by：CaMnter
- * Time：2016-06-22 17:46
+ * Time：2016-06-23 23:06
  */
 
-public class Okhttp3AgeraActivity extends Okhttp3Activity {
+public class HurlAgeraGsonActivity extends Okhttp3GsonActivity {
     private static final GankResultData INITIAL_VALUE = new GankResultData();
     private final Executor executor = newSingleThreadExecutor();
 
@@ -47,7 +47,7 @@ public class Okhttp3AgeraActivity extends Okhttp3Activity {
     @Override protected void initData() {
         SaveVolley saveVolley = SaveVolleys
             .request(TEST_URL)
-            .method(Request.Method.GET)
+            .method(Method.GET)
             .parseStyle(GSON)
             .jsonBean(GankData.class)
             .create()

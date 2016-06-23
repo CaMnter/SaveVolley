@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.samples;
+package com.camnter.savevolley.samples.gson;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -25,11 +25,11 @@ import com.camnter.savevolley.hurl.toolbox.Volley;
 import com.camnter.savevolley.samples.bean.GankData;
 
 /**
- * Description：HurlActivity
+ * Description：HurlGsonActivity
  * Created by：CaMnter
  * Time：2016-05-29 22:10
  */
-public class HurlActivity extends Okhttp3Activity {
+public class HurlGsonActivity extends Okhttp3GsonActivity {
     @Override protected void initData() {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(new HurlGsonRequest<GankData>(TEST_URL,
@@ -40,7 +40,7 @@ public class HurlActivity extends Okhttp3Activity {
 
 
             @Override public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HurlActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(HurlGsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("GsonRequest", error.getMessage());
             }
         });

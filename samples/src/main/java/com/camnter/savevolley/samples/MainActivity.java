@@ -24,6 +24,10 @@ import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyDividerItemDecoration;
 import com.camnter.savevolley.samples.adapter.MainAdapter;
+import com.camnter.savevolley.samples.gson.HurlGsonActivity;
+import com.camnter.savevolley.samples.gson.HurlAgeraGsonActivity;
+import com.camnter.savevolley.samples.gson.Okhttp3GsonActivity;
+import com.camnter.savevolley.samples.gson.Okhttp3AgeraGsonActivity;
 import java.util.ArrayList;
 
 /**
@@ -57,10 +61,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
         this.classes = new ArrayList<>();
-        this.classes.add(HurlActivity.class);
-        this.classes.add(Okhttp3Activity.class);
-        this.classes.add(HurlAgeraActivity.class);
-        this.classes.add(Okhttp3AgeraActivity.class);
+        this.classes.add(HurlGsonActivity.class);
+        this.classes.add(Okhttp3GsonActivity.class);
+        this.classes.add(HurlAgeraGsonActivity.class);
+        this.classes.add(Okhttp3AgeraGsonActivity.class);
 
         this.mainAdapter = new MainAdapter();
         this.mainAdapter.setList(this.classes);

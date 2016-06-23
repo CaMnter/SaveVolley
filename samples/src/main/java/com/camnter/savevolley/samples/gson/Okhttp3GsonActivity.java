@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.samples;
+package com.camnter.savevolley.samples.gson;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,14 +25,15 @@ import com.camnter.savevolley.okhttp3.gson.request.OkHttp3GsonRequest;
 import com.camnter.savevolley.okhttp3.volley.RequestQueue;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
+import com.camnter.savevolley.samples.R;
 import com.camnter.savevolley.samples.bean.GankData;
 
 /**
- * Description：HurlActivity
+ * Description：Okhttp3GsonActivity
  * Created by：CaMnter
  * Time：2016-05-29 21:58
  */
-public class Okhttp3Activity extends AppCompatActivity {
+public class Okhttp3GsonActivity extends AppCompatActivity {
 
     public static final String TEST_URL = "http://gank.io/api/data/Android/1/1";
 
@@ -65,7 +66,7 @@ public class Okhttp3Activity extends AppCompatActivity {
              * provided error code and optional user-readable message.
              */
             @Override public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Okhttp3Activity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(Okhttp3GsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("GsonRequest", error.getMessage());
             }
         });
