@@ -2,10 +2,8 @@ package com.camnter.savevolley.samples;
 
 import android.content.Context;
 import com.camnter.savevolley.okhttp3.volley.RequestQueue;
-import com.camnter.savevolley.okhttp3.volley.Response;
 import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
-import com.google.android.agera.Result;
-import com.google.android.agera.Supplier;
+import com.camnter.savevolley.samples.compiler.GsonReservoirRequest;
 
 /**
  * Description：Volleys
@@ -14,10 +12,11 @@ import com.google.android.agera.Supplier;
  */
 
 public class Volleys {
+
     private static final ThreadLocal<RequestQueue> requestQueueLocal = new ThreadLocal<>();
 
 
-    public static RequestQueue getRequestQueue(Context context) {
+    public static RequestQueue requestQueue(Context context) {
         if (requestQueueLocal.get() == null) {
             requestQueueLocal.set(Volley.newRequestQueue(context));
         }
@@ -25,7 +24,8 @@ public class Volleys {
     }
 
 
-    public static <T> Supplier<Result<Response<?>>> getVolleySupplier(Context context,T t) {
-        return null;
+    public static <T> GsonReservoirRequest<T> okHttp3ReservoirRequest(String url, Class<T> clazz) {
+        return new GsonReservoirRequest<>(url, clazz);
     }
+
 }

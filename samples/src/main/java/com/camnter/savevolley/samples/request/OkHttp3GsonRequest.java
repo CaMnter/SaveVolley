@@ -71,7 +71,7 @@ public abstract class OkHttp3GsonRequest<T> extends Request<T>
 
 
     /**
-     * @return this request's {@link com.camnter.savevolley.hurl.Response.ErrorListener}.
+     * @return this request's {@link com.camnter.savevolley.okhttp3.volley.Response.ErrorListener}.
      */
     public Response.ErrorListener getErrorListener() {
         return this;

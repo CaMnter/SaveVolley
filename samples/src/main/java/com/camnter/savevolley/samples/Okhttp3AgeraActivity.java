@@ -1,15 +1,16 @@
 package com.camnter.savevolley.samples;
 
 import android.support.annotation.NonNull;
+import com.camnter.savevolley.okhttp3.volley.Request;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.bean.GankResultData;
-import com.camnter.savevolley.samples.request.OkHttp3GsonRequest;
+import com.camnter.savevolley.samples.compiler.SaveVolley;
+import com.camnter.savevolley.samples.compiler.SaveVolleyCompilerStates;
+import com.camnter.savevolley.samples.compiler.SaveVolleys;
 import com.google.android.agera.Function;
 import com.google.android.agera.Repositories;
 import com.google.android.agera.Repository;
-import com.google.android.agera.Reservoir;
-import com.google.android.agera.Reservoirs;
 import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 import java.util.concurrent.Executor;
@@ -28,25 +29,19 @@ public class Okhttp3AgeraActivity extends Okhttp3Activity {
 
 
     @Override protected void initData() {
-        final Reservoir<Object> reservoir = Reservoirs.reservoir();
-        Volleys.getRequestQueue(this)
-            .add(new OkHttp3GsonRequest<GankData>(TEST_URL, GankData.class) {
-                @Override public void onResponse(GankData response) {
-                    reservoir.accept(response);
-                }
-
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    reservoir.accept(error);
-                }
-            });
+        SaveVolley saveVolley = SaveVolleys
+            .request(TEST_URL)
+            .method(Request.Method.GET)
+            .parseStyle(SaveVolleyCompilerStates.GSON)
+            .type(GankData.class)
+            .create()
+            .execute(this);
         final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
             INITIAL_VALUE)
-            .observe(reservoir)
+            .observe(saveVolley.getReservoir())
             .onUpdatesPerLoop()
             .goTo(executor)
-            .attemptGetFrom(reservoir)
+            .attemptGetFrom(saveVolley.getReservoir())
             .orSkip()
             .thenAttemptTransform(new Function<Object, Result<GankResultData>>() {
                 /**
@@ -63,7 +58,6 @@ public class Okhttp3AgeraActivity extends Okhttp3Activity {
             })
             .orSkip()
             .compile();
-
         repository.addUpdatable(new Updatable() {
             @Override public void update() {
                 mGetContentText.setText(repository.get().toString());
