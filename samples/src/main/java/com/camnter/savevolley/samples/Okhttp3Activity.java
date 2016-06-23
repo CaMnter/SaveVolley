@@ -27,17 +27,22 @@ import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
 import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.request.OkHttp3GsonRequest;
 
+/**
+ * Description：HurlActivity
+ * Created by：CaMnter
+ * Time：2016-05-29 21:58
+ */
 public class Okhttp3Activity extends AppCompatActivity {
 
     public static final String TEST_URL = "http://gank.io/api/data/Android/1/1";
 
-    protected TextView mGetContentText;
+    protected TextView getContentText;
 
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_network_hurl);
-        this.mGetContentText = (TextView) this.findViewById(R.id.get_content_text);
+        this.getContentText = (TextView) this.findViewById(R.id.get_content_text);
 
         this.initData();
     }
@@ -51,7 +56,7 @@ public class Okhttp3Activity extends AppCompatActivity {
              * Called when a response is received.
              */
             @Override public void onResponse(GankData response) {
-                mGetContentText.setText(response.toString());
+                getContentText.setText(response.toString());
             }
 
 

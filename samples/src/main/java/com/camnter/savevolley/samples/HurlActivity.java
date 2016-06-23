@@ -35,7 +35,7 @@ public class HurlActivity extends Okhttp3Activity {
         queue.add(new HurlGsonRequest<GankData>(TEST_URL,
                 GankData.class) {
             @Override public void onResponse(GankData response) {
-                mGetContentText.setText(response.toString());
+                getContentText.setText(response.toString());
             }
 
 

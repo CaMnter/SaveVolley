@@ -60,7 +60,7 @@ public class Okhttp3AgeraActivity extends Okhttp3Activity {
             .compile();
         repository.addUpdatable(new Updatable() {
             @Override public void update() {
-                mGetContentText.setText(repository.get().toString());
+                getContentText.setText(repository.get().toString());
             }
         });
     }
