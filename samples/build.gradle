@@ -71,3 +71,9 @@ dependencies {
      *****************************/
     compile 'com.camnter.savevolley:okhttp3:1.2.0'
 }
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.2.0'
+    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+}

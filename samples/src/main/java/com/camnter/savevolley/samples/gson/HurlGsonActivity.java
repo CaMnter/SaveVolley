@@ -34,11 +34,18 @@ public class HurlGsonActivity extends Okhttp3GsonActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(new HurlGsonRequest<GankData>(TEST_URL,
             GankData.class) {
+            /**
+             * Called when a response is received.
+             */
             @Override public void onResponse(GankData response) {
                 getContentText.setText(response.toString());
             }
 
 
+            /**
+             * Callback method that an error has been occurred with the
+             * provided error code and optional user-readable message.
+             */
             @Override public void onErrorResponse(VolleyError error) {
                 Toast.makeText(HurlGsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
                 Log.d("GsonRequest", error.getMessage());
