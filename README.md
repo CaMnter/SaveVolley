@@ -1,23 +1,103 @@
-# savevolley-okhttp3
+# savevolley-okhttp3-gson
+    
+## savevolley-okhttp3-gson gradle
    
-## gradle
-   
-```grovvy
-compile 'com.camnter.savevolley:okhttp3:1.0.3'
+```gradle
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.2.0'
+    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+}
 ```
+   
+可以使用 `OkHttp3GsonRequest` 。可以查看 [savevolley-okhttp3-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-gson/src/main/java/com/camnter/savevolley/okhttp3/gson/request) 。      
+   
+```java
+    RequestQueue queue = Volley.newRequestQueue(this);
+    queue.add(new OkHttp3GsonRequest<GankData>(TEST_URL,
+        GankData.class) {
+        /**
+         * Called when a response is received.
+         */
+        @Override public void onResponse(GankData response) {
+            getContentText.setText(response.toString());
+        }
+
+
+        /**
+         * Callback method that an error has been occurred with the
+         * provided error code and optional user-readable message.
+         */
+        @Override public void onErrorResponse(VolleyError error) {
+            Toast.makeText(Okhttp3GsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            Log.d("GsonRequest", error.getMessage());
+        }
+    });
+```
+   
+   
+# savevolley-okhttp3 
+   
+## savevolley-okhttp3 gradle
+   
+```gradle
+dependencies {
+    compile 'com.camnter.savevolley:okhttp3:1.0.3'
+}
+```
+   
+```java
+    RequestQueue queue = Volley.newRequestQueue(this);
+    queue.add(new HurlGsonRequest<GankData>(TEST_URL,
+        GankData.class) {
+        /**
+         * Called when a response is received.
+         */
+        @Override public void onResponse(GankData response) {
+            getContentText.setText(response.toString());
+        }
+
+
+        /**
+         * Callback method that an error has been occurred with the
+         * provided error code and optional user-readable message.
+         */
+        @Override public void onErrorResponse(VolleyError error) {
+            Toast.makeText(HurlGsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+            Log.d("GsonRequest", error.getMessage());
+        }
+    });
+```
+   
+   
+可以使用 `HurlGsonRequest` 。可以查看 [savevolley-hurl-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-gson/src/main/java/com/camnter/savevolley/hurl/gson/request) 。   
    
 [savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
    
 将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
 换成 **square/okhttp3** 作为实现网络请求。  
-      
-      
+   
+   
+# savevolley-hurl-gson
+   
+## savevolley-hurl-gson gradle
+   
+```gradle
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.2.0'
+    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+}
+```
+   
 # savevolley-hurl
    
 ## gradle
    
-```grovvy
-compile 'com.camnter.savevolley:hurl:1.0.3'
+```gradle
+dependencies {
+    compile 'com.camnter.savevolley:hurl:1.0.3'
+}
 ```
    
    
@@ -62,6 +142,34 @@ compile 'com.camnter.savevolley:hurl:1.0.3'
 **savevolley-network-adapter** 的子模块，**HttpConnection** -> **通用的 HTTP Response API**。
    
    
+# extensions / savevolley-okhttp3-agera-gson
+   
+[savevolley-okhttp3-agera-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-agera-gson/src/main/java/com/camnter/savevolley/okhttp3/agera)   
+   
+**作用**: **agera** ->  **savevolley-okhttp3** <- **Gson** , 为 **savevolley-okhttp3** 桥接了 **Agera** 和 **Gson** 。  
+   
+   
+# extensions / savevolley-hurl-agera-gson
+   
+[savevolley-hurl-agera-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-agera-gson/src/main/java/com/camnter/savevolley/hurl/agera)   
+   
+**作用**: **agera** ->  **savevolley-hurl** <- **Gson** , 为 **savevolley-hurl** 桥接了 **Agera** 和 **Gson** 。   
+   
+   
+# extensions / savevolley-okhttp3-gson
+   
+[savevolley-okhttp3-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-gson/src/main/java/com/camnter/savevolley/okhttp3/gson/request)   
+   
+**作用**: **Gson** ->  **savevolley-okhttp3**  , 为 **savevolley-okhttp3** 桥接了 **Gson** 。   
+   
+   
+# extensions / savevolley-hurl-gson
+   
+[savevolley-hurl-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-gson/src/main/java/com/camnter/savevolley/hurl/gson/request)   
+   
+**作用**: **Gson** ->  **savevolley-hurl** , 为 **savevolley-hurl** 桥接了 和 **Gson** 。   
+   
+   
 # square-okhttp3
    
 [square/okhttp](https://github.com/square/okhttp)  Version: **3.3.1**   
@@ -71,7 +179,7 @@ compile 'com.camnter.savevolley:hurl:1.0.3'
    
 [google/agera](https://github.com/google/agera)  Version: **1.1.0-beta2**   
    
-
+   
    
    
 # volley-comments 
