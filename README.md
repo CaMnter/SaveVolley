@@ -36,15 +36,36 @@ dependencies {
 ```
    
    
-# savevolley-okhttp3 
+# savevolley-okhttp3
    
-## savevolley-okhttp3 gradle
+## gradle
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:okhttp3:1.0.3'
+    compile 'com.camnter.savevolley:okhttp3:1.2.0'
 }
 ```
+
+[savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
+   
+将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
+换成 **square/okhttp3** 作为实现网络请求。
+   
+   
+# savevolley-hurl-gson
+   
+## savevolley-hurl-gson gradle
+   
+```gradle
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.2.0'
+    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+}
+```
+   
+可以使用 `HurlGsonRequest` 。可以查看 [savevolley-hurl-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-gson/src/main/java/com/camnter/savevolley/hurl/gson/request) 。   
+   
    
 ```java
     RequestQueue queue = Volley.newRequestQueue(this);
@@ -69,26 +90,6 @@ dependencies {
     });
 ```
    
-   
-可以使用 `HurlGsonRequest` 。可以查看 [savevolley-hurl-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-gson/src/main/java/com/camnter/savevolley/hurl/gson/request) 。   
-   
-[savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
-   
-将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
-换成 **square/okhttp3** 作为实现网络请求。  
-   
-   
-# savevolley-hurl-gson
-   
-## savevolley-hurl-gson gradle
-   
-```gradle
-dependencies {
-    compile 'com.google.code.gson:gson:2.7'
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.2.0'
-    compile 'com.camnter.savevolley:okhttp3:1.2.0'
-}
-```
    
 # savevolley-hurl
    
