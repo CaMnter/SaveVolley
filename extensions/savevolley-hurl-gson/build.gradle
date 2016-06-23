@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 24
@@ -23,4 +25,50 @@ android {
 dependencies {
     provided project(':savevolley-hurl')
     provided 'com.google.code.gson:gson:2.7'
+}
+
+android {
+    defaultConfig {
+        minSdkVersion gradle.minSdkVersion
+    }
+    compileOptions {
+        sourceCompatibility gradle.javaVersion
+        targetCompatibility gradle.javaVersion
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+publish {
+    userOrg = gradle.bintrayUser
+    uploadName = gradle.bintrayName
+    repoName = gradle.bintrayRepo
+    groupId = gradle.group
+    artifactId = 'savevolley-hurl-gson'
+    version = gradle.versionName
+    autoPublish = true
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'SaveVolley savevolley-hurl-gson'
+                url gradle.url
+                licenses {
+                    license {
+                        name gradle.licenseName
+                        url gradle.licenseUrl
+                    }
+                }
+                scm {
+                    url gradle.url
+                    connection gradle.gitUrl
+                }
+            }
+        }
+    }
 }
