@@ -21,11 +21,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.camnter.savevolley.okhttp3.gson.request.OkHttp3GsonRequest;
 import com.camnter.savevolley.okhttp3.volley.RequestQueue;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
 import com.camnter.savevolley.samples.bean.GankData;
-import com.camnter.savevolley.samples.request.OkHttp3GsonRequest;
 
 /**
  * Description：HurlActivity

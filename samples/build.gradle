@@ -28,19 +28,34 @@ dependencies {
     compile 'com.android.support:appcompat-v7:24.0.0'
     compile 'com.camnter.easyrecyclerview:easyrecyclerview:1.3'
 
-    // Necessary
+    /*************
+     * Necessary *
+     *************/
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
 
-    // Local
+    /**************
+     * extensions *
+     **************/
+    compile project(':extensions:savevolley-hurl-agera-gson')
+    compile project(':extensions:savevolley-hurl-gson')
+    compile project(':extensions:savevolley-okhttp3-agera-gson')
+    compile project(':extensions:savevolley-okhttp3-gson')
+
+    /*******************
+     * savevolley-hurl *
+     *******************/
     compile project(':savevolley-hurl')
+
+
+    /**********************
+     * savevolley-okhttp3 *
+     **********************/
     compile project(':savevolley-okhttp3')
-    compile project(':savevolley-hurl-agera')
-    compile project(':savevolley-okhttp3-agera')
 
     // Remote
-//    compile 'com.camnter.savevolley:hurl:1.1.0'
-//    compile 'com.camnter.savevolley:okhttp3:1.1.0'
-//    compile 'com.camnter.savevolley:savevolley-hurl-agera:1.1.0'
-//    compile 'com.camnter.savevolley:savevolley-okhttp3-agera:1.1.0'
+    //    compile 'com.camnter.savevolley:hurl:1.1.0'
+    //    compile 'com.camnter.savevolley:okhttp3:1.1.0'
+    //    compile 'com.camnter.savevolley:savevolley-hurl-agera:1.1.0'
+    //    compile 'com.camnter.savevolley:savevolley-okhttp3-agera:1.1.0'
 }

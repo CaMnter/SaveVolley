@@ -14,7 +14,7 @@ import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 import java.util.concurrent.Executor;
 
-import static com.camnter.savevolley.hurl.agera.SaveVolleyCompilerStates.GSON;
+import static com.camnter.savevolley.okhttp3.agera.SaveVolleyCompilerStates.GSON;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
