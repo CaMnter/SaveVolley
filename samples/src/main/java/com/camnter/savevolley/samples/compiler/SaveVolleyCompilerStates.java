@@ -35,11 +35,11 @@ public interface SaveVolleyCompilerStates {
         @NonNull VRequestState<RType> type(@Nullable Class<RType> clazz);
 
         @NonNull
-        VRequestQueue<RType> create();
+        VRequestQueue create();
     }
 
 
-    interface VRequestQueue<RType> extends VRequestState<RType> {
+    interface VRequestQueue {
         SaveVolley execute(@NonNull Context context);
     }
 

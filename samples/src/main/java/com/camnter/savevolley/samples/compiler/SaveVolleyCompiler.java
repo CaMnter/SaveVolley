@@ -24,7 +24,7 @@ import static com.google.android.agera.Preconditions.checkNotNull;
 
 public final class SaveVolleyCompiler<RType> implements
     SaveVolleyCompilerStates.VRequestState<RType>,
-    SaveVolleyCompilerStates.VRequestQueue<RType> {
+    SaveVolleyCompilerStates.VRequestQueue {
 
     private int requestMethod;
     @NonNull
