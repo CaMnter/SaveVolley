@@ -1,6 +1,119 @@
+# SaveVolley
+   
+Save volley from anything. AgeraVolley . (｡>﹏<｡)   
+   
+   
+![Language](https://img.shields.io/badge/language-Java-EE0000.svg) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE) 
+![Version](https://img.shields.io/badge/version-1.2.0-8470FF.svg)
+[ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)   
+   
+   
+# savevolley-okhttp3-agera-gson
+   
+## gradle
+   
+```gradle
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.2.0'
+    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+}
+```
+   
+可以使用 `SaveVolley` **Flow** 和 `agera` **Flow** 。 [savevolley-okhttp3-agera-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-agera-gson/src/main/java/com/camnter/savevolley/okhttp3/agera) 。      
+   
+```java
+    SaveVolley saveVolley = SaveVolleys
+        .request(TEST_URL)
+        .method(Request.Method.GET)
+        .parseStyle(GSON)
+        .jsonBean(GankData.class)
+        .create()
+        .execute(this);
+    final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
+        INITIAL_VALUE)
+        .observe(saveVolley.getReservoir())
+        .onUpdatesPerLoop()
+        .goTo(executor)
+        .attemptGetFrom(saveVolley.getReservoir())
+        .orSkip()
+        .thenAttemptTransform(new Function<Object, Result<GankResultData>>() {
+            /**
+             * Returns the result of applying this function to {@code input}.
+             */
+            @NonNull @Override public Result<GankResultData> apply(@NonNull Object input) {
+                if (input instanceof GankData) {
+                    return Result.success(((GankData) input).results.get(0));
+                } else if (input instanceof VolleyError) {
+                    return Result.failure((VolleyError) input);
+                }
+                return Result.failure();
+            }
+        })
+        .orSkip()
+        .compile();
+    repository.addUpdatable(new Updatable() {
+        @Override public void update() {
+            getContentText.setText(repository.get().toString());
+        }
+    });
+```
+   
+# savevolley-hurl-agera-gson
+   
+## gradle
+   
+```gradle
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.2.0'
+    compile 'com.camnter.savevolley:hurl:1.2.0'
+}
+```
+   
+可以使用 `SaveVolley` **Flow** 和 `agera` **Flow** 。 [savevolley-hurl-agera-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-agera-gson/src/main/java/com/camnter/savevolley/hurl/agera) 。         
+   
+```java
+    SaveVolley saveVolley = SaveVolleys
+        .request(TEST_URL)
+        .method(Method.GET)
+        .parseStyle(GSON)
+        .jsonBean(GankData.class)
+        .create()
+        .execute(this);
+    final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
+        INITIAL_VALUE)
+        .observe(saveVolley.getReservoir())
+        .onUpdatesPerLoop()
+        .goTo(executor)
+        .attemptGetFrom(saveVolley.getReservoir())
+        .orSkip()
+        .thenAttemptTransform(new Function<Object, Result<GankResultData>>() {
+            /**
+             * Returns the result of applying this function to {@code input}.
+             */
+            @NonNull @Override public Result<GankResultData> apply(@NonNull Object input) {
+                if (input instanceof GankData) {
+                    return Result.success(((GankData) input).results.get(0));
+                } else if (input instanceof VolleyError) {
+                    return Result.failure((VolleyError) input);
+                }
+                return Result.failure();
+            }
+        })
+        .orSkip()
+        .compile();
+    repository.addUpdatable(new Updatable() {
+        @Override public void update() {
+            getContentText.setText(repository.get().toString());
+        }
+    });
+```
+   
+   
 # savevolley-okhttp3-gson
     
-## savevolley-okhttp3-gson gradle
+## gradle
    
 ```gradle
 dependencies {
@@ -10,7 +123,7 @@ dependencies {
 }
 ```
    
-可以使用 `OkHttp3GsonRequest` 。可以查看 [savevolley-okhttp3-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-gson/src/main/java/com/camnter/savevolley/okhttp3/gson/request) 。      
+可以使用 `OkHttp3GsonRequest` 。[savevolley-okhttp3-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-gson/src/main/java/com/camnter/savevolley/okhttp3/gson/request) 。      
    
 ```java
     RequestQueue queue = Volley.newRequestQueue(this);
@@ -36,35 +149,19 @@ dependencies {
 ```
    
    
-# savevolley-okhttp3
+# savevolley-hurl-gson
    
 ## gradle
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:okhttp3:1.2.0'
-}
-```
-
-[savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
-   
-将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
-换成 **square/okhttp3** 作为实现网络请求。
-   
-   
-# savevolley-hurl-gson
-   
-## savevolley-hurl-gson gradle
-   
-```gradle
-dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.camnter.savevolley:savevolley-hurl-gson:1.2.0'
-    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+    compile 'com.camnter.savevolley:hurl:1.2.0'
 }
 ```
    
-可以使用 `HurlGsonRequest` 。可以查看 [savevolley-hurl-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-gson/src/main/java/com/camnter/savevolley/hurl/gson/request) 。   
+可以使用 `HurlGsonRequest` 。 [savevolley-hurl-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-gson/src/main/java/com/camnter/savevolley/hurl/gson/request) 。   
    
    
 ```java
@@ -89,6 +186,22 @@ dependencies {
         }
     });
 ```
+   
+   
+# savevolley-okhttp3
+   
+## gradle
+   
+```gradle
+dependencies {
+    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+}
+```
+
+[savevolley-okhttp3](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-okhttp3/src/main/java/com/camnter/savevolley/okhttp3/volley)         
+   
+将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
+换成 **square/okhttp3** 作为实现网络请求。
    
    
 # savevolley-hurl
@@ -147,28 +260,28 @@ dependencies {
    
 [savevolley-okhttp3-agera-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-agera-gson/src/main/java/com/camnter/savevolley/okhttp3/agera)   
    
-**作用**: **agera** ->  **savevolley-okhttp3** <- **Gson** , 为 **savevolley-okhttp3** 桥接了 **Agera** 和 **Gson** 。  
+**作用**: **agera** **- >**  **savevolley-okhttp3** **< -** **Gson** , 为 **savevolley-okhttp3** 桥接了 **Agera** 和 **Gson** 。  
    
    
 # extensions / savevolley-hurl-agera-gson
    
 [savevolley-hurl-agera-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-agera-gson/src/main/java/com/camnter/savevolley/hurl/agera)   
    
-**作用**: **agera** ->  **savevolley-hurl** <- **Gson** , 为 **savevolley-hurl** 桥接了 **Agera** 和 **Gson** 。   
+**作用**: **agera** **- >**  **savevolley-hurl** **< -** **Gson** , 为 **savevolley-hurl** 桥接了 **Agera** 和 **Gson** 。   
    
    
 # extensions / savevolley-okhttp3-gson
    
 [savevolley-okhttp3-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-gson/src/main/java/com/camnter/savevolley/okhttp3/gson/request)   
    
-**作用**: **Gson** ->  **savevolley-okhttp3**  , 为 **savevolley-okhttp3** 桥接了 **Gson** 。   
+**作用**: **Gson** **- >**  **savevolley-okhttp3**  , 为 **savevolley-okhttp3** 桥接了 **Gson** 。   
    
    
 # extensions / savevolley-hurl-gson
    
 [savevolley-hurl-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-gson/src/main/java/com/camnter/savevolley/hurl/gson/request)   
    
-**作用**: **Gson** ->  **savevolley-hurl** , 为 **savevolley-hurl** 桥接了 和 **Gson** 。   
+**作用**: **Gson** **- >**  **savevolley-hurl** , 为 **savevolley-hurl** 桥接了 和 **Gson** 。   
    
    
 # square-okhttp3
