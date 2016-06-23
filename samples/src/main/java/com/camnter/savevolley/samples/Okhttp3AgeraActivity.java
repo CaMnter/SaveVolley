@@ -1,6 +1,9 @@
 package com.camnter.savevolley.samples;
 
 import android.support.annotation.NonNull;
+import com.camnter.savevolley.okhttp3.agera.SaveVolley;
+import com.camnter.savevolley.okhttp3.agera.SaveVolleyCompilerStates;
+import com.camnter.savevolley.okhttp3.agera.SaveVolleys;
 import com.camnter.savevolley.okhttp3.volley.Request;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.samples.bean.GankData;
@@ -10,9 +13,6 @@ import com.google.android.agera.Repositories;
 import com.google.android.agera.Repository;
 import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
-import com.savevolley.okhttp3.agera.SaveVolley;
-import com.savevolley.okhttp3.agera.SaveVolleyCompilerStates;
-import com.savevolley.okhttp3.agera.SaveVolleys;
 import java.util.concurrent.Executor;
 
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
@@ -33,7 +33,7 @@ public class Okhttp3AgeraActivity extends Okhttp3Activity {
             .request(TEST_URL)
             .method(Request.Method.GET)
             .parseStyle(SaveVolleyCompilerStates.GSON)
-            .type(GankData.class)
+            .jsonBean(GankData.class)
             .create()
             .execute(this);
         final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(

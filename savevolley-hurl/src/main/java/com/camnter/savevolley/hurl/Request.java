@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2016 CaMnter yuanyu.camnter@gmail.com
  * Copyright (C) 2011 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -74,6 +75,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     private Cache.Entry mCacheEntry = null;
     /** An opaque token tagging this request; used for bulk cancellation. */
     private Object mTag;
+
 
     /**
      * Creates a new request with the given URL and error listener.  Note that
@@ -367,6 +369,18 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     }
 
 
+    /***********
+     * CaMnter *
+     ***********/
+
+    private Map<String, String> params;
+
+
+    public void setParams(Map<String, String> params) {
+        this.params = params;
+    }
+
+
     /**
      * Returns a Map of parameters to be used for a POST or PUT request.  Can throw
      * {@link AuthFailureError} as authentication may be required to provide these values.
@@ -376,7 +390,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
      * @throws AuthFailureError in the event of auth failure
      */
     protected Map<String, String> getParams() throws AuthFailureError {
-        return null;
+        return this.params;
     }
 
 
@@ -602,7 +616,7 @@ public abstract class Request<T> implements Comparable<Request<T>> {
     @Override public String toString() {
         String trafficStatsTag = "0x" + Integer.toHexString(getTrafficStatsTag());
         return (mCanceled ? "[X] " : "[ ] ") + getUrl() + " " + trafficStatsTag + " " +
-                getPriority() + " " + mSequence;
+            getPriority() + " " + mSequence;
     }
 
 

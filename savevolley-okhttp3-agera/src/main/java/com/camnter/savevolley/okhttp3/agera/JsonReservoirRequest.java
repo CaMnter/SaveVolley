@@ -1,4 +1,20 @@
-package com.savevolley.okhttp3.agera;
+/*
+ * Copyright (C) 2016 CaMnter yuanyu.camnter@gmail.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.camnter.savevolley.okhttp3.agera;
 
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
@@ -9,21 +25,21 @@ import com.camnter.savevolley.okhttp3.volley.toolbox.HttpHeaderParser;
 import com.google.android.agera.Reservoir;
 import com.google.android.agera.Reservoirs;
 import java.io.UnsupportedEncodingException;
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
- * Description：JsonArrayReservoirRequest
+ * Description：JsonReservoirRequest
  * Created by：CaMnter
- * Time：2016-06-23 16:09
+ * Time：2016-06-23 16:00
  */
 
-public class JsonArrayReservoirRequest extends Request<JSONArray>
-    implements Response.Listener<JSONArray>, Response.ErrorListener {
+public class JsonReservoirRequest extends Request<JSONObject>
+    implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
-    private final Response.Listener<JSONArray> mResponseListener;
+    private final Response.Listener<JSONObject> mResponseListener;
     private final Reservoir<Object> mReservoir;
 
 
@@ -32,23 +48,23 @@ public class JsonArrayReservoirRequest extends Request<JSONArray>
     }
 
 
-    public JsonArrayReservoirRequest(String url) {
+    public JsonReservoirRequest(String url) {
         this(Method.GET, url);
     }
 
 
-    public JsonArrayReservoirRequest(int method, String url) {
+    public JsonReservoirRequest(int method, String url) {
         super(method, url, null);
         this.mResponseListener = this;
         this.mReservoir = Reservoirs.reservoir();
     }
 
 
-    @Override protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
+    @Override protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
                 HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-            return Response.success(new JSONArray(jsonString),
+            return Response.success(new JSONObject(jsonString),
                 HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
@@ -58,7 +74,7 @@ public class JsonArrayReservoirRequest extends Request<JSONArray>
     }
 
 
-    @Override protected void deliverResponse(JSONArray response) {
+    @Override protected void deliverResponse(JSONObject response) {
         this.mResponseListener.onResponse(response);
     }
 
@@ -73,7 +89,7 @@ public class JsonArrayReservoirRequest extends Request<JSONArray>
     }
 
 
-    @Override public void onResponse(JSONArray response) {
+    @Override public void onResponse(JSONObject response) {
         this.mReservoir.accept(response);
     }
 
