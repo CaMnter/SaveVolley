@@ -34,23 +34,23 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
 
-    /**************
-     * extensions *
-     **************/
+    /********************
+     * Local extensions *
+     ********************/
     compile project(':extensions:savevolley-hurl-agera-gson')
     compile project(':extensions:savevolley-hurl-gson')
     compile project(':extensions:savevolley-okhttp3-agera-gson')
     compile project(':extensions:savevolley-okhttp3-gson')
 
-    /*******************
-     * savevolley-hurl *
-     *******************/
+    /*************************
+     * Local savevolley-hurl *
+     *************************/
     compile project(':savevolley-hurl')
 
 
-    /**********************
-     * savevolley-okhttp3 *
-     **********************/
+    /****************************
+     * Local savevolley-okhttp3 *
+     ****************************/
     compile project(':savevolley-okhttp3')
 
     // Remote
