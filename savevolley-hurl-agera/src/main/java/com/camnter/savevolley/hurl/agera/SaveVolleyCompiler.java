@@ -23,6 +23,9 @@ import android.support.annotation.Nullable;
 import com.camnter.savevolley.hurl.Request;
 import com.camnter.savevolley.hurl.Request.Method;
 import com.camnter.savevolley.hurl.RequestQueue;
+import com.camnter.savevolley.hurl.agera.request.HurlGsonReservoirRequest;
+import com.camnter.savevolley.hurl.agera.request.HurlJsonArrayReservoirRequest;
+import com.camnter.savevolley.hurl.agera.request.HurlJsonReservoirRequest;
 import com.camnter.savevolley.hurl.toolbox.Volley;
 import com.google.android.agera.Reservoir;
 import java.util.HashMap;
@@ -141,14 +144,14 @@ public final class SaveVolleyCompiler<RType> implements
             case SaveVolleyCompilerStates.GSON:
                 checkNotNull(this.requestTypeClass,
                     "The parse style of response was null, requestTypeClass == null.");
-                this.request = new GsonReservoirRequest<>(this.requestMethod, this.requestUrl,
+                this.request = new HurlGsonReservoirRequest<>(this.requestMethod, this.requestUrl,
                     this.requestTypeClass);
                 break;
             case SaveVolleyCompilerStates.JSON_OBJECT:
-                this.request = new JsonReservoirRequest(this.requestMethod, this.requestUrl);
+                this.request = new HurlJsonReservoirRequest(this.requestMethod, this.requestUrl);
                 break;
             case SaveVolleyCompilerStates.JSON_ARRAY:
-                this.request = new JsonArrayReservoirRequest(this.requestMethod,
+                this.request = new HurlJsonArrayReservoirRequest(this.requestMethod,
                     this.requestUrl);
                 break;
         }
@@ -159,12 +162,12 @@ public final class SaveVolleyCompiler<RType> implements
     @Override public SaveVolley execute(@NonNull Context context) {
         checkNotNull(this.request, "The request was null, request == null");
         requestQueue(context).add(this.request);
-        if (this.request instanceof GsonReservoirRequest) {
-            this.reservoir = ((GsonReservoirRequest) this.request).getReservoir();
-        } else if (this.request instanceof JsonReservoirRequest) {
-            this.reservoir = ((JsonReservoirRequest) this.request).getReservoir();
-        } else if (this.request instanceof JsonArrayReservoirRequest) {
-            this.reservoir = ((JsonArrayReservoirRequest) this.request).getReservoir();
+        if (this.request instanceof HurlGsonReservoirRequest) {
+            this.reservoir = ((HurlGsonReservoirRequest) this.request).getReservoir();
+        } else if (this.request instanceof HurlJsonReservoirRequest) {
+            this.reservoir = ((HurlJsonReservoirRequest) this.request).getReservoir();
+        } else if (this.request instanceof HurlJsonArrayReservoirRequest) {
+            this.reservoir = ((HurlJsonArrayReservoirRequest) this.request).getReservoir();
         }
         SaveVolley saveVolley = new SaveVolley(this.requestMethod, this.requestUrl,
             this.requestParseStyle, this.requestTypeClass, this.request, this.reservoir);

@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.okhttp3.agera;
+package com.camnter.savevolley.hurl.agera.request;
 
-import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
-import com.camnter.savevolley.okhttp3.volley.ParseError;
-import com.camnter.savevolley.okhttp3.volley.Request;
-import com.camnter.savevolley.okhttp3.volley.Response;
-import com.camnter.savevolley.okhttp3.volley.VolleyError;
-import com.camnter.savevolley.okhttp3.volley.toolbox.HttpHeaderParser;
+import com.camnter.savevolley.hurl.NetworkResponse;
+import com.camnter.savevolley.hurl.ParseError;
+import com.camnter.savevolley.hurl.Request;
+import com.camnter.savevolley.hurl.Response;
+import com.camnter.savevolley.hurl.VolleyError;
+import com.camnter.savevolley.hurl.toolbox.HttpHeaderParser;
 import com.google.android.agera.Reservoir;
 import com.google.android.agera.Reservoirs;
 import java.io.UnsupportedEncodingException;
@@ -31,10 +31,10 @@ import org.json.JSONException;
 /**
  * Description：JsonArrayReservoirRequest
  * Created by：CaMnter
- * Time：2016-06-23 16:09
+ * Time：2016-06-23 21:32
  */
 
-public class JsonArrayReservoirRequest extends Request<JSONArray>
+public class HurlJsonArrayReservoirRequest extends Request<JSONArray>
     implements Response.Listener<JSONArray>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
@@ -48,12 +48,12 @@ public class JsonArrayReservoirRequest extends Request<JSONArray>
     }
 
 
-    public JsonArrayReservoirRequest(String url) {
+    public HurlJsonArrayReservoirRequest(String url) {
         this(Method.GET, url);
     }
 
 
-    public JsonArrayReservoirRequest(int method, String url) {
+    public HurlJsonArrayReservoirRequest(int method, String url) {
         super(method, url, null);
         this.mResponseListener = this;
         this.mReservoir = Reservoirs.reservoir();

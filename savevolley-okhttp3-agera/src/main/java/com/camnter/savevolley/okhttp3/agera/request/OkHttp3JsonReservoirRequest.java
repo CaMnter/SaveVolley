@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.okhttp3.agera;
+package com.camnter.savevolley.okhttp3.agera.request;
 
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
@@ -29,12 +29,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Description：JsonReservoirRequest
+ * Description：OkHttp3JsonReservoirRequest
  * Created by：CaMnter
  * Time：2016-06-23 16:00
  */
 
-public class JsonReservoirRequest extends Request<JSONObject>
+public class OkHttp3JsonReservoirRequest extends Request<JSONObject>
     implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
@@ -48,12 +48,12 @@ public class JsonReservoirRequest extends Request<JSONObject>
     }
 
 
-    public JsonReservoirRequest(String url) {
+    public OkHttp3JsonReservoirRequest(String url) {
         this(Method.GET, url);
     }
 
 
-    public JsonReservoirRequest(int method, String url) {
+    public OkHttp3JsonReservoirRequest(int method, String url) {
         super(method, url, null);
         this.mResponseListener = this;
         this.mReservoir = Reservoirs.reservoir();

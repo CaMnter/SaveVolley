@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.hurl.agera;
+package com.camnter.savevolley.hurl.agera.request;
 
 import com.camnter.savevolley.hurl.NetworkResponse;
 import com.camnter.savevolley.hurl.ParseError;
@@ -24,22 +24,23 @@ import com.camnter.savevolley.hurl.VolleyError;
 import com.camnter.savevolley.hurl.toolbox.HttpHeaderParser;
 import com.google.android.agera.Reservoir;
 import com.google.android.agera.Reservoirs;
+import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
- * Description：JsonReservoirRequest
+ * Description：GsonReservoirRequest
  * Created by：CaMnter
- * Time：2016-06-23 21:27
+ * Time：2016-06-23 21:37
  */
 
-public class JsonReservoirRequest extends Request<JSONObject>
-    implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class HurlGsonReservoirRequest<T> extends Request<T>
+    implements Response.Listener<T>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
-    private final Response.Listener<JSONObject> mResponseListener;
+    private final Gson mGson;
+    private final Response.Listener<T> mResponseListener;
+    private final Class<T> mClass;
     private final Reservoir<Object> mReservoir;
 
 
@@ -48,33 +49,33 @@ public class JsonReservoirRequest extends Request<JSONObject>
     }
 
 
-    public JsonReservoirRequest(String url) {
-        this(Method.GET, url);
+    public HurlGsonReservoirRequest(String url, Class<T> clazz) {
+        this(Method.GET, url, clazz);
     }
 
 
-    public JsonReservoirRequest(int method, String url) {
+    public HurlGsonReservoirRequest(int method, String url, Class<T> clazz) {
         super(method, url, null);
+        this.mGson = new Gson();
+        this.mClass = clazz;
         this.mResponseListener = this;
         this.mReservoir = Reservoirs.reservoir();
     }
 
 
-    @Override protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+    @Override protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
                 HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-            return Response.success(new JSONObject(jsonString),
+            return Response.success(this.mGson.fromJson(jsonString, this.mClass),
                 HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
         }
     }
 
 
-    @Override protected void deliverResponse(JSONObject response) {
+    @Override protected void deliverResponse(T response) {
         this.mResponseListener.onResponse(response);
     }
 
@@ -89,8 +90,7 @@ public class JsonReservoirRequest extends Request<JSONObject>
     }
 
 
-    @Override public void onResponse(JSONObject response) {
+    @Override public void onResponse(T response) {
         this.mReservoir.accept(response);
     }
-
 }
