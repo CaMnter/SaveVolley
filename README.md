@@ -32,7 +32,7 @@ dependencies {
 ```java
     SaveVolley saveVolley = SaveVolleys
         .request(TEST_URL)
-        .method(Request.Method.GET)
+        .method(Method.GET)
         .parseStyle(GSON)
         .classOf(GankData.class)
         .create()

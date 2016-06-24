@@ -19,7 +19,7 @@ package com.camnter.savevolley.samples.gson;
 import android.support.annotation.NonNull;
 import com.camnter.savevolley.okhttp3.agera.SaveVolley;
 import com.camnter.savevolley.okhttp3.agera.SaveVolleys;
-import com.camnter.savevolley.okhttp3.volley.Request;
+import com.camnter.savevolley.okhttp3.volley.Request.Method;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.bean.GankResultData;
@@ -47,7 +47,7 @@ public class Okhttp3AgeraGsonActivity extends Okhttp3GsonActivity {
     @Override protected void initData() {
         SaveVolley saveVolley = SaveVolleys
             .request(TEST_URL)
-            .method(Request.Method.GET)
+            .method(Method.GET)
             .parseStyle(GSON)
             .classOf(GankData.class)
             .create()
