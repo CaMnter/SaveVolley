@@ -13,8 +13,8 @@ include ':samples',
         ':savevolley-okhttp3',
         ':savevolley-network-core'
 
-gradle.ext.versionCode = 120
-gradle.ext.versionName = '1.2.0'
+gradle.ext.versionCode = 121
+gradle.ext.versionName = '1.2.1'
 
 gradle.ext.bintrayRepo = 'maven'
 gradle.ext.bintrayName = 'SaveVolley'

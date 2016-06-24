@@ -31,18 +31,18 @@ public class SaveVolley {
     @NonNull
     private final String requestUrl;
     private final int requestParseStyle;
-    private final Class requestTypeClass;
+    private final Class requestClassOf;
 
     private final Request<?> request;
     private final Reservoir<Object> reservoir;
 
 
     public SaveVolley(int requestMethod, @NonNull
-        String requestUrl, int requestParseStyle, Class requestTypeClass, Request<?> request, Reservoir<Object> reservoir) {
+        String requestUrl, int requestParseStyle, Class requestClassOf, Request<?> request, Reservoir<Object> reservoir) {
         this.requestMethod = requestMethod;
         this.requestUrl = requestUrl;
         this.requestParseStyle = requestParseStyle;
-        this.requestTypeClass = requestTypeClass;
+        this.requestClassOf = requestClassOf;
         this.request = request;
         this.reservoir = reservoir;
     }
@@ -63,8 +63,8 @@ public class SaveVolley {
     }
 
 
-    public Class getRequestTypeClass() {
-        return requestTypeClass;
+    public Class getRequestClassOf() {
+        return requestClassOf;
     }
 
 

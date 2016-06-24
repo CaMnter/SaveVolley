@@ -4,10 +4,12 @@
    
    
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE)
-![Version](https://img.shields.io/badge/version-1.2.0-8470FF.svg)
+![Version](https://img.shields.io/badge/version-1.2.1-8470FF.svg)
 [ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)   
    
-**gson:** 3.3.1
+   
+**gson:** 3.3.1   
+   
 **agera:** 1.1.0-beta2
    
    
@@ -20,21 +22,21 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.2.0'
-    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.2.1'
+    compile 'com.camnter.savevolley:okhttp3:1.2.1'
 }
 ```
    
 可以使用 `SaveVolley` **Flow** 和 `agera` **Flow** 。          
-
+   
 ```java
     SaveVolley saveVolley = SaveVolleys
         .request(TEST_URL)
         .method(Request.Method.GET)
         .parseStyle(GSON)
-        .jsonBean(GankData.class)
+        .classOf(GankData.class)
         .create()
-        .execute(this);
+        .compile(this);
     final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
         INITIAL_VALUE)
         .observe(saveVolley.getReservoir())
@@ -74,21 +76,21 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.2.0'
-    compile 'com.camnter.savevolley:hurl:1.2.0'
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.2.1'
+    compile 'com.camnter.savevolley:hurl:1.2.1'
 }
 ```
    
 可以使用 `SaveVolley` **Flow** 和 `agera` **Flow** 。            
-
+   
 ```java
     SaveVolley saveVolley = SaveVolleys
         .request(TEST_URL)
         .method(Method.GET)
         .parseStyle(GSON)
-        .jsonBean(GankData.class)
+        .classOf(GankData.class)
         .create()
-        .execute(this);
+        .compile(this);
     final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
         INITIAL_VALUE)
         .observe(saveVolley.getReservoir())
@@ -126,8 +128,8 @@ dependencies {
 ```gradle
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.2.0'
-    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.2.1'
+    compile 'com.camnter.savevolley:okhttp3:1.2.1'
 }
 ```
    
@@ -164,8 +166,8 @@ dependencies {
 ```gradle
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.2.0'
-    compile 'com.camnter.savevolley:hurl:1.2.0'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.2.1'
+    compile 'com.camnter.savevolley:hurl:1.2.1'
 }
 ```
    
@@ -202,7 +204,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:okhttp3:1.2.0'
+    compile 'com.camnter.savevolley:okhttp3:1.2.1'
 }
 ```
    
@@ -218,7 +220,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:hurl:1.2.0'
+    compile 'com.camnter.savevolley:hurl:1.2.1'
 }
 ```
    

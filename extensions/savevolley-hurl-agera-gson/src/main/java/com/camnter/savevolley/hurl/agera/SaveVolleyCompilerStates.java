@@ -53,7 +53,7 @@ public interface SaveVolleyCompilerStates {
 
         @NonNull VRequestState<RType> parseStyle(@Nullable @ParseStyle Integer parseStyle);
 
-        @NonNull VRequestState<RType> jsonBean(@Nullable Class<RType> clazz);
+        @NonNull VRequestState<RType> classOf(@Nullable Class<RType> classOfT);
 
         @NonNull
         VRequestQueue create();
@@ -61,7 +61,7 @@ public interface SaveVolleyCompilerStates {
 
 
     interface VRequestQueue {
-        SaveVolley execute(@NonNull Context context);
+        SaveVolley compile(@NonNull Context context);
     }
 
 }

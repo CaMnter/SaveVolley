@@ -49,9 +49,9 @@ public class Okhttp3AgeraGsonActivity extends Okhttp3GsonActivity {
             .request(TEST_URL)
             .method(Request.Method.GET)
             .parseStyle(GSON)
-            .jsonBean(GankData.class)
+            .classOf(GankData.class)
             .create()
-            .execute(this);
+            .compile(this);
         final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
             INITIAL_VALUE)
             .observe(saveVolley.getReservoir())

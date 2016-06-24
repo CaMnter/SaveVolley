@@ -48,7 +48,7 @@ public final class SaveVolleyCompiler<RType> implements
     @NonNull
     private String requestUrl;
     private int requestParseStyle;
-    private Class requestTypeClass;
+    private Class requestClassOf;
     private Map<String, String> requestParams;
 
     private Request<?> request;
@@ -126,8 +126,8 @@ public final class SaveVolleyCompiler<RType> implements
     }
 
 
-    @NonNull @Override public SaveVolleyCompiler<RType> jsonBean(@Nullable Class clazz) {
-        this.requestTypeClass = clazz;
+    @NonNull @Override public SaveVolleyCompiler<RType> classOf(@Nullable Class classOfT) {
+        this.requestClassOf = classOfT;
         return this;
     }
 
@@ -142,10 +142,11 @@ public final class SaveVolleyCompiler<RType> implements
         }
         switch (this.requestParseStyle) {
             case SaveVolleyCompilerStates.GSON:
-                checkNotNull(this.requestTypeClass,
+                checkNotNull(this.requestClassOf,
                     "The parse style of response was null, requestTypeClass == null.");
-                this.request = new OkHttp3GsonReservoirRequest<>(this.requestMethod, this.requestUrl,
-                    this.requestTypeClass);
+                this.request = new OkHttp3GsonReservoirRequest<>(this.requestMethod,
+                    this.requestUrl,
+                    this.requestClassOf);
                 break;
             case SaveVolleyCompilerStates.JSON_OBJECT:
                 this.request = new OkHttp3JsonReservoirRequest(this.requestMethod, this.requestUrl);
@@ -159,7 +160,7 @@ public final class SaveVolleyCompiler<RType> implements
     }
 
 
-    @Override public SaveVolley execute(@NonNull Context context) {
+    @Override public SaveVolley compile(@NonNull Context context) {
         checkNotNull(this.request, "The request was null, request == null");
         requestQueue(context).add(this.request);
         if (this.request instanceof OkHttp3GsonReservoirRequest) {
@@ -170,7 +171,7 @@ public final class SaveVolleyCompiler<RType> implements
             this.reservoir = ((OkHttp3JsonArrayReservoirRequest) this.request).getReservoir();
         }
         SaveVolley saveVolley = new SaveVolley(this.requestMethod, this.requestUrl,
-            this.requestParseStyle, this.requestTypeClass, this.request, this.reservoir);
+            this.requestParseStyle, this.requestClassOf, this.request, this.reservoir);
         recycle(this);
         return saveVolley;
     }
