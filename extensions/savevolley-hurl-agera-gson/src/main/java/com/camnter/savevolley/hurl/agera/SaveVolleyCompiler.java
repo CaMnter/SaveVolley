@@ -42,7 +42,8 @@ import static com.camnter.savevolley.hurl.agera.Preconditions.checkNotNull;
 
 public final class SaveVolleyCompiler<RType> implements
     SaveVolleyCompilerStates.VRequestState<RType>,
-    SaveVolleyCompilerStates.VRequestQueue {
+    SaveVolleyCompilerStates.VRequestQueue<RType>,
+    SaveVolleyCompilerStates.VTermination<RType> {
 
     private int requestMethod;
     @NonNull
@@ -72,14 +73,8 @@ public final class SaveVolleyCompiler<RType> implements
     }
 
 
-    @NonNull @Override public SaveVolleyCompiler<RType> url(@NonNull String url) {
-        this.requestUrl = url;
-        return this;
-    }
-
-
     @NonNull
-    static <RType> SaveVolleyCompiler<RType> request(
+    static <RType> SaveVolleyCompilerStates.VRequestState<RType> request(
         @NonNull final String url) {
         checkNotNull(Looper.myLooper());
         checkNotNull(url, "The url was null, url == null.");
@@ -93,7 +88,19 @@ public final class SaveVolleyCompiler<RType> implements
     }
 
 
-    @NonNull @Override public SaveVolleyCompiler<RType> method(@Nullable Integer method) {
+    /*****************
+     * VRequestState *
+     *****************/
+
+    @NonNull @Override public SaveVolleyCompilerStates.VRequestState<RType> url(
+        @NonNull String url) {
+        this.requestUrl = url;
+        return this;
+    }
+
+
+    @NonNull @Override
+    public SaveVolleyCompilerStates.VRequestState<RType> method(@Nullable Integer method) {
         this.requestMethod = method != null ? method : Method.GET;
         return this;
     }
@@ -119,20 +126,21 @@ public final class SaveVolleyCompiler<RType> implements
 
 
     @NonNull @Override
-    public SaveVolleyCompiler<RType> parseStyle(
+    public SaveVolleyCompilerStates.VRequestState<RType> parseStyle(
         @Nullable @SaveVolleyCompilerStates.ParseStyle Integer parseStyle) {
         this.requestParseStyle = parseStyle != null ? parseStyle : SaveVolleyCompilerStates.GSON;
         return this;
     }
 
 
-    @NonNull @Override public SaveVolleyCompiler<RType> classOf(@Nullable Class classOfT) {
-        this.requestClassOf = classOfT;
+    @NonNull @Override
+    public SaveVolleyCompilerStates.VRequestState<RType> classOf(@Nullable Class<RType> classOf) {
+        this.requestClassOf = classOf;
         return this;
     }
 
 
-    @NonNull @Override public SaveVolleyCompiler<RType> create() {
+    @NonNull @Override public SaveVolleyCompilerStates.VRequestQueue<RType> createRequest() {
         if (this.requestMethod != Method.GET) {
             checkNotNull(this.requestParams,
                 "The params of request was null, params == null.");
@@ -159,7 +167,12 @@ public final class SaveVolleyCompiler<RType> implements
     }
 
 
-    @Override public SaveVolley compile(@NonNull Context context) {
+    /*****************
+     * VRequestQueue *
+     *****************/
+
+    @Override
+    public SaveVolleyCompilerStates.VTermination<RType> context(@NonNull Context context) {
         checkNotNull(this.request, "The request was null, request == null");
         requestQueue(context).add(this.request);
         if (this.request instanceof HurlGsonReservoirRequest) {
@@ -169,6 +182,15 @@ public final class SaveVolleyCompiler<RType> implements
         } else if (this.request instanceof HurlJsonArrayReservoirRequest) {
             this.reservoir = ((HurlJsonArrayReservoirRequest) this.request).getReservoir();
         }
+        return this;
+    }
+
+
+    /*****************
+     * VTermination *
+     *****************/
+
+    @Override public SaveVolley compile() {
         SaveVolley saveVolley = new SaveVolley(this.requestMethod, this.requestUrl,
             this.requestParseStyle, this.requestClassOf, this.request, this.reservoir);
         recycle(this);

@@ -46,12 +46,14 @@ public class Okhttp3AgeraGsonActivity extends Okhttp3GsonActivity {
 
     @Override protected void initData() {
         SaveVolley saveVolley = SaveVolleys
-            .request(TEST_URL)
+            .<GankData>request(TEST_URL)
             .method(Method.GET)
             .parseStyle(GSON)
             .classOf(GankData.class)
-            .create()
-            .compile(this);
+            .createRequest()
+            .context(this)
+            .compile();
+
         final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
             INITIAL_VALUE)
             .observe(saveVolley.getReservoir())

@@ -40,6 +40,4 @@ public class GankData {
         return builder.toString();
     }
 
-
-
 }

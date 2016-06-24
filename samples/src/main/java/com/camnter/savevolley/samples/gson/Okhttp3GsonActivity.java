@@ -66,7 +66,8 @@ public class Okhttp3GsonActivity extends AppCompatActivity {
              * provided error code and optional user-readable message.
              */
             @Override public void onErrorResponse(VolleyError error) {
-                Toast.makeText(Okhttp3GsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(Okhttp3GsonActivity.this, error.getMessage(), Toast.LENGTH_LONG)
+                    .show();
                 Log.d("GsonRequest", error.getMessage());
             }
         });

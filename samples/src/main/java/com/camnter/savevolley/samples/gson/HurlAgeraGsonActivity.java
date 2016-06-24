@@ -45,39 +45,41 @@ public class HurlAgeraGsonActivity extends Okhttp3GsonActivity {
 
 
     @Override protected void initData() {
-    SaveVolley saveVolley = SaveVolleys
-        .request(TEST_URL)
-        .method(Method.GET)
-        .parseStyle(GSON)
-        .classOf(GankData.class)
-        .create()
-        .compile(this);
-    final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
-        INITIAL_VALUE)
-        .observe(saveVolley.getReservoir())
-        .onUpdatesPerLoop()
-        .goTo(executor)
-        .attemptGetFrom(saveVolley.getReservoir())
-        .orSkip()
-        .thenAttemptTransform(new Function<Object, Result<GankResultData>>() {
-            /**
-             * Returns the result of applying this function to {@code input}.
-             */
-            @NonNull @Override public Result<GankResultData> apply(@NonNull Object input) {
-                if (input instanceof GankData) {
-                    return Result.success(((GankData) input).results.get(0));
-                } else if (input instanceof VolleyError) {
-                    return Result.failure((VolleyError) input);
+        SaveVolley saveVolley = SaveVolleys
+            .<GankData>request(TEST_URL)
+            .method(Method.GET)
+            .parseStyle(GSON)
+            .classOf(GankData.class)
+            .createRequest()
+            .context(this)
+            .compile();
+
+        final Repository<GankResultData> repository = Repositories.repositoryWithInitialValue(
+            INITIAL_VALUE)
+            .observe(saveVolley.getReservoir())
+            .onUpdatesPerLoop()
+            .goTo(executor)
+            .attemptGetFrom(saveVolley.getReservoir())
+            .orSkip()
+            .thenAttemptTransform(new Function<Object, Result<GankResultData>>() {
+                /**
+                 * Returns the result of applying this function to {@code input}.
+                 */
+                @NonNull @Override public Result<GankResultData> apply(@NonNull Object input) {
+                    if (input instanceof GankData) {
+                        return Result.success(((GankData) input).results.get(0));
+                    } else if (input instanceof VolleyError) {
+                        return Result.failure((VolleyError) input);
+                    }
+                    return Result.failure();
                 }
-                return Result.failure();
+            })
+            .orSkip()
+            .compile();
+        repository.addUpdatable(new Updatable() {
+            @Override public void update() {
+                getContentText.setText(repository.get().toString());
             }
-        })
-        .orSkip()
-        .compile();
-    repository.addUpdatable(new Updatable() {
-        @Override public void update() {
-            getContentText.setText(repository.get().toString());
-        }
-    });
+        });
     }
 }

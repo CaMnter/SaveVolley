@@ -24,7 +24,7 @@ package com.camnter.savevolley.hurl.agera;
 
 public class SaveVolleys {
 
-    public static <T> SaveVolleyCompiler<T> request(final String url) {
+    public static <T> SaveVolleyCompilerStates.VRequestState<T> request(final String url) {
         return SaveVolleyCompiler.request(url);
     }
 

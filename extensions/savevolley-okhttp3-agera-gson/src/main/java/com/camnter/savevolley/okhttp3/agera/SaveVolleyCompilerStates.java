@@ -56,12 +56,17 @@ public interface SaveVolleyCompilerStates {
         @NonNull VRequestState<RType> classOf(@Nullable Class<RType> classOfT);
 
         @NonNull
-        VRequestQueue create();
+        VRequestQueue<RType> createRequest();
     }
 
 
-    interface VRequestQueue {
-        SaveVolley compile(@NonNull Context context);
+    interface VRequestQueue<RType> {
+        VTermination<RType> context(@NonNull Context context);
+    }
+
+
+    interface VTermination<RType> {
+        SaveVolley compile();
     }
 
 }

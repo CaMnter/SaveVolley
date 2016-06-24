@@ -24,10 +24,10 @@ import com.camnter.easyrecyclerview.holder.EasyRecyclerViewHolder;
 import com.camnter.easyrecyclerview.widget.EasyRecyclerView;
 import com.camnter.easyrecyclerview.widget.decorator.EasyDividerItemDecoration;
 import com.camnter.savevolley.samples.adapter.MainAdapter;
-import com.camnter.savevolley.samples.gson.HurlGsonActivity;
 import com.camnter.savevolley.samples.gson.HurlAgeraGsonActivity;
-import com.camnter.savevolley.samples.gson.Okhttp3GsonActivity;
+import com.camnter.savevolley.samples.gson.HurlGsonActivity;
 import com.camnter.savevolley.samples.gson.Okhttp3AgeraGsonActivity;
+import com.camnter.savevolley.samples.gson.Okhttp3GsonActivity;
 import java.util.ArrayList;
 
 /**
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private void initViews() {
         this.mainList = (EasyRecyclerView) this.findViewById(R.id.main_list);
         EasyDividerItemDecoration decoration = new EasyDividerItemDecoration(this,
-                EasyDividerItemDecoration.VERTICAL_LIST);
+            EasyDividerItemDecoration.VERTICAL_LIST);
         decoration.bottomDivider = true;
         this.mainList.addItemDecoration(decoration);
     }
