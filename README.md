@@ -133,7 +133,7 @@ dependencies {
 }
 ```
    
-可以使用 `OkHttp3GsonRequest` 。[savevolley-okhttp3-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-okhttp3-gson/src/main/java/com/camnter/savevolley/okhttp3/gson/request) 。      
+可以使用 `OkHttp3GsonRequest` 。         
    
 ```java
     RequestQueue queue = Volley.newRequestQueue(this);
@@ -171,7 +171,7 @@ dependencies {
 }
 ```
    
-可以使用 `HurlGsonRequest` 。 [savevolley-hurl-gson](https://github.com/CaMnter/SaveVolley/tree/master/extensions/savevolley-hurl-gson/src/main/java/com/camnter/savevolley/hurl/gson/request) 。   
+可以使用 `HurlGsonRequest` 。       
    
    
 ```java
