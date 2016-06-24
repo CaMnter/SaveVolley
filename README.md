@@ -22,8 +22,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.2.1'
     compile 'com.camnter.savevolley:okhttp3:1.2.1'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.2.1'
 }
 ```
    
@@ -76,8 +76,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.2.1'
     compile 'com.camnter.savevolley:hurl:1.2.1'
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.2.1'
 }
 ```
    
@@ -128,8 +128,9 @@ dependencies {
 ```gradle
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.2.1'
+    
     compile 'com.camnter.savevolley:okhttp3:1.2.1'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.2.1'
 }
 ```
    
@@ -166,8 +167,9 @@ dependencies {
 ```gradle
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.2.1'
+    
     compile 'com.camnter.savevolley:hurl:1.2.1'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.2.1'
 }
 ```
    
