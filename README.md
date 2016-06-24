@@ -8,7 +8,7 @@
 [ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)   
    
    
-**gson:** 3.3.1   
+**gson:** 2.7
    
 **agera:** 1.1.0-beta2
    
