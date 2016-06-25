@@ -23,6 +23,8 @@ android {
 dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':savevolley-network-okhttp3-adapter')
+
+    provided 'com.squareup.okhttp3:okhttp:3.3.1'
 }
 
 android {

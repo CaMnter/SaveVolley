@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 24
@@ -28,48 +26,3 @@ dependencies {
     compile 'com.squareup.okio:okio:1.8.0'
 }
 
-android {
-    defaultConfig {
-        minSdkVersion gradle.minSdkVersion
-    }
-    compileOptions {
-        sourceCompatibility gradle.javaVersion
-        targetCompatibility gradle.javaVersion
-    }
-    lintOptions {
-        abortOnError false
-    }
-
-}
-
-publish {
-    userOrg = gradle.bintrayUser
-    uploadName = gradle.bintrayName
-    repoName = gradle.bintrayRepo
-    groupId = gradle.group
-    artifactId = 'square-okhttp3'
-    version = gradle.versionName
-    autoPublish = true
-}
-
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-                name 'SaveVolley square-okhttp3'
-                url gradle.url
-                licenses {
-                    license {
-                        name gradle.licenseName
-                        url gradle.licenseUrl
-                    }
-                }
-                scm {
-                    url gradle.url
-                    connection gradle.gitUrl
-                }
-            }
-        }
-    }
-}
