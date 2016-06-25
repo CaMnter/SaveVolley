@@ -3,8 +3,6 @@ include ':extensions:savevolley-hurl-agera-gson',
         ':extensions:savevolley-okhttp3-agera-gson',
         ':extensions:savevolley-okhttp3-gson',
 
-        ':google-agera',
-
         ':samples',
 
         ':savevolley-hurl',
