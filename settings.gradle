@@ -1,17 +1,22 @@
-include ':samples',
-        ':extensions:savevolley-hurl-agera-gson',
+include ':extensions:savevolley-hurl-agera-gson',
         ':extensions:savevolley-hurl-gson',
         ':extensions:savevolley-okhttp3-agera-gson',
         ':extensions:savevolley-okhttp3-gson',
+
         ':google-agera',
-        ':square-okhttp3',
-        ':savevolley-network-okhttp3-adapter',
-        ':savevolley-network-hurl-adapter',
-        ':volley-comments',
+
+        ':samples',
+
         ':savevolley-hurl',
         ':savevolley-network-adapter',
+        ':savevolley-network-core',
+        ':savevolley-network-hurl-adapter',
+        ':savevolley-network-okhttp3-adapter',
         ':savevolley-okhttp3',
-        ':savevolley-network-core'
+
+        ':volley-comments'
+
+
 
 gradle.ext.versionCode = 140
 gradle.ext.versionName = '1.4.0'
