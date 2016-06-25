@@ -12,7 +12,7 @@
    
 **agera:** 1.1.0-beta2   
    
-**okhttp3** 3.3.1
+**okhttp3:** 3.3.1
    
    
 # savevolley-okhttp3-agera-gson
