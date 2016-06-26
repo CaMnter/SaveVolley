@@ -82,8 +82,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:hurl:1.4.0'
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.4.0'
+    compile 'com.camnter.savevolley:hurl:1.4.1'
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.4.1'
 }
 ```
    
@@ -138,8 +138,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     
-    compile 'com.camnter.savevolley:okhttp3:1.4.0'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.4.0'
+    compile 'com.camnter.savevolley:okhttp3:1.4.1'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.4.1'
 }
 ```
    
@@ -177,8 +177,8 @@ dependencies {
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     
-    compile 'com.camnter.savevolley:hurl:1.4.0'
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.4.0'
+    compile 'com.camnter.savevolley:hurl:1.4.1'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.4.1'
 }
 ```
    
@@ -215,7 +215,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:okhttp3:1.4.0'
+    compile 'com.camnter.savevolley:okhttp3:1.4.1'
 }
 ```
    
@@ -231,7 +231,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:hurl:1.4.0'
+    compile 'com.camnter.savevolley:hurl:1.4.1'
 }
 ```
    
