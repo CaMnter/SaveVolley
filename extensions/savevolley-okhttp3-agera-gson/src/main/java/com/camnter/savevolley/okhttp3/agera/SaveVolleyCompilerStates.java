@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * Description：SaveVolleyCompilerStates
  * Created by：CaMnter
- * Time：2016-06-23 21:01
+ * Time：2016-06-27 00:06
  */
 
 public interface SaveVolleyCompilerStates {
@@ -43,17 +43,23 @@ public interface SaveVolleyCompilerStates {
 
     interface VRequestState<RType> {
 
-        @NonNull VRequestState<RType> url(@NonNull String url);
+        @NonNull
+        VRequestState<RType> url(@NonNull String url);
 
-        @NonNull VRequestState<RType> method(@Nullable Integer method);
+        @NonNull
+        VRequestState<RType> method(@Nullable Integer method);
 
-        @NonNull VRequestState<RType> addParam(@NonNull String key, @NonNull String value);
+        @NonNull
+        VRequestState<RType> addParam(@NonNull String key, @NonNull String value);
 
-        @NonNull VRequestState<RType> resetParams(@Nullable Map<String, String> params);
+        @NonNull
+        VRequestState<RType> resetParams(@Nullable Map<String, String> params);
 
-        @NonNull VRequestState<RType> parseStyle(@Nullable @ParseStyle Integer parseStyle);
+        @NonNull
+        VRequestState<RType> parseStyle(@Nullable @ParseStyle Integer parseStyle);
 
-        @NonNull VRequestState<RType> classOf(@Nullable Class<RType> classOfT);
+        @NonNull
+        VRequestState<RType> classOf(@Nullable Class<RType> classOfT);
 
         @NonNull
         VRequestQueue<RType> createRequest();
@@ -61,12 +67,18 @@ public interface SaveVolleyCompilerStates {
 
 
     interface VRequestQueue<RType> {
+
+        @NonNull
         VTermination<RType> context(@NonNull Context context);
+
     }
 
 
     interface VTermination<RType> {
+
+        @NonNull
         SaveVolley compile();
+
     }
 
 }

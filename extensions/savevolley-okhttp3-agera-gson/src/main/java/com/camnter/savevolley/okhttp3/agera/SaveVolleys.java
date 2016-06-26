@@ -16,14 +16,17 @@
 
 package com.camnter.savevolley.okhttp3.agera;
 
+import android.support.annotation.NonNull;
+
 /**
  * Description：SaveVolleys
  * Created by：CaMnter
- * Time：2016-06-23 16:27
+ * Time：2016-06-27 00:12
  */
 
 public class SaveVolleys {
 
+    @NonNull
     public static <T> SaveVolleyCompilerStates.VRequestState<T> request(final String url) {
         return SaveVolleyCompiler.request(url);
     }

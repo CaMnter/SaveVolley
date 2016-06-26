@@ -17,28 +17,41 @@
 package com.camnter.savevolley.hurl.agera;
 
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import com.camnter.savevolley.hurl.Request;
 import com.google.android.agera.Reservoir;
 
 /**
  * Description：SaveVolley
  * Created by：CaMnter
- * Time：2016-06-23 16:46
+ * Time：2016-06-27 00:30
  */
 
 public class SaveVolley {
+
     private final int requestMethod;
+
     @NonNull
     private final String requestUrl;
+
     private final int requestParseStyle;
+
+    @Nullable
     private final Class requestClassOf;
 
+    @NonNull
     private final Request<?> request;
+
+    @NonNull
     private final Reservoir<Object> reservoir;
 
 
-    public SaveVolley(int requestMethod, @NonNull
-        String requestUrl, int requestParseStyle, Class requestClassOf, Request<?> request, Reservoir<Object> reservoir) {
+    public SaveVolley(final int requestMethod,
+                      @NonNull final String requestUrl,
+                      final int requestParseStyle,
+                      @Nullable final Class requestClassOf,
+                      @NonNull final Request<?> request,
+                      @NonNull final Reservoir<Object> reservoir) {
         this.requestMethod = requestMethod;
         this.requestUrl = requestUrl;
         this.requestParseStyle = requestParseStyle;

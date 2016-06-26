@@ -16,14 +16,17 @@
 
 package com.camnter.savevolley.hurl.agera;
 
+import android.support.annotation.NonNull;
+
 /**
  * Description：SaveVolleys
  * Created by：CaMnter
- * Time：2016-06-23 21:40
+ * Time：2016-06-27 00:31
  */
 
 public class SaveVolleys {
 
+    @NonNull
     public static <T> SaveVolleyCompilerStates.VRequestState<T> request(final String url) {
         return SaveVolleyCompiler.request(url);
     }

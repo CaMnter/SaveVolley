@@ -18,6 +18,7 @@ package com.camnter.savevolley.hurl.agera;
 
 import android.content.Context;
 import android.os.Looper;
+import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import com.camnter.savevolley.hurl.Request;
@@ -28,16 +29,19 @@ import com.camnter.savevolley.hurl.agera.gson.request.HurlJsonArrayReservoirRequ
 import com.camnter.savevolley.hurl.agera.gson.request.HurlJsonReservoirRequest;
 import com.camnter.savevolley.hurl.toolbox.Volley;
 import com.google.android.agera.Reservoir;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.camnter.savevolley.hurl.agera.Preconditions.checkArgument;
 import static com.camnter.savevolley.hurl.agera.Preconditions.checkNotNull;
+import static com.google.android.agera.Preconditions.checkState;
 
 /**
  * Description：SaveVolleyCompiler
  * Created by：CaMnter
- * Time：2016-06-23 21:05
+ * Time：2016-06-27 00:24
  */
 
 public final class SaveVolleyCompiler<RType> implements
@@ -45,12 +49,25 @@ public final class SaveVolleyCompiler<RType> implements
     SaveVolleyCompilerStates.VRequestQueue<RType>,
     SaveVolleyCompilerStates.VTermination<RType> {
 
+    @IntDef({ IDLE, REQUEST, REQUEST_QUEUE, TERMINATION })
+    @Retention(RetentionPolicy.SOURCE)
+    private @interface Expect {}
+
+
+    private static final int IDLE = 260;
+    private static final int REQUEST = 261;
+    private static final int REQUEST_QUEUE = 262;
+    private static final int TERMINATION = 263;
+
     private int requestMethod;
     @NonNull
     private String requestUrl;
     private int requestParseStyle;
     private Class requestClassOf;
     private Map<String, String> requestParams;
+
+    @Expect
+    private int expect;
 
     private Request<?> request;
 
@@ -60,7 +77,15 @@ public final class SaveVolleyCompiler<RType> implements
     private static final ThreadLocal<RequestQueue> queue = new ThreadLocal<>();
 
 
-    public static RequestQueue requestQueue(Context context) {
+    private SaveVolleyCompiler() {}
+
+
+    private void checkExpect(@Expect final int accept) {
+        checkState(expect == accept, "Unexpected compiler state");
+    }
+
+
+    public static RequestQueue requestQueue(final Context context) {
         if (queue.get() == null) {
             queue.set(Volley.newRequestQueue(context));
         }
@@ -93,49 +118,59 @@ public final class SaveVolleyCompiler<RType> implements
      *****************/
 
     @NonNull @Override public SaveVolleyCompilerStates.VRequestState<RType> url(
-        @NonNull String url) {
+        @NonNull final String url) {
+        checkNotNull(url, "The url was null, url == null.");
         this.requestUrl = url;
+        this.expect = REQUEST;
         return this;
     }
 
 
     @NonNull @Override
-    public SaveVolleyCompilerStates.VRequestState<RType> method(@Nullable Integer method) {
+    public SaveVolleyCompilerStates.VRequestState<RType> method(@Nullable final Integer method) {
         this.requestMethod = method != null ? method : Method.GET;
+        this.expect = REQUEST;
         return this;
     }
 
 
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> addParam(
-        @NonNull String key, @NonNull String value) {
+        @NonNull final String key, @NonNull final String value) {
+        checkNotNull(key, "The key was null, key == null.");
+        checkNotNull(value, "The value was null, value == null.");
         if (this.requestParams == null) {
             this.requestParams = new HashMap<>();
         }
         this.requestParams.put(key, value);
+        this.expect = REQUEST;
         return this;
     }
 
 
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> resetParams(
-        @Nullable Map<String, String> params) {
+        @Nullable final Map<String, String> params) {
         this.requestParams = params;
+        this.expect = REQUEST;
         return this;
     }
 
 
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> parseStyle(
-        @Nullable @SaveVolleyCompilerStates.ParseStyle Integer parseStyle) {
+        @Nullable @SaveVolleyCompilerStates.ParseStyle final Integer parseStyle) {
         this.requestParseStyle = parseStyle != null ? parseStyle : SaveVolleyCompilerStates.GSON;
+        this.expect = REQUEST;
         return this;
     }
 
 
     @NonNull @Override
-    public SaveVolleyCompilerStates.VRequestState<RType> classOf(@Nullable Class<RType> classOf) {
-        this.requestClassOf = classOf;
+    public SaveVolleyCompilerStates.VRequestState<RType> classOf(
+        @Nullable final Class<RType> classOfT) {
+        this.requestClassOf = classOfT;
+        this.expect = REQUEST;
         return this;
     }
 
@@ -152,7 +187,8 @@ public final class SaveVolleyCompiler<RType> implements
             case SaveVolleyCompilerStates.GSON:
                 checkNotNull(this.requestClassOf,
                     "The parse style of response was null, requestTypeClass == null.");
-                this.request = new HurlGsonReservoirRequest<>(this.requestMethod, this.requestUrl,
+                this.request = new HurlGsonReservoirRequest<>(this.requestMethod,
+                    this.requestUrl,
                     this.requestClassOf);
                 break;
             case SaveVolleyCompilerStates.JSON_OBJECT:
@@ -163,6 +199,7 @@ public final class SaveVolleyCompiler<RType> implements
                     this.requestUrl);
                 break;
         }
+        this.expect = REQUEST;
         return this;
     }
 
@@ -172,8 +209,9 @@ public final class SaveVolleyCompiler<RType> implements
      *****************/
 
     @Override
-    public SaveVolleyCompilerStates.VTermination<RType> context(@NonNull Context context) {
+    public SaveVolleyCompilerStates.VTermination<RType> context(@NonNull final Context context) {
         checkNotNull(this.request, "The request was null, request == null");
+        checkNotNull(context, "The context was null, context == null");
         requestQueue(context).add(this.request);
         if (this.request instanceof HurlGsonReservoirRequest) {
             this.reservoir = ((HurlGsonReservoirRequest) this.request).getReservoir();
@@ -182,6 +220,7 @@ public final class SaveVolleyCompiler<RType> implements
         } else if (this.request instanceof HurlJsonArrayReservoirRequest) {
             this.reservoir = ((HurlJsonArrayReservoirRequest) this.request).getReservoir();
         }
+        this.expect = REQUEST_QUEUE;
         return this;
     }
 
@@ -194,6 +233,7 @@ public final class SaveVolleyCompiler<RType> implements
         SaveVolley saveVolley = new SaveVolley(this.requestMethod, this.requestUrl,
             this.requestParseStyle, this.requestClassOf, this.request, this.reservoir);
         recycle(this);
+        this.expect = TERMINATION;
         return saveVolley;
     }
 
