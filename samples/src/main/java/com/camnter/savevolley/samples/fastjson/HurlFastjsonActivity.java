@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2016 CaMnter yuanyu.camnter@gmail.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.camnter.savevolley.samples.fastjson;
 
 import android.util.Log;
@@ -18,8 +34,7 @@ import com.camnter.savevolley.samples.gson.Okhttp3GsonActivity;
 public class HurlFastjsonActivity extends Okhttp3GsonActivity {
     @Override protected void initData() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(new HurlFastjsonRequest<GankData>(TEST_URL,
-            GankData.class) {
+        queue.add(new HurlFastjsonRequest<GankData>(TEST_URL, GankData.class) {
             /**
              * Called when a response is received.
              */
@@ -33,9 +48,14 @@ public class HurlFastjsonActivity extends Okhttp3GsonActivity {
              * provided error code and optional user-readable message.
              */
             @Override public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HurlFastjsonActivity.this, error.getMessage(), Toast.LENGTH_LONG)
+                Toast.makeText(HurlFastjsonActivity.this,
+                    error != null && error.getMessage() != null
+                    ? error.getMessage()
+                    : "No error message", Toast.LENGTH_LONG)
                     .show();
-                Log.d("GsonRequest", error.getMessage());
+                Log.d("GsonRequest", error != null && error.getMessage() != null
+                                     ? error.getMessage()
+                                     : "No error message");
             }
         });
     }

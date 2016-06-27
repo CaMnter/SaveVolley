@@ -4,7 +4,7 @@
    
    
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE)
-![Version](https://img.shields.io/badge/version-1.5.0-8470FF.svg)
+![Version](https://img.shields.io/badge/version-1.5.2-8470FF.svg)
 [ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)   
    
    
@@ -14,6 +14,7 @@
    
 **okhttp3:** 3.3.1
    
+<br/>
    
 # savevolley-okhttp3-agera-gson
    
@@ -25,8 +26,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:okhttp3:1.5.0'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.5.0'
+    compile 'com.camnter.savevolley:okhttp3:1.5.2'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.5.2'
 }
 ```
     
@@ -64,6 +65,7 @@ dependencies {
         })
         .orSkip()
         .compile();
+    
     repository.addUpdatable(new Updatable() {
         @Override public void update() {
             getContentText.setText(repository.get().toString());
@@ -82,8 +84,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:hurl:1.5.0'
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.5.0'
+    compile 'com.camnter.savevolley:hurl:1.5.2'
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.5.2'
 }
 ```
    
@@ -121,6 +123,7 @@ dependencies {
         })
         .orSkip()
         .compile();
+    
     repository.addUpdatable(new Updatable() {
         @Override public void update() {
             getContentText.setText(repository.get().toString());
@@ -129,17 +132,18 @@ dependencies {
 ```
    
    
-# savevolley-okhttp3-gson
+# savevolley-okhttp3-gson || savevolley-okhttp3-fastjson
    
-## gradle
+## savevolley-okhttp3-gson  gradle
    
 ```gradle
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     
-    compile 'com.camnter.savevolley:okhttp3:1.5.0'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.5.0'
+    compile 'com.camnter.savevolley:okhttp3:1.5.2'
+    // for gson
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.5.2'
 }
 ```
    
@@ -162,8 +166,56 @@ dependencies {
          * provided error code and optional user-readable message.
          */
         @Override public void onErrorResponse(VolleyError error) {
-            Toast.makeText(Okhttp3GsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-            Log.d("GsonRequest", error.getMessage());
+            Toast.makeText(Okhttp3GsonActivity.this,
+                error != null && error.getMessage() != null
+                ? error.getMessage()
+                : "No error message", Toast.LENGTH_LONG)
+                .show();
+            Log.d("GsonRequest", error != null && error.getMessage() != null
+                                 ? error.getMessage()
+                                 : "No error message");
+        }
+    });
+```
+   
+## savevolley-okhttp3-fastjson  gradle
+   
+```gradle
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    
+    compile 'com.camnter.savevolley:hurl:1.5.2'
+    // for fastjson
+    compile 'com.camnter.savevolley:savevolley-okhttp3-fastjson:1.5.2'
+}
+```
+   
+可以使用 `Okhttp3FastjsonRequest` 。
+   
+```java
+    RequestQueue queue = Volley.newRequestQueue(this);
+    queue.add(new OkHttp3FastjsonRequest<GankData>(TEST_URL, GankData.class) {
+        /**
+         * Called when a response is received.
+         */
+        @Override public void onResponse(GankData response) {
+            getContentText.setText(response.toString());
+        }
+
+
+        /**
+         * Callback method that an error has been occurred with the
+         * provided error code and optional user-readable message.
+         */
+        @Override public void onErrorResponse(VolleyError error) {
+            Toast.makeText(Okhttp3FastjsonActivity.this,
+                error != null && error.getMessage() != null
+                ? error.getMessage()
+                : "No error message", Toast.LENGTH_LONG)
+                .show();
+            Log.d("GsonRequest", error != null && error.getMessage() != null
+                                 ? error.getMessage()
+                                 : "No error message");
         }
     });
 ```
@@ -177,9 +229,9 @@ dependencies {
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     
-    compile 'com.camnter.savevolley:hurl:1.5.0'
+    compile 'com.camnter.savevolley:hurl:1.5.2'
     // for gson
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.5.0'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.5.2'
 }
 ```
    
@@ -203,8 +255,14 @@ dependencies {
          * provided error code and optional user-readable message.
          */
         @Override public void onErrorResponse(VolleyError error) {
-            Toast.makeText(HurlGsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-            Log.d("GsonRequest", error.getMessage());
+            Toast.makeText(HurlGsonActivity.this,
+                error != null && error.getMessage() != null
+                ? error.getMessage()
+                : "No error message", Toast.LENGTH_LONG)
+                .show();
+            Log.d("GsonRequest", error != null && error.getMessage() != null
+                                 ? error.getMessage()
+                                 : "No error message");
         }
     });
 ```
@@ -215,9 +273,9 @@ dependencies {
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     
-    compile 'com.camnter.savevolley:hurl:1.5.0'
+    compile 'com.camnter.savevolley:hurl:1.5.2'
     // for fastjson
-    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.5.0'
+    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.5.2'
 }
 ```
     
@@ -225,8 +283,7 @@ dependencies {
    
 ```java
     RequestQueue queue = Volley.newRequestQueue(this);
-    queue.add(new HurlFastjsonRequest<GankData>(TEST_URL,
-        GankData.class) {
+    queue.add(new HurlFastjsonRequest<GankData>(TEST_URL, GankData.class) {
         /**
          * Called when a response is received.
          */
@@ -240,9 +297,14 @@ dependencies {
          * provided error code and optional user-readable message.
          */
         @Override public void onErrorResponse(VolleyError error) {
-            Toast.makeText(HurlFastjsonActivity.this, error.getMessage(), Toast.LENGTH_LONG)
+            Toast.makeText(HurlFastjsonActivity.this,
+                error != null && error.getMessage() != null
+                ? error.getMessage()
+                : "No error message", Toast.LENGTH_LONG)
                 .show();
-            Log.d("GsonRequest", error.getMessage());
+            Log.d("GsonRequest", error != null && error.getMessage() != null
+                                 ? error.getMessage()
+                                 : "No error message");
         }
     });
 ```
@@ -254,7 +316,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:okhttp3:1.5.0'
+    compile 'com.camnter.savevolley:okhttp3:1.5.2'
 }
 ```
    
@@ -270,7 +332,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:hurl:1.5.0'
+    compile 'com.camnter.savevolley:hurl:1.5.2'
 }
 ```
    

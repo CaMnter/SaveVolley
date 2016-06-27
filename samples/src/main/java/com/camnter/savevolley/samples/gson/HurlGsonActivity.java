@@ -47,8 +47,14 @@ public class HurlGsonActivity extends Okhttp3GsonActivity {
              * provided error code and optional user-readable message.
              */
             @Override public void onErrorResponse(VolleyError error) {
-                Toast.makeText(HurlGsonActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
-                Log.d("GsonRequest", error.getMessage());
+                Toast.makeText(HurlGsonActivity.this,
+                    error != null && error.getMessage() != null
+                    ? error.getMessage()
+                    : "No error message", Toast.LENGTH_LONG)
+                    .show();
+                Log.d("GsonRequest", error != null && error.getMessage() != null
+                                     ? error.getMessage()
+                                     : "No error message");
             }
         });
     }
