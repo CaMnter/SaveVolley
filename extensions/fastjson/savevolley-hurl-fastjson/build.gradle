@@ -1,0 +1,75 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    provided project(':savevolley-hurl')
+    provided 'com.alibaba:fastjson:1.1.52.android'
+}
+
+android {
+    defaultConfig {
+        minSdkVersion gradle.minSdkVersion
+    }
+    compileOptions {
+        sourceCompatibility gradle.javaVersion
+        targetCompatibility gradle.javaVersion
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+publish {
+    userOrg = gradle.bintrayUser
+    uploadName = gradle.bintrayName
+    repoName = gradle.bintrayRepo
+    groupId = gradle.group
+    artifactId = 'savevolley-hurl-fastjson'
+    version = gradle.versionName
+    autoPublish = true
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'SaveVolley savevolley-hurl-fastjson'
+                url gradle.url
+                licenses {
+                    license {
+                        name gradle.licenseName
+                        url gradle.licenseUrl
+                    }
+                }
+                scm {
+                    url gradle.url
+                    connection gradle.gitUrl
+                }
+            }
+        }
+    }
+}
+

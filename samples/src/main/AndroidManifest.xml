@@ -12,10 +12,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.camnter.savevolley.samples.gson.HurlGsonActivity"/>
-        <activity android:name="com.camnter.savevolley.samples.gson.Okhttp3GsonActivity"/>
-        <activity android:name="com.camnter.savevolley.samples.gson.HurlAgeraGsonActivity"/>
-        <activity android:name="com.camnter.savevolley.samples.gson.Okhttp3AgeraGsonActivity"/>
+        <activity android:name=".gson.HurlGsonActivity"/>
+        <activity android:name=".gson.Okhttp3GsonActivity"/>
+        <activity android:name=".gson.HurlAgeraGsonActivity"/>
+        <activity android:name=".gson.Okhttp3AgeraGsonActivity"/>
+
+        <activity android:name=".fastjson.HurlFastjsonActivity"/>
     </application>
 
 </manifest>
