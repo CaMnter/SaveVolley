@@ -49,7 +49,7 @@ public final class SaveVolleyCompiler<RType> implements
     SaveVolleyCompilerStates.VRequestQueue<RType>,
     SaveVolleyCompilerStates.VTermination<RType> {
 
-    @IntDef({ IDLE, REQUEST, REQUEST_QUEUE, TERMINATION })
+    @IntDef({ IDLE, REQUEST, REQUEST_QUEUE, TERMINATION, PRODUCT })
     @Retention(RetentionPolicy.SOURCE)
     private @interface Expect {}
 
@@ -58,6 +58,7 @@ public final class SaveVolleyCompiler<RType> implements
     private static final int REQUEST = 261;
     private static final int REQUEST_QUEUE = 262;
     private static final int TERMINATION = 263;
+    private static final int PRODUCT = 264;
 
     private int requestMethod;
     @NonNull
@@ -128,6 +129,7 @@ public final class SaveVolleyCompiler<RType> implements
 
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> method(@Nullable final Integer method) {
+        checkExpect(REQUEST);
         this.requestMethod = method != null ? method : Method.GET;
         this.expect = REQUEST;
         return this;
@@ -137,6 +139,7 @@ public final class SaveVolleyCompiler<RType> implements
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> addParam(
         @NonNull final String key, @NonNull final String value) {
+        checkExpect(REQUEST);
         checkNotNull(key, "The key was null, key == null.");
         checkNotNull(value, "The value was null, value == null.");
         if (this.requestParams == null) {
@@ -151,6 +154,7 @@ public final class SaveVolleyCompiler<RType> implements
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> resetParams(
         @Nullable final Map<String, String> params) {
+        checkExpect(REQUEST);
         this.requestParams = params;
         this.expect = REQUEST;
         return this;
@@ -160,6 +164,7 @@ public final class SaveVolleyCompiler<RType> implements
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> parseStyle(
         @Nullable @SaveVolleyCompilerStates.ParseStyle final Integer parseStyle) {
+        checkExpect(REQUEST);
         this.requestParseStyle = parseStyle != null ? parseStyle : SaveVolleyCompilerStates.GSON;
         this.expect = REQUEST;
         return this;
@@ -169,6 +174,7 @@ public final class SaveVolleyCompiler<RType> implements
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> classOf(
         @Nullable final Class<RType> classOfT) {
+        checkExpect(REQUEST);
         this.requestClassOf = classOfT;
         this.expect = REQUEST;
         return this;
@@ -176,6 +182,7 @@ public final class SaveVolleyCompiler<RType> implements
 
 
     @NonNull @Override public SaveVolleyCompilerStates.VRequestQueue<RType> createRequest() {
+        checkExpect(REQUEST);
         if (this.requestMethod != Method.GET) {
             checkNotNull(this.requestParams,
                 "The params of request was null, params == null.");
@@ -199,7 +206,7 @@ public final class SaveVolleyCompiler<RType> implements
                     this.requestUrl);
                 break;
         }
-        this.expect = REQUEST;
+        this.expect = REQUEST_QUEUE;
         return this;
     }
 
@@ -210,6 +217,7 @@ public final class SaveVolleyCompiler<RType> implements
 
     @Override
     public SaveVolleyCompilerStates.VTermination<RType> context(@NonNull final Context context) {
+        checkExpect(REQUEST_QUEUE);
         checkNotNull(this.request, "The request was null, request == null");
         checkNotNull(context, "The context was null, context == null");
         requestQueue(context).add(this.request);
@@ -220,7 +228,7 @@ public final class SaveVolleyCompiler<RType> implements
         } else if (this.request instanceof HurlJsonArrayReservoirRequest) {
             this.reservoir = ((HurlJsonArrayReservoirRequest) this.request).getReservoir();
         }
-        this.expect = REQUEST_QUEUE;
+        this.expect = TERMINATION;
         return this;
     }
 
@@ -230,10 +238,11 @@ public final class SaveVolleyCompiler<RType> implements
      *****************/
 
     @Override public SaveVolley compile() {
+        checkExpect(TERMINATION);
         SaveVolley saveVolley = new SaveVolley(this.requestMethod, this.requestUrl,
             this.requestParseStyle, this.requestClassOf, this.request, this.reservoir);
         recycle(this);
-        this.expect = TERMINATION;
+        this.expect = PRODUCT;
         return saveVolley;
     }
 
