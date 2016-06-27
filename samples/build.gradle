@@ -61,21 +61,21 @@ dependencies {
     /*********************
      * Remote extensions *
      *********************/
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.5.2'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.5.2'
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.5.2'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.5.2'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.5.3'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.5.3'
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.5.3'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.5.3'
 
-    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.5.2'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-fastjson:1.5.2'
+    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.5.3'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-fastjson:1.5.3'
 
     /**************************
      * Remote savevolley-hurl *
      **************************/
-    compile 'com.camnter.savevolley:hurl:1.5.2'
+    compile 'com.camnter.savevolley:hurl:1.5.3'
 
     /*****************************
      * Remote savevolley-okhttp3 *
      *****************************/
-    compile 'com.camnter.savevolley:okhttp3:1.5.2'
+    compile 'com.camnter.savevolley:okhttp3:1.5.3'
 }
