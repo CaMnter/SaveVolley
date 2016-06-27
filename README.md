@@ -4,7 +4,7 @@
    
    
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE)
-![Version](https://img.shields.io/badge/version-1.4.0-8470FF.svg)
+![Version](https://img.shields.io/badge/version-1.4.2-8470FF.svg)
 [ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)   
    
    
@@ -25,8 +25,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:okhttp3:1.4.0'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.4.0'
+    compile 'com.camnter.savevolley:okhttp3:1.4.2'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.4.2'
 }
 ```
    
@@ -82,8 +82,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:hurl:1.4.1'
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.4.1'
+    compile 'com.camnter.savevolley:hurl:1.4.2'
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.4.2'
 }
 ```
    
@@ -138,8 +138,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     
-    compile 'com.camnter.savevolley:okhttp3:1.4.1'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.4.1'
+    compile 'com.camnter.savevolley:okhttp3:1.4.2'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.4.2'
 }
 ```
    
@@ -177,8 +177,8 @@ dependencies {
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     
-    compile 'com.camnter.savevolley:hurl:1.4.1'
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.4.1'
+    compile 'com.camnter.savevolley:hurl:1.4.2'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.4.2'
 }
 ```
    
@@ -215,7 +215,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:okhttp3:1.4.1'
+    compile 'com.camnter.savevolley:okhttp3:1.4.2'
 }
 ```
    
@@ -231,7 +231,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:hurl:1.4.1'
+    compile 'com.camnter.savevolley:hurl:1.4.2'
 }
 ```
    
