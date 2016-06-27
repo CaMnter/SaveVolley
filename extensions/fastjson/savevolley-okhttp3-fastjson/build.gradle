@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 24
@@ -21,10 +23,52 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    testCompile 'junit:junit:4.12'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support:support-annotations:24.0.0'
+    provided project(':savevolley-okhttp3')
+    provided 'com.alibaba:fastjson:1.1.52.android'
+}
+
+android {
+    defaultConfig {
+        minSdkVersion gradle.minSdkVersion
+    }
+    compileOptions {
+        sourceCompatibility gradle.javaVersion
+        targetCompatibility gradle.javaVersion
+    }
+    lintOptions {
+        abortOnError false
+    }
+
+}
+
+publish {
+    userOrg = gradle.bintrayUser
+    uploadName = gradle.bintrayName
+    repoName = gradle.bintrayRepo
+    groupId = gradle.group
+    artifactId = 'savevolley-okhttp3-fastjson'
+    version = gradle.versionName
+    autoPublish = true
+}
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+                name 'SaveVolley savevolley-okhttp3-fastjson'
+                url gradle.url
+                licenses {
+                    license {
+                        name gradle.licenseName
+                        url gradle.licenseUrl
+                    }
+                }
+                scm {
+                    url gradle.url
+                    connection gradle.gitUrl
+                }
+            }
+        }
+    }
 }

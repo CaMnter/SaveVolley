@@ -20,8 +20,8 @@ include ':extensions:agera-gson:savevolley-hurl-agera-gson',
 
 
 
-gradle.ext.versionCode = 151
-gradle.ext.versionName = '1.5.1'
+gradle.ext.versionCode = 152
+gradle.ext.versionName = '1.5.2'
 
 gradle.ext.bintrayRepo = 'maven'
 gradle.ext.bintrayName = 'SaveVolley'
