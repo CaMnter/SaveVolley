@@ -4,7 +4,7 @@
    
    
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE)
-![Version](https://img.shields.io/badge/version-1.4.2-8470FF.svg)
+![Version](https://img.shields.io/badge/version-1.5.0-8470FF.svg)
 [ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)   
    
    
@@ -25,11 +25,11 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:okhttp3:1.4.2'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.4.2'
+    compile 'com.camnter.savevolley:okhttp3:1.5.0'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.5.0'
 }
 ```
-   
+    
 可以使用 `SaveVolley` **Flow** 和 `agera` **Flow** 。          
    
 ```java
@@ -70,8 +70,8 @@ dependencies {
         }
     });
 ```
-   
-   
+    
+    
 # savevolley-hurl-agera-gson
    
 ## gradle
@@ -82,8 +82,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:hurl:1.4.2'
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.4.2'
+    compile 'com.camnter.savevolley:hurl:1.5.0'
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.5.0'
 }
 ```
    
@@ -138,8 +138,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     
-    compile 'com.camnter.savevolley:okhttp3:1.4.2'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.4.2'
+    compile 'com.camnter.savevolley:okhttp3:1.5.0'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.5.0'
 }
 ```
    
@@ -169,16 +169,17 @@ dependencies {
 ```
    
    
-# savevolley-hurl-gson
+# savevolley-hurl-gson || savevolley-hurl-fastjson 
    
-## gradle
+## savevolley-hurl-gson  gradle
    
 ```gradle
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     
-    compile 'com.camnter.savevolley:hurl:1.4.2'
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.4.2'
+    compile 'com.camnter.savevolley:hurl:1.5.0'
+    // for gson
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.5.0'
 }
 ```
    
@@ -208,14 +209,52 @@ dependencies {
     });
 ```
    
+## savevolley-hurl-fastjson  gradle
    
+```gradle
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    
+    compile 'com.camnter.savevolley:hurl:1.5.0'
+    // for fastjson
+    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.5.0'
+}
+```
+    
+可以使用 `HurlFastjsonRequest` 。
+   
+```java
+    RequestQueue queue = Volley.newRequestQueue(this);
+    queue.add(new HurlFastjsonRequest<GankData>(TEST_URL,
+        GankData.class) {
+        /**
+         * Called when a response is received.
+         */
+        @Override public void onResponse(GankData response) {
+            getContentText.setText(response.toString());
+        }
+
+
+        /**
+         * Callback method that an error has been occurred with the
+         * provided error code and optional user-readable message.
+         */
+        @Override public void onErrorResponse(VolleyError error) {
+            Toast.makeText(HurlFastjsonActivity.this, error.getMessage(), Toast.LENGTH_LONG)
+                .show();
+            Log.d("GsonRequest", error.getMessage());
+        }
+    });
+```
+    
+    
 # savevolley-okhttp3
    
 ## gradle
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:okhttp3:1.4.2'
+    compile 'com.camnter.savevolley:okhttp3:1.5.0'
 }
 ```
    
@@ -231,7 +270,7 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:hurl:1.4.2'
+    compile 'com.camnter.savevolley:hurl:1.5.0'
 }
 ```
    
