@@ -76,6 +76,7 @@ public class HurlAgeraGsonActivity extends Okhttp3GsonActivity {
             })
             .orSkip()
             .compile();
+
         repository.addUpdatable(new Updatable() {
             @Override public void update() {
                 getContentText.setText(repository.get().toString());

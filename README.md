@@ -131,6 +131,7 @@ dependencies {
     });
 ```
    
+<br/>
    
 # savevolley-okhttp3-gson || savevolley-okhttp3-fastjson
    
@@ -220,6 +221,7 @@ dependencies {
     });
 ```
    
+<br/>
    
 # savevolley-hurl-gson || savevolley-hurl-fastjson 
    
@@ -309,6 +311,7 @@ dependencies {
     });
 ```
     
+<br/>
     
 # savevolley-okhttp3
    
@@ -325,6 +328,7 @@ dependencies {
 将 原版的 **google/volley** 中 网络实现层 的 **Apache HttpClient** 和 **原生的 HttpUrlConnection** 都移除。
 换成 **square/okhttp3** 作为实现网络请求。
    
+<br/>
    
 # savevolley-hurl
    
@@ -343,6 +347,7 @@ dependencies {
    
 移除了 **原版** **google/volley** 中的，所有相关与 HttpClient 的逻辑，全版本的网络通信接入到 **HttpUrlConnection** 内。   
    
+<br/>
    
 # savevolley-network-core
    
@@ -355,6 +360,7 @@ dependencies {
    
 这个模块还需要与 [savevolley-network-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-adapter/src/main/java/com/camnter/savevolley/network/adapter/core) 的子模块（ [savevolley-network-okhttp3-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-okhttp3-adapter/src/main/java/com/camnter/savevolley/network/okhttp3/adapter), [savevolley-network-hurl-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-hurl-adapter/src/main/java/com/camnter/savevolley/network/hurl/adapter) ）一起协作。
    
+<br/>
    
 # savevolley-network-adapter
    
@@ -363,6 +369,7 @@ dependencies {
 目的是为了定义一些接口： **不同框架的响应结果** -> **通用的 HTTP Response API**。   
 子模块有： [savevolley-network-okhttp3-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-okhttp3-adapter/src/main/java/com/camnter/savevolley/network/okhttp3/adapter), [savevolley-network-hurl-adapter](https://github.com/CaMnter/SaveVolley/tree/master/savevolley-network-hurl-adapter/src/main/java/com/camnter/savevolley/network/hurl/adapter) 。   
    
+<br/>
    
 # savevolley-network-okhttp3-adapter
    
@@ -370,6 +377,7 @@ dependencies {
    
 **savevolley-network-adapter** 的子模块，**square/okhttp Response** -> **通用的 HTTP Response API**。
    
+<br/>
    
 # savevolley-network-hurl-adapter
    
@@ -377,6 +385,7 @@ dependencies {
    
 **savevolley-network-adapter** 的子模块，**HttpConnection** -> **通用的 HTTP Response API**。
    
+<br/>
    
 # extensions / savevolley-okhttp3-agera-gson
    
@@ -384,6 +393,7 @@ dependencies {
    
 **作用**: **agera** **- >**  **savevolley-okhttp3** **< -** **gson** , 为 **savevolley-okhttp3** 桥接了 **Agera** 和 **gson** 。  
    
+<br/>
    
 # extensions / savevolley-hurl-agera-gson
    
@@ -391,6 +401,7 @@ dependencies {
    
 **作用**: **agera** **- >**  **savevolley-hurl** **< -** **gson** , 为 **savevolley-hurl** 桥接了 **Agera** 和 **gson** 。   
    
+<br/>
    
 # extensions / savevolley-okhttp3-gson
    
@@ -398,6 +409,7 @@ dependencies {
    
 **作用**: **gson** **- >**  **savevolley-okhttp3**  。      
    
+<br/>
    
 # extensions / savevolley-hurl-gson
    
@@ -405,17 +417,21 @@ dependencies {
    
 **作用**: **gson** **- >**  **savevolley-hurl** 。      
    
+<br/>
    
 # square-okhttp3
    
 [square/okhttp](https://github.com/square/okhttp)  Version: **3.3.1**   
    
+<br/>
    
 # google-agera
    
 [google/agera](https://github.com/google/agera)  Version: **1.1.0-beta2**   
    
    
+<br/>
+<br/>
    
    
 # volley-comments
