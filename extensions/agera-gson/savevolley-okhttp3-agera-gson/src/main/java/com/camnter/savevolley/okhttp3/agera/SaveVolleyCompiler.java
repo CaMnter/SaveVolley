@@ -21,9 +21,8 @@ import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.camnter.savevolley.okhttp3.agera.gson.request.OkHttp3GsonReservoirRequest;
-import com.camnter.savevolley.okhttp3.agera.gson.request.OkHttp3JsonArrayReservoirRequest;
-import com.camnter.savevolley.okhttp3.agera.gson.request.OkHttp3JsonReservoirRequest;
+import com.camnter.savevolley.okhttp3.agera.gson.request.Okhttp3ReservoirRequest;
+import com.camnter.savevolley.okhttp3.agera.gson.request.Okhttp3ReservoirRequests;
 import com.camnter.savevolley.okhttp3.volley.Request;
 import com.camnter.savevolley.okhttp3.volley.Request.Method;
 import com.camnter.savevolley.okhttp3.volley.RequestQueue;
@@ -194,15 +193,17 @@ public final class SaveVolleyCompiler<RType> implements
             case SaveVolleyCompilerStates.GSON:
                 checkNotNull(this.requestClassOf,
                     "The parse style of response was null, requestTypeClass == null.");
-                this.request = new OkHttp3GsonReservoirRequest<>(this.requestMethod,
+                this.request = Okhttp3ReservoirRequests.gsonReservoirRequest(this.requestMethod,
                     this.requestUrl,
                     this.requestClassOf);
                 break;
             case SaveVolleyCompilerStates.JSON_OBJECT:
-                this.request = new OkHttp3JsonReservoirRequest(this.requestMethod, this.requestUrl);
+                this.request = Okhttp3ReservoirRequests.jsonReservoirRequest(this.requestMethod,
+                    this.requestUrl);
                 break;
             case SaveVolleyCompilerStates.JSON_ARRAY:
-                this.request = new OkHttp3JsonArrayReservoirRequest(this.requestMethod,
+                this.request = Okhttp3ReservoirRequests.jsonArrayReservoirRequest(
+                    this.requestMethod,
                     this.requestUrl);
                 break;
         }
@@ -221,12 +222,8 @@ public final class SaveVolleyCompiler<RType> implements
         checkNotNull(this.request, "The request was null, request == null");
         checkNotNull(context, "The context was null, context == null");
         requestQueue(context).add(this.request);
-        if (this.request instanceof OkHttp3GsonReservoirRequest) {
-            this.reservoir = ((OkHttp3GsonReservoirRequest) this.request).getReservoir();
-        } else if (this.request instanceof OkHttp3JsonReservoirRequest) {
-            this.reservoir = ((OkHttp3JsonReservoirRequest) this.request).getReservoir();
-        } else if (this.request instanceof OkHttp3JsonArrayReservoirRequest) {
-            this.reservoir = ((OkHttp3JsonArrayReservoirRequest) this.request).getReservoir();
+        if (this.request instanceof Okhttp3ReservoirRequest) {
+            this.reservoir = ((Okhttp3ReservoirRequest) this.request).getReservoir();
         }
         this.expect = TERMINATION;
         return this;
