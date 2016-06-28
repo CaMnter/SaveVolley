@@ -18,12 +18,9 @@ package com.camnter.savevolley.okhttp3.agera.gson.request;
 
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
-import com.camnter.savevolley.okhttp3.volley.Request;
 import com.camnter.savevolley.okhttp3.volley.Response;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.okhttp3.volley.toolbox.HttpHeaderParser;
-import com.google.android.agera.Reservoir;
-import com.google.android.agera.Reservoirs;
 import java.io.UnsupportedEncodingException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,18 +31,12 @@ import org.json.JSONObject;
  * Time：2016-06-23 16:00
  */
 
-public class OkHttp3JsonReservoirRequest extends Request<JSONObject>
+public class OkHttp3JsonReservoirRequest extends Okhttp3ReservoirRequest<JSONObject>
     implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Response.Listener<JSONObject> mResponseListener;
-    private final Reservoir<Object> mReservoir;
-
-
-    public Reservoir<Object> getReservoir() {
-        return this.mReservoir;
-    }
 
 
     public OkHttp3JsonReservoirRequest(String url) {
@@ -56,7 +47,6 @@ public class OkHttp3JsonReservoirRequest extends Request<JSONObject>
     public OkHttp3JsonReservoirRequest(int method, String url) {
         super(method, url, null);
         this.mResponseListener = this;
-        this.mReservoir = Reservoirs.reservoir();
     }
 
 

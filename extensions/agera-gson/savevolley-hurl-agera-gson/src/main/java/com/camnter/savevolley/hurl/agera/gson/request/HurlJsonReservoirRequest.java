@@ -18,12 +18,9 @@ package com.camnter.savevolley.hurl.agera.gson.request;
 
 import com.camnter.savevolley.hurl.NetworkResponse;
 import com.camnter.savevolley.hurl.ParseError;
-import com.camnter.savevolley.hurl.Request;
 import com.camnter.savevolley.hurl.Response;
 import com.camnter.savevolley.hurl.VolleyError;
 import com.camnter.savevolley.hurl.toolbox.HttpHeaderParser;
-import com.google.android.agera.Reservoir;
-import com.google.android.agera.Reservoirs;
 import java.io.UnsupportedEncodingException;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,18 +31,12 @@ import org.json.JSONObject;
  * Time：2016-06-23 21:27
  */
 
-public class HurlJsonReservoirRequest extends Request<JSONObject>
+public class HurlJsonReservoirRequest extends HurlReservoirRequest<JSONObject>
     implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Response.Listener<JSONObject> mResponseListener;
-    private final Reservoir<Object> mReservoir;
-
-
-    public Reservoir<Object> getReservoir() {
-        return this.mReservoir;
-    }
 
 
     public HurlJsonReservoirRequest(String url) {
@@ -56,7 +47,6 @@ public class HurlJsonReservoirRequest extends Request<JSONObject>
     public HurlJsonReservoirRequest(int method, String url) {
         super(method, url, null);
         this.mResponseListener = this;
-        this.mReservoir = Reservoirs.reservoir();
     }
 
 

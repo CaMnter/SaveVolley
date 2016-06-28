@@ -24,9 +24,8 @@ import android.support.annotation.Nullable;
 import com.camnter.savevolley.hurl.Request;
 import com.camnter.savevolley.hurl.Request.Method;
 import com.camnter.savevolley.hurl.RequestQueue;
-import com.camnter.savevolley.hurl.agera.gson.request.HurlGsonReservoirRequest;
-import com.camnter.savevolley.hurl.agera.gson.request.HurlJsonArrayReservoirRequest;
-import com.camnter.savevolley.hurl.agera.gson.request.HurlJsonReservoirRequest;
+import com.camnter.savevolley.hurl.agera.gson.request.HurlReservoirRequest;
+import com.camnter.savevolley.hurl.agera.gson.request.HurlReservoirRequests;
 import com.camnter.savevolley.hurl.toolbox.Volley;
 import com.google.android.agera.Reservoir;
 import java.lang.annotation.Retention;
@@ -194,15 +193,17 @@ public final class SaveVolleyCompiler<RType> implements
             case SaveVolleyCompilerStates.GSON:
                 checkNotNull(this.requestClassOf,
                     "The parse style of response was null, requestTypeClass == null.");
-                this.request = new HurlGsonReservoirRequest<>(this.requestMethod,
+                this.request = HurlReservoirRequests.gsonReservoirRequest(this.requestMethod,
                     this.requestUrl,
                     this.requestClassOf);
                 break;
             case SaveVolleyCompilerStates.JSON_OBJECT:
-                this.request = new HurlJsonReservoirRequest(this.requestMethod, this.requestUrl);
+                this.request = HurlReservoirRequests.jsonReservoirRequest(this.requestMethod,
+                    this.requestUrl);
                 break;
             case SaveVolleyCompilerStates.JSON_ARRAY:
-                this.request = new HurlJsonArrayReservoirRequest(this.requestMethod,
+                this.request = HurlReservoirRequests.jsonArrayReservoirRequest(
+                    this.requestMethod,
                     this.requestUrl);
                 break;
         }
@@ -221,12 +222,8 @@ public final class SaveVolleyCompiler<RType> implements
         checkNotNull(this.request, "The request was null, request == null");
         checkNotNull(context, "The context was null, context == null");
         requestQueue(context).add(this.request);
-        if (this.request instanceof HurlGsonReservoirRequest) {
-            this.reservoir = ((HurlGsonReservoirRequest) this.request).getReservoir();
-        } else if (this.request instanceof HurlJsonReservoirRequest) {
-            this.reservoir = ((HurlJsonReservoirRequest) this.request).getReservoir();
-        } else if (this.request instanceof HurlJsonArrayReservoirRequest) {
-            this.reservoir = ((HurlJsonArrayReservoirRequest) this.request).getReservoir();
+        if (this.request instanceof HurlReservoirRequest) {
+            this.reservoir = ((HurlReservoirRequest) this.request).getReservoir();
         }
         this.expect = TERMINATION;
         return this;
