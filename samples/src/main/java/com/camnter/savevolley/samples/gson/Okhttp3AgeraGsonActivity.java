@@ -21,6 +21,7 @@ import com.camnter.savevolley.okhttp3.agera.gson.SaveVolley;
 import com.camnter.savevolley.okhttp3.agera.gson.SaveVolleys;
 import com.camnter.savevolley.okhttp3.volley.Request.Method;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
+import com.camnter.savevolley.samples.BaseTestActivity;
 import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.bean.GankResultData;
 import com.google.android.agera.Function;
@@ -39,7 +40,7 @@ import static java.util.concurrent.Executors.newSingleThreadExecutor;
  * Time：2016-06-22 17:46
  */
 
-public class Okhttp3AgeraGsonActivity extends Okhttp3GsonActivity {
+public class Okhttp3AgeraGsonActivity extends BaseTestActivity {
     private static final GankResultData INITIAL_VALUE = new GankResultData();
     private final Executor executor = newSingleThreadExecutor();
 

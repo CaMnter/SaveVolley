@@ -16,5 +16,4 @@
 
 -->
 
-<manifest package="com.camnter.savevolley.hurl.agera.fastjson"/>
-
+<manifest package="com.camnter.savevolley.hurl.agera.core"/>

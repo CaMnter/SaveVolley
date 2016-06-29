@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.samples.gson;
+package com.camnter.savevolley.samples.fastjson;
 
 import android.support.annotation.NonNull;
 import com.camnter.savevolley.hurl.Request.Method;
 import com.camnter.savevolley.hurl.VolleyError;
-import com.camnter.savevolley.hurl.agera.gson.SaveVolley;
-import com.camnter.savevolley.hurl.agera.gson.SaveVolleys;
+import com.camnter.savevolley.hurl.agera.core.SaveVolley;
+import com.camnter.savevolley.hurl.agera.fastjson.SaveVolleys;
 import com.camnter.savevolley.samples.BaseTestActivity;
 import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.bean.GankResultData;
@@ -31,16 +31,16 @@ import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 import java.util.concurrent.Executor;
 
-import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.GSON;
+import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.GSON;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
- * Description：HurlAgeraGsonActivity
+ * Description：HurlAgeraFastjsonActivity
  * Created by：CaMnter
- * Time：2016-06-23 23:06
+ * Time：2016-06-29 17:43
  */
 
-public class HurlAgeraGsonActivity extends BaseTestActivity {
+public class HurlAgeraFastjsonActivity extends BaseTestActivity {
     private static final GankResultData INITIAL_VALUE = new GankResultData();
     private final Executor executor = newSingleThreadExecutor();
 

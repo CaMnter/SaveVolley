@@ -38,6 +38,8 @@
             android:label="HurlFastjsonActivity"/>
         <activity android:name=".fastjson.Okhttp3FastjsonActivity"
             android:label="Okhttp3FastjsonActivity"/>
+        <activity android:name=".fastjson.HurlAgeraFastjsonActivity"
+            android:label="HurlAgeraFastjsonActivity"/>
     </application>
 
 </manifest>

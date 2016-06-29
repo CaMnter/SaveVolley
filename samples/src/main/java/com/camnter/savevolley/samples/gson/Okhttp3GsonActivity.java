@@ -16,40 +16,23 @@
 
 package com.camnter.savevolley.samples.gson;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.camnter.savevolley.okhttp3.gson.request.OkHttp3GsonRequest;
 import com.camnter.savevolley.okhttp3.volley.RequestQueue;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
-import com.camnter.savevolley.samples.R;
+import com.camnter.savevolley.samples.BaseTestActivity;
 import com.camnter.savevolley.samples.bean.GankData;
 
 /**
  * Description：Okhttp3GsonActivity
  * Created by：CaMnter
- * Time：2016-05-29 21:58
+ * Time：2016-06-29 17:45
  */
-public class Okhttp3GsonActivity extends AppCompatActivity {
 
-    public static final String TEST_URL = "http://gank.io/api/data/Android/1/1";
-
-    protected TextView getContentText;
-
-
-    @Override protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_network_hurl);
-        this.getContentText = (TextView) this.findViewById(R.id.get_content_text);
-
-        this.initData();
-    }
-
-
-    protected void initData() {
+public class Okhttp3GsonActivity extends BaseTestActivity {
+    @Override protected void initData() {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(new OkHttp3GsonRequest<GankData>(TEST_URL,
             GankData.class) {
@@ -77,5 +60,4 @@ public class Okhttp3GsonActivity extends AppCompatActivity {
             }
         });
     }
-
 }
