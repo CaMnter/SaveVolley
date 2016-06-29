@@ -4,7 +4,7 @@
    
    
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE)
-![Version](https://img.shields.io/badge/version-1.5.5-8470FF.svg)
+![Version](https://img.shields.io/badge/version-1.6.0-8470FF.svg)
 [ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)   
    
    
@@ -28,8 +28,10 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:okhttp3:1.5.5'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.5.5'
+    // for okhttp3
+    compile 'com.camnter.savevolley:okhttp3:1.6.0'
+    // for gson
+    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.6.0'
 }
 ```
     
@@ -76,22 +78,24 @@ dependencies {
 ```
     
     
-# savevolley-hurl-agera-gson
+# savevolley-hurl-agera-gson || savevolley-hurl-agera-fastjson
    
-## gradle
+可以使用 `SaveVolley` **Flow** 和 `agera` **Flow** 。   
+   
+## savevolley-hurl-agera-gson gradle
    
 ```gradle
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
     compile 'com.google.android.agera:agera:1.1.0-beta2'
     
-    compile 'com.camnter.savevolley:hurl:1.5.5'
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.5.5'
+    // for hurl
+    compile 'com.camnter.savevolley:hurl:1.6.0'
+    // for gson
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.6.0'
 }
 ```
    
-可以使用 `SaveVolley` **Flow** 和 `agera` **Flow** 。            
    
 ```java
     SaveVolley saveVolley = SaveVolleys
@@ -133,6 +137,61 @@ dependencies {
     });
 ```
    
+## savevolley-hurl-agera-fastjson gradle
+   
+```gradle
+dependencies {
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.google.android.agera:agera:1.1.0-beta2'
+    
+    // for hurl
+    compile 'com.camnter.savevolley:hurl:1.6.0'
+    // for fastjson
+    compile 'com.camnter.savevolley:savevolley-hurl-agera-fastjson:1.6.0'
+}
+```
+   
+```java
+    SaveVolley saveVolley = SaveVolleys
+        .<GankData>request(TEST_URL)
+        .method(Method.GET)
+        .parseStyle(GSON)
+        .classOf(GankData.class)
+        .createRequest()
+        .context(this)
+        .compile();
+
+    final Repository<GankResultData> repository = Repositories
+        .repositoryWithInitialValue(INITIAL_VALUE)
+        .observe(saveVolley.getReservoir())
+        .onUpdatesPerLoop()
+        .goTo(executor)
+        .attemptGetFrom(saveVolley.getReservoir())
+        .orSkip()
+        .thenAttemptTransform(new Function<Object, Result<GankResultData>>() {
+            /**
+             * Returns the result of applying this function to {@code input}.
+             */
+            @NonNull @Override public Result<GankResultData> apply(@NonNull Object input) {
+                if (input instanceof GankData) {
+                    return Result.success(((GankData) input).results.get(0));
+                } else if (input instanceof VolleyError) {
+                    return Result.failure((VolleyError) input);
+                }
+                return Result.failure();
+            }
+        })
+        .orSkip()
+        .compile();
+
+    repository.addUpdatable(new Updatable() {
+        @Override public void update() {
+            getContentText.setText(repository.get().toString());
+        }
+    });
+```
+   
+   
 <br/>
    
 # savevolley-okhttp3-gson || savevolley-okhttp3-fastjson
@@ -144,9 +203,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
     
-    compile 'com.camnter.savevolley:okhttp3:1.5.5'
+    // for okhttp3
+    compile 'com.camnter.savevolley:okhttp3:1.6.0'
     // for gson
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.5.5'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.6.0'
 }
 ```
    
@@ -187,9 +247,10 @@ dependencies {
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     
-    compile 'com.camnter.savevolley:okhttp3:1.5.5'
+    // for okhttp3
+    compile 'com.camnter.savevolley:okhttp3:1.6.0'
     // for fastjson
-    compile 'com.camnter.savevolley:savevolley-okhttp3-fastjson:1.5.5'
+    compile 'com.camnter.savevolley:savevolley-okhttp3-fastjson:1.6.0'
 }
 ```
    
@@ -233,9 +294,10 @@ dependencies {
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     
-    compile 'com.camnter.savevolley:hurl:1.5.5'
+    // for hurl
+    compile 'com.camnter.savevolley:hurl:1.6.0'
     // for gson
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.5.5'
+    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.6.0'
 }
 ```
    
@@ -277,9 +339,10 @@ dependencies {
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     
-    compile 'com.camnter.savevolley:hurl:1.5.5'
+    // for hurl
+    compile 'com.camnter.savevolley:hurl:1.6.0'
     // for fastjson
-    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.5.5'
+    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.6.0'
 }
 ```
     
@@ -321,7 +384,8 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:okhttp3:1.5.5'
+    // for okhttp3
+    compile 'com.camnter.savevolley:okhttp3:1.6.0'
 }
 ```
    
@@ -338,7 +402,8 @@ dependencies {
    
 ```gradle
 dependencies {
-    compile 'com.camnter.savevolley:hurl:1.5.5'
+    // for hurl
+    compile 'com.camnter.savevolley:hurl:1.6.0'
 }
 ```
    
