@@ -22,6 +22,7 @@ import com.camnter.savevolley.hurl.RequestQueue;
 import com.camnter.savevolley.hurl.VolleyError;
 import com.camnter.savevolley.hurl.gson.request.HurlGsonRequest;
 import com.camnter.savevolley.hurl.toolbox.Volley;
+import com.camnter.savevolley.samples.BaseTestActivity;
 import com.camnter.savevolley.samples.bean.GankData;
 
 /**
@@ -29,7 +30,7 @@ import com.camnter.savevolley.samples.bean.GankData;
  * Created by：CaMnter
  * Time：2016-05-29 22:10
  */
-public class HurlGsonActivity extends Okhttp3GsonActivity {
+public class HurlGsonActivity extends BaseTestActivity {
     @Override protected void initData() {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(new HurlGsonRequest<GankData>(TEST_URL,

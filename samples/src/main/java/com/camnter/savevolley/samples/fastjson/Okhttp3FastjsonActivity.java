@@ -22,8 +22,8 @@ import com.camnter.savevolley.okhttp3.fastjson.request.OkHttp3FastjsonRequest;
 import com.camnter.savevolley.okhttp3.volley.RequestQueue;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
+import com.camnter.savevolley.samples.BaseTestActivity;
 import com.camnter.savevolley.samples.bean.GankData;
-import com.camnter.savevolley.samples.gson.Okhttp3GsonActivity;
 
 /**
  * Description：Okhttp3FastjsonActivity
@@ -31,7 +31,7 @@ import com.camnter.savevolley.samples.gson.Okhttp3GsonActivity;
  * Time：2016-06-27 15:04
  */
 
-public class Okhttp3FastjsonActivity extends Okhttp3GsonActivity {
+public class Okhttp3FastjsonActivity extends BaseTestActivity {
     @Override protected void initData() {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(new OkHttp3FastjsonRequest<GankData>(TEST_URL, GankData.class) {

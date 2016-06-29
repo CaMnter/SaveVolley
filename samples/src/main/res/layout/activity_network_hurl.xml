@@ -19,7 +19,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gson.Okhttp3GsonActivity">
+    tools:context=".BaseTestActivity">
 
     <TextView
         android:id="@+id/get_label_text"

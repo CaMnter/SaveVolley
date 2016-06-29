@@ -39,10 +39,8 @@ android {
 }
 
 dependencies {
-    compile project(':extensions:savevolley-hurl-agera-core')
     provided project(':savevolley-hurl')
 
-    provided 'com.alibaba:fastjson:1.1.52.android'
     provided 'com.google.android.agera:agera:1.1.0-beta2'
 }
 
@@ -65,7 +63,7 @@ publish {
     uploadName = gradle.bintrayName
     repoName = gradle.bintrayRepo
     groupId = gradle.group
-    artifactId = 'savevolley-hurl-agera-fastjson'
+    artifactId = 'savevolley-hurl-agera-core'
     version = gradle.versionName
     autoPublish = true
 }
@@ -75,7 +73,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'SaveVolley savevolley-hurl-agera-fastjson'
+                name 'SaveVolley savevolley-hurl-agera-core'
                 url gradle.url
                 licenses {
                     license {
