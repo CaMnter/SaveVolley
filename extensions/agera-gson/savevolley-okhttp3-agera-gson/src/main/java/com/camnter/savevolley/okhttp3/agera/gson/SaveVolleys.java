@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.okhttp3.agera;
+package com.camnter.savevolley.okhttp3.agera.gson;
 
 import android.support.annotation.NonNull;
 

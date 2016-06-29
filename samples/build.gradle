@@ -39,43 +39,43 @@ dependencies {
     /********************
      * Local extensions *
      ********************/
-//    compile project(':extensions:gson:savevolley-hurl-gson')
-//    compile project(':extensions:gson:savevolley-okhttp3-gson')
-//    compile project(':extensions:agera-gson:savevolley-hurl-agera-gson')
-//    compile project(':extensions:agera-gson:savevolley-okhttp3-agera-gson')
-//
-//    compile project(':extensions:fastjson:savevolley-hurl-fastjson')
-//    compile project(':extensions:fastjson:savevolley-okhttp3-fastjson')
-//
-//    /*************************
-//     * Local savevolley-hurl *
-//     *************************/
-//    compile project(':savevolley-hurl')
-//
-//
-//    /****************************
-//     * Local savevolley-okhttp3 *
-//     ****************************/
-//    compile project(':savevolley-okhttp3')
+    compile project(':extensions:gson:savevolley-hurl-gson')
+    compile project(':extensions:gson:savevolley-okhttp3-gson')
+    compile project(':extensions:agera-gson:savevolley-hurl-agera-gson')
+    compile project(':extensions:agera-gson:savevolley-okhttp3-agera-gson')
+
+    compile project(':extensions:fastjson:savevolley-hurl-fastjson')
+    compile project(':extensions:fastjson:savevolley-okhttp3-fastjson')
+
+    /*************************
+     * Local savevolley-hurl *
+     *************************/
+    compile project(':savevolley-hurl')
+
+
+    /****************************
+     * Local savevolley-okhttp3 *
+     ****************************/
+    compile project(':savevolley-okhttp3')
 
     /*********************
      * Remote extensions *
      *********************/
-    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.5.4'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.5.4'
-    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.5.4'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.5.4'
-
-    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.5.4'
-    compile 'com.camnter.savevolley:savevolley-okhttp3-fastjson:1.5.4'
-
-    /**************************
-     * Remote savevolley-hurl *
-     **************************/
-    compile 'com.camnter.savevolley:hurl:1.5.4'
-
-    /*****************************
-     * Remote savevolley-okhttp3 *
-     *****************************/
-    compile 'com.camnter.savevolley:okhttp3:1.5.4'
+//    compile 'com.camnter.savevolley:savevolley-hurl-gson:1.5.4'
+//    compile 'com.camnter.savevolley:savevolley-okhttp3-gson:1.5.4'
+//    compile 'com.camnter.savevolley:savevolley-hurl-agera-gson:1.5.4'
+//    compile 'com.camnter.savevolley:savevolley-okhttp3-agera-gson:1.5.4'
+//
+//    compile 'com.camnter.savevolley:savevolley-hurl-fastjson:1.5.4'
+//    compile 'com.camnter.savevolley:savevolley-okhttp3-fastjson:1.5.4'
+//
+//    /**************************
+//     * Remote savevolley-hurl *
+//     **************************/
+//    compile 'com.camnter.savevolley:hurl:1.5.4'
+//
+//    /*****************************
+//     * Remote savevolley-okhttp3 *
+//     *****************************/
+//    compile 'com.camnter.savevolley:okhttp3:1.5.4'
 }

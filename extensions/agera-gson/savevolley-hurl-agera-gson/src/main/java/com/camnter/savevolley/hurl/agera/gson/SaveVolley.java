@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.hurl.agera;
+package com.camnter.savevolley.hurl.agera.gson;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;

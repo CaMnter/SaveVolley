@@ -14,33 +14,33 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.okhttp3.agera;
+package com.camnter.savevolley.hurl.agera.gson;
 
 import android.content.Context;
 import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.camnter.savevolley.okhttp3.agera.gson.request.Okhttp3ReservoirRequest;
-import com.camnter.savevolley.okhttp3.agera.gson.request.Okhttp3ReservoirRequests;
-import com.camnter.savevolley.okhttp3.volley.Request;
-import com.camnter.savevolley.okhttp3.volley.Request.Method;
-import com.camnter.savevolley.okhttp3.volley.RequestQueue;
-import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
+import com.camnter.savevolley.hurl.Request;
+import com.camnter.savevolley.hurl.Request.Method;
+import com.camnter.savevolley.hurl.RequestQueue;
+import com.camnter.savevolley.hurl.agera.gson.request.HurlReservoirRequest;
+import com.camnter.savevolley.hurl.agera.gson.request.HurlReservoirRequests;
+import com.camnter.savevolley.hurl.toolbox.Volley;
 import com.google.android.agera.Reservoir;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.camnter.savevolley.okhttp3.agera.Preconditions.checkArgument;
-import static com.camnter.savevolley.okhttp3.agera.Preconditions.checkNotNull;
+import static com.camnter.savevolley.hurl.agera.gson.Preconditions.checkArgument;
+import static com.camnter.savevolley.hurl.agera.gson.Preconditions.checkNotNull;
 import static com.google.android.agera.Preconditions.checkState;
 
 /**
  * Description：SaveVolleyCompiler
  * Created by：CaMnter
- * Time：2016-06-27 00:03
+ * Time：2016-06-27 00:24
  */
 
 public final class SaveVolleyCompiler<RType> implements
@@ -193,16 +193,16 @@ public final class SaveVolleyCompiler<RType> implements
             case SaveVolleyCompilerStates.GSON:
                 checkNotNull(this.requestClassOf,
                     "The parse style of response was null, requestTypeClass == null.");
-                this.request = Okhttp3ReservoirRequests.gsonReservoirRequest(this.requestMethod,
+                this.request = HurlReservoirRequests.gsonReservoirRequest(this.requestMethod,
                     this.requestUrl,
                     this.requestClassOf);
                 break;
             case SaveVolleyCompilerStates.JSON_OBJECT:
-                this.request = Okhttp3ReservoirRequests.jsonReservoirRequest(this.requestMethod,
+                this.request = HurlReservoirRequests.jsonReservoirRequest(this.requestMethod,
                     this.requestUrl);
                 break;
             case SaveVolleyCompilerStates.JSON_ARRAY:
-                this.request = Okhttp3ReservoirRequests.jsonArrayReservoirRequest(
+                this.request = HurlReservoirRequests.jsonArrayReservoirRequest(
                     this.requestMethod,
                     this.requestUrl);
                 break;
@@ -222,8 +222,8 @@ public final class SaveVolleyCompiler<RType> implements
         checkNotNull(this.request, "The request was null, request == null");
         checkNotNull(context, "The context was null, context == null");
         requestQueue(context).add(this.request);
-        if (this.request instanceof Okhttp3ReservoirRequest) {
-            this.reservoir = ((Okhttp3ReservoirRequest) this.request).getReservoir();
+        if (this.request instanceof HurlReservoirRequest) {
+            this.reservoir = ((HurlReservoirRequest) this.request).getReservoir();
         }
         this.expect = TERMINATION;
         return this;

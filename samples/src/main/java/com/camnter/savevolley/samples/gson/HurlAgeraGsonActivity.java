@@ -19,8 +19,8 @@ package com.camnter.savevolley.samples.gson;
 import android.support.annotation.NonNull;
 import com.camnter.savevolley.hurl.Request.Method;
 import com.camnter.savevolley.hurl.VolleyError;
-import com.camnter.savevolley.hurl.agera.SaveVolley;
-import com.camnter.savevolley.hurl.agera.SaveVolleys;
+import com.camnter.savevolley.hurl.agera.gson.SaveVolley;
+import com.camnter.savevolley.hurl.agera.gson.SaveVolleys;
 import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.bean.GankResultData;
 import com.google.android.agera.Function;
@@ -30,7 +30,7 @@ import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 import java.util.concurrent.Executor;
 
-import static com.camnter.savevolley.hurl.agera.SaveVolleyCompilerStates.GSON;
+import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.GSON;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
