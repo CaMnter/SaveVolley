@@ -3,8 +3,7 @@
 **Save volley from anything, By Agera to save. Thus, derived the AgeraVolley** . **(｡>﹏<｡)**   
    
    
-![Language](https://img.shields.io/badge/language-Java-EE0000.svg)  [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE) 
-![Version](https://img.shields.io/badge/version-1.6.0-8470FF.svg)  
+![Language](https://img.shields.io/badge/language-Java-EE0000.svg)  [![License](https://img.shields.io/badge/license-Apache%202.0-8470FF.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE) 
 [![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg)  ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)   
    
    
