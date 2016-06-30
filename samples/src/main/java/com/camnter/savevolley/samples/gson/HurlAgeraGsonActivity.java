@@ -19,7 +19,7 @@ package com.camnter.savevolley.samples.gson;
 import android.support.annotation.NonNull;
 import com.camnter.savevolley.hurl.Request.Method;
 import com.camnter.savevolley.hurl.VolleyError;
-import com.camnter.savevolley.hurl.agera.gson.SaveVolley;
+import com.camnter.savevolley.hurl.agera.core.SaveVolley;
 import com.camnter.savevolley.hurl.agera.gson.SaveVolleys;
 import com.camnter.savevolley.samples.BaseTestActivity;
 import com.camnter.savevolley.samples.bean.GankData;

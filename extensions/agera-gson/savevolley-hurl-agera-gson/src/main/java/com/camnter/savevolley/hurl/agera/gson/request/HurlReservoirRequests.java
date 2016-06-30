@@ -16,6 +16,9 @@
 
 package com.camnter.savevolley.hurl.agera.gson.request;
 
+import com.camnter.savevolley.hurl.agera.core.HurlJsonArrayReservoirRequest;
+import com.camnter.savevolley.hurl.agera.core.HurlJsonReservoirRequest;
+
 /**
  * Description：HurlReservoirRequests
  * Created by：CaMnter
