@@ -26,6 +26,7 @@ include ':extensions:agera-fastjson:savevolley-hurl-agera-fastjson',
         ':extensions:gson:savevolley-okhttp3-gson',
 
         ':extensions:savevolley-hurl-agera-core',
+        ':extensions:savevolley-okhttp3-agera-core',
 
         ':samples',
 

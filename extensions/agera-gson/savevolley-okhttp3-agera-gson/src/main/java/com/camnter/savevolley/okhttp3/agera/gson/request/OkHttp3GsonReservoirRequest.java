@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.okhttp3.agera.gson.request;
 
+import com.camnter.savevolley.okhttp3.agera.core.Okhttp3ReservoirRequest;
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
 import com.camnter.savevolley.okhttp3.volley.Response;

@@ -39,10 +39,8 @@ android {
 }
 
 dependencies {
-    compile project(':extensions:savevolley-okhttp3-agera-core')
     provided project(':savevolley-okhttp3')
 
-    provided 'com.google.code.gson:gson:2.7'
     provided 'com.google.android.agera:agera:1.1.0-beta2'
 }
 
@@ -65,7 +63,7 @@ publish {
     uploadName = gradle.bintrayName
     repoName = gradle.bintrayRepo
     groupId = gradle.group
-    artifactId = 'savevolley-okhttp3-agera-gson'
+    artifactId = 'savevolley-okhttp3-agera-core'
     version = gradle.versionName
     autoPublish = true
 }
@@ -75,7 +73,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                name 'SaveVolley savevolley-okhttp3-agera-gson'
+                name 'SaveVolley savevolley-okhttp3-agera-core'
                 url gradle.url
                 licenses {
                     license {
@@ -91,3 +89,4 @@ install {
         }
     }
 }
+

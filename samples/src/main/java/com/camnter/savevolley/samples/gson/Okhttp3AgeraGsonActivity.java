@@ -17,7 +17,7 @@
 package com.camnter.savevolley.samples.gson;
 
 import android.support.annotation.NonNull;
-import com.camnter.savevolley.okhttp3.agera.gson.SaveVolley;
+import com.camnter.savevolley.okhttp3.agera.core.SaveVolley;
 import com.camnter.savevolley.okhttp3.agera.gson.SaveVolleys;
 import com.camnter.savevolley.okhttp3.volley.Request.Method;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;

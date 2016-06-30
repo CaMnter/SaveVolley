@@ -14,47 +14,48 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.okhttp3.agera.gson.request;
+package com.camnter.savevolley.okhttp3.agera.core;
 
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
+import com.camnter.savevolley.okhttp3.volley.Request;
 import com.camnter.savevolley.okhttp3.volley.Response;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.okhttp3.volley.toolbox.HttpHeaderParser;
 import java.io.UnsupportedEncodingException;
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
- * Description：OkHttp3JsonArrayReservoirRequest
+ * Description：OkHttp3JsonReservoirRequest
  * Created by：CaMnter
- * Time：2016-06-23 16:09
+ * Time：2016-06-23 16:00
  */
 
-public class OkHttp3JsonArrayReservoirRequest extends Okhttp3ReservoirRequest<JSONArray>
-    implements Response.Listener<JSONArray>, Response.ErrorListener {
+public class OkHttp3JsonReservoirRequest extends Okhttp3ReservoirRequest<JSONObject>
+    implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
-    private final Response.Listener<JSONArray> mResponseListener;
+    private final Response.Listener<JSONObject> mResponseListener;
 
 
-    public OkHttp3JsonArrayReservoirRequest(String url) {
-        this(Method.GET, url);
+    public OkHttp3JsonReservoirRequest(String url) {
+        this(Request.Method.GET, url);
     }
 
 
-    public OkHttp3JsonArrayReservoirRequest(int method, String url) {
+    public OkHttp3JsonReservoirRequest(int method, String url) {
         super(method, url, null);
         this.mResponseListener = this;
     }
 
 
-    @Override protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
+    @Override protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
                 HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-            return Response.success(new JSONArray(jsonString),
+            return Response.success(new JSONObject(jsonString),
                 HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
@@ -64,7 +65,7 @@ public class OkHttp3JsonArrayReservoirRequest extends Okhttp3ReservoirRequest<JS
     }
 
 
-    @Override protected void deliverResponse(JSONArray response) {
+    @Override protected void deliverResponse(JSONObject response) {
         this.mResponseListener.onResponse(response);
     }
 
@@ -79,7 +80,7 @@ public class OkHttp3JsonArrayReservoirRequest extends Okhttp3ReservoirRequest<JS
     }
 
 
-    @Override public void onResponse(JSONArray response) {
+    @Override public void onResponse(JSONObject response) {
         this.mReservoir.accept(response);
     }
 
