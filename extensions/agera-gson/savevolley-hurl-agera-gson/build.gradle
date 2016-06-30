@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    compile project(':extensions:savevolley-hurl-agera-core')
     provided project(':savevolley-hurl')
 
     provided 'com.google.code.gson:gson:2.7'

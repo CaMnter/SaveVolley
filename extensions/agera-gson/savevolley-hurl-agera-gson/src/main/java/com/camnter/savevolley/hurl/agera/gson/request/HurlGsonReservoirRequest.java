@@ -20,6 +20,7 @@ import com.camnter.savevolley.hurl.NetworkResponse;
 import com.camnter.savevolley.hurl.ParseError;
 import com.camnter.savevolley.hurl.Response;
 import com.camnter.savevolley.hurl.VolleyError;
+import com.camnter.savevolley.hurl.agera.core.HurlReservoirRequest;
 import com.camnter.savevolley.hurl.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
 import java.io.UnsupportedEncodingException;

@@ -24,7 +24,8 @@ import android.support.annotation.Nullable;
 import com.camnter.savevolley.hurl.Request;
 import com.camnter.savevolley.hurl.Request.Method;
 import com.camnter.savevolley.hurl.RequestQueue;
-import com.camnter.savevolley.hurl.agera.gson.request.HurlReservoirRequest;
+import com.camnter.savevolley.hurl.agera.core.HurlReservoirRequest;
+import com.camnter.savevolley.hurl.agera.core.SaveVolley;
 import com.camnter.savevolley.hurl.agera.gson.request.HurlReservoirRequests;
 import com.camnter.savevolley.hurl.toolbox.Volley;
 import com.google.android.agera.Reservoir;
@@ -33,8 +34,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.camnter.savevolley.hurl.agera.gson.Preconditions.checkArgument;
-import static com.camnter.savevolley.hurl.agera.gson.Preconditions.checkNotNull;
+import static com.camnter.savevolley.hurl.agera.core.Preconditions.checkArgument;
+import static com.camnter.savevolley.hurl.agera.core.Preconditions.checkNotNull;
+import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.GSON;
+import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.JSON_ARRAY;
+import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.JSON_OBJECT;
+import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.ParseStyle;
 import static com.google.android.agera.Preconditions.checkState;
 
 /**
@@ -162,9 +167,9 @@ public final class SaveVolleyCompiler<RType> implements
 
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> parseStyle(
-        @Nullable @SaveVolleyCompilerStates.ParseStyle final Integer parseStyle) {
+        @Nullable @ParseStyle final Integer parseStyle) {
         checkExpect(REQUEST);
-        this.requestParseStyle = parseStyle != null ? parseStyle : SaveVolleyCompilerStates.GSON;
+        this.requestParseStyle = parseStyle != null ? parseStyle : GSON;
         this.expect = REQUEST;
         return this;
     }
@@ -190,18 +195,18 @@ public final class SaveVolleyCompiler<RType> implements
             this.request.setParams(this.requestParams);
         }
         switch (this.requestParseStyle) {
-            case SaveVolleyCompilerStates.GSON:
+            case GSON:
                 checkNotNull(this.requestClassOf,
                     "The parse style of response was null, requestTypeClass == null.");
                 this.request = HurlReservoirRequests.gsonReservoirRequest(this.requestMethod,
                     this.requestUrl,
                     this.requestClassOf);
                 break;
-            case SaveVolleyCompilerStates.JSON_OBJECT:
+            case JSON_OBJECT:
                 this.request = HurlReservoirRequests.jsonReservoirRequest(this.requestMethod,
                     this.requestUrl);
                 break;
-            case SaveVolleyCompilerStates.JSON_ARRAY:
+            case JSON_ARRAY:
                 this.request = HurlReservoirRequests.jsonArrayReservoirRequest(
                     this.requestMethod,
                     this.requestUrl);
