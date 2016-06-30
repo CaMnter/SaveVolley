@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.okhttp3.agera.gson.request;
+package com.camnter.savevolley.okhttp3.agera.core;
 
 import com.camnter.savevolley.okhttp3.volley.Request;
 import com.camnter.savevolley.okhttp3.volley.Response;

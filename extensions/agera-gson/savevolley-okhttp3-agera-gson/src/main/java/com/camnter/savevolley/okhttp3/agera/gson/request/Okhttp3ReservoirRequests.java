@@ -16,6 +16,9 @@
 
 package com.camnter.savevolley.okhttp3.agera.gson.request;
 
+import com.camnter.savevolley.okhttp3.agera.core.OkHttp3JsonArrayReservoirRequest;
+import com.camnter.savevolley.okhttp3.agera.core.OkHttp3JsonReservoirRequest;
+
 /**
  * Description：Okhttp3ReservoirRequests
  * Created by：CaMnter
