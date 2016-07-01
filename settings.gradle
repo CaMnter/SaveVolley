@@ -42,8 +42,8 @@ include ':extensions:agera-fastjson:savevolley-hurl-agera-fastjson',
 
 
 
-gradle.ext.versionCode = 162
-gradle.ext.versionName = '1.6.2'
+gradle.ext.versionCode = 163
+gradle.ext.versionName = '1.6.3'
 
 gradle.ext.bintrayRepo = 'maven'
 gradle.ext.bintrayName = 'SaveVolley'
