@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.hurl.fastjson.request;
 
+import android.support.annotation.NonNull;
 import com.alibaba.fastjson.JSON;
 import com.camnter.savevolley.hurl.NetworkResponse;
 import com.camnter.savevolley.hurl.ParseError;
@@ -37,15 +38,19 @@ public abstract class HurlFastjsonRequest<T> extends Request<T>
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
     private Response.Listener<T> mResponseListener;
+    @NonNull
     private Class<T> mClass;
 
 
-    public HurlFastjsonRequest(String url, Class<T> clazz) {
+    public HurlFastjsonRequest(@NonNull String url,
+                               @NonNull Class<T> clazz) {
         this(Method.GET, url, clazz);
     }
 
 
-    public HurlFastjsonRequest(int method, String url, Class<T> clazz) {
+    public HurlFastjsonRequest(@NonNull int method,
+                               @NonNull String url,
+                               @NonNull Class<T> clazz) {
         super(method, url, null);
         this.mClass = clazz;
         this.mResponseListener = this;

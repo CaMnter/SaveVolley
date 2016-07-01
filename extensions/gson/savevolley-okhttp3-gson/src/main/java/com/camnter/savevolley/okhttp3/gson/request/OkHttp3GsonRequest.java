@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.okhttp3.gson.request;
 
+import android.support.annotation.NonNull;
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
 import com.camnter.savevolley.okhttp3.volley.Request;
@@ -31,21 +32,25 @@ import java.io.UnsupportedEncodingException;
  * Time：2016-05-27 17:22
  */
 public abstract class OkHttp3GsonRequest<T> extends Request<T>
-        implements Response.Listener<T>, Response.ErrorListener {
+    implements Response.Listener<T>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
     private Gson mGson;
     private Response.Listener<T> mResponseListener;
+    @NonNull
     private Class<T> mClass;
 
 
-    public OkHttp3GsonRequest(String url, Class<T> clazz) {
+    public OkHttp3GsonRequest(@NonNull String url,
+                              @NonNull Class<T> clazz) {
         this(Method.GET, url, clazz);
     }
 
 
-    public OkHttp3GsonRequest(int method, String url, Class<T> clazz) {
+    public OkHttp3GsonRequest(@NonNull int method,
+                              @NonNull String url,
+                              @NonNull Class<T> clazz) {
         super(method, url, null);
         this.mGson = new Gson();
         this.mClass = clazz;
@@ -56,9 +61,9 @@ public abstract class OkHttp3GsonRequest<T> extends Request<T>
     @Override protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
-                    HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+                HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
             return Response.success(this.mGson.fromJson(jsonString, this.mClass),
-                    HttpHeaderParser.parseCacheHeaders(response));
+                HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
         }

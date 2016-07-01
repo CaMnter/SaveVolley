@@ -24,11 +24,14 @@ import android.support.annotation.NonNull;
  * Time：2016-06-29 17:05
  */
 
-public class SaveVolleys {
+public final class SaveVolleys {
 
     @NonNull
     public static <T> SaveVolleyCompilerStates.VRequestState<T> request(final String url) {
         return SaveVolleyCompiler.request(url);
     }
+
+
+    private SaveVolleys() {}
 
 }

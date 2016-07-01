@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.okhttp3.fastjson.request;
 
+import android.support.annotation.NonNull;
 import com.alibaba.fastjson.JSON;
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
@@ -37,15 +38,19 @@ public abstract class OkHttp3FastjsonRequest<T> extends Request<T>
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
     private Response.Listener<T> mResponseListener;
+    @NonNull
     private Class<T> mClass;
 
 
-    public OkHttp3FastjsonRequest(String url, Class<T> clazz) {
+    public OkHttp3FastjsonRequest(@NonNull String url,
+                                  @NonNull Class<T> clazz) {
         this(Method.GET, url, clazz);
     }
 
 
-    public OkHttp3FastjsonRequest(int method, String url, Class<T> clazz) {
+    public OkHttp3FastjsonRequest(@NonNull int method,
+                                  @NonNull String url,
+                                  @NonNull Class<T> clazz) {
         super(method, url, null);
         this.mClass = clazz;
         this.mResponseListener = this;

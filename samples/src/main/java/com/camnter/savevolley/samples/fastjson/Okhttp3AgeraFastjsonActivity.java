@@ -17,10 +17,10 @@
 package com.camnter.savevolley.samples.fastjson;
 
 import android.support.annotation.NonNull;
-import com.camnter.savevolley.hurl.Request.Method;
 import com.camnter.savevolley.hurl.VolleyError;
-import com.camnter.savevolley.hurl.agera.core.SaveVolley;
-import com.camnter.savevolley.hurl.agera.fastjson.SaveVolleys;
+import com.camnter.savevolley.okhttp3.agera.core.SaveVolley;
+import com.camnter.savevolley.okhttp3.agera.fastjson.SaveVolleys;
+import com.camnter.savevolley.okhttp3.volley.Request.Method;
 import com.camnter.savevolley.samples.BaseTestActivity;
 import com.camnter.savevolley.samples.bean.GankData;
 import com.camnter.savevolley.samples.bean.GankResultData;
@@ -31,16 +31,16 @@ import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 import java.util.concurrent.Executor;
 
-import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.FASTJSON;
+import static com.camnter.savevolley.okhttp3.agera.fastjson.SaveVolleyCompilerStates.FASTJSON;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
- * Description：HurlAgeraFastjsonActivity
+ * Description：Okhttp3AgeraFastjsonActivity
  * Created by：CaMnter
- * Time：2016-06-29 17:43
+ * Time：2016-07-01 11:49
  */
 
-public class HurlAgeraFastjsonActivity extends BaseTestActivity {
+public class Okhttp3AgeraFastjsonActivity extends BaseTestActivity {
     private static final GankResultData INITIAL_VALUE = new GankResultData();
     private final Executor executor = newSingleThreadExecutor();
 

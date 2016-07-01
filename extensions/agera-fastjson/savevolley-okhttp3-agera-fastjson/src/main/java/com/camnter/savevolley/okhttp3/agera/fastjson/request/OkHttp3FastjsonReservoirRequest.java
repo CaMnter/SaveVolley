@@ -14,60 +14,63 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.okhttp3.agera.core;
+package com.camnter.savevolley.okhttp3.agera.fastjson.request;
 
 import android.support.annotation.NonNull;
+import com.alibaba.fastjson.JSON;
+import com.camnter.savevolley.okhttp3.agera.core.Okhttp3ReservoirRequest;
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
-import com.camnter.savevolley.okhttp3.volley.Request;
 import com.camnter.savevolley.okhttp3.volley.Response;
 import com.camnter.savevolley.okhttp3.volley.VolleyError;
 import com.camnter.savevolley.okhttp3.volley.toolbox.HttpHeaderParser;
 import java.io.UnsupportedEncodingException;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
- * Description：OkHttp3JsonReservoirRequest
+ * Description：OkHttp3FastjsonReservoirRequest
  * Created by：CaMnter
- * Time：2016-06-23 16:00
+ * Time：2016-07-01 11:36
  */
 
-public class OkHttp3JsonReservoirRequest extends Okhttp3ReservoirRequest<JSONObject>
-    implements Response.Listener<JSONObject>, Response.ErrorListener {
+public class OkHttp3FastjsonReservoirRequest<T> extends Okhttp3ReservoirRequest<T>
+    implements Response.Listener<T>, Response.ErrorListener {
 
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
-    private final Response.Listener<JSONObject> mResponseListener;
+    private final Response.Listener<T> mResponseListener;
+    @NonNull
+    private final Class<T> mClass;
 
 
-    public OkHttp3JsonReservoirRequest(@NonNull String url) {
-        this(Request.Method.GET, url);
+    public OkHttp3FastjsonReservoirRequest(@NonNull String url,
+                                           @NonNull Class<T> clazz) {
+        this(Method.GET, url, clazz);
     }
 
 
-    public OkHttp3JsonReservoirRequest(@NonNull int method,
-                                       @NonNull String url) {
+
+    public OkHttp3FastjsonReservoirRequest(@NonNull int method,
+                                           @NonNull String url,
+                                           @NonNull Class<T> clazz) {
         super(method, url, null);
+        this.mClass = clazz;
         this.mResponseListener = this;
     }
 
 
-    @Override protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+    @Override protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,
                 HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
-            return Response.success(new JSONObject(jsonString),
+            return Response.success(JSON.parseObject(jsonString, this.mClass),
                 HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
         }
     }
 
 
-    @Override protected void deliverResponse(JSONObject response) {
+    @Override protected void deliverResponse(T response) {
         this.mResponseListener.onResponse(response);
     }
 
@@ -82,8 +85,7 @@ public class OkHttp3JsonReservoirRequest extends Okhttp3ReservoirRequest<JSONObj
     }
 
 
-    @Override public void onResponse(JSONObject response) {
+    @Override public void onResponse(T response) {
         this.mReservoir.accept(response);
     }
-
 }

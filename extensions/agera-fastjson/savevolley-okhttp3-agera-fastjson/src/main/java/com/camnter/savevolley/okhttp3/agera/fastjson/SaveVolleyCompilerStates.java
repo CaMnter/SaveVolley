@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.hurl.agera.fastjson;
+package com.camnter.savevolley.okhttp3.agera.fastjson;
 
 import android.content.Context;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.camnter.savevolley.hurl.agera.core.SaveVolley;
+import com.camnter.savevolley.okhttp3.agera.core.SaveVolley;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Map;
@@ -28,7 +28,7 @@ import java.util.Map;
 /**
  * Description：SaveVolleyCompilerStates
  * Created by：CaMnter
- * Time：2016-06-27 00:27
+ * Time：2016-07-01 11:32
  */
 
 public interface SaveVolleyCompilerStates {
@@ -83,3 +83,4 @@ public interface SaveVolleyCompilerStates {
     }
 
 }
+

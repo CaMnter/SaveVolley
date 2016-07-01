@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.hurl.agera.gson.request;
 
+import android.support.annotation.NonNull;
 import com.camnter.savevolley.hurl.agera.core.HurlJsonArrayReservoirRequest;
 import com.camnter.savevolley.hurl.agera.core.HurlJsonReservoirRequest;
 
@@ -25,20 +26,26 @@ import com.camnter.savevolley.hurl.agera.core.HurlJsonReservoirRequest;
  * Time：2016-06-28 12:06
  */
 
-public class HurlReservoirRequests {
+public final class HurlReservoirRequests {
 
+    @NonNull
     public static <T> HurlGsonReservoirRequest<T> gsonReservoirRequest(int method, String url, Class<T> clazz) {
         return new HurlGsonReservoirRequest<>(method, url, clazz);
     }
 
 
+    @NonNull
     public static HurlJsonReservoirRequest jsonReservoirRequest(int method, String url) {
         return new HurlJsonReservoirRequest(method, url);
     }
 
 
+    @NonNull
     public static HurlJsonArrayReservoirRequest jsonArrayReservoirRequest(int method, String url) {
         return new HurlJsonArrayReservoirRequest(method, url);
     }
+
+
+    private HurlReservoirRequests() {}
 
 }

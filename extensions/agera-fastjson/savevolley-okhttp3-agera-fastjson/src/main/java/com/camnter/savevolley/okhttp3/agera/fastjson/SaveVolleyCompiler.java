@@ -14,41 +14,40 @@
  * limitations under the License.
  */
 
-package com.camnter.savevolley.hurl.agera.gson;
+package com.camnter.savevolley.okhttp3.agera.fastjson;
 
 import android.content.Context;
 import android.os.Looper;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.camnter.savevolley.hurl.Request;
-import com.camnter.savevolley.hurl.Request.Method;
-import com.camnter.savevolley.hurl.RequestQueue;
-import com.camnter.savevolley.hurl.agera.core.HurlReservoirRequest;
-import com.camnter.savevolley.hurl.agera.core.SaveVolley;
-import com.camnter.savevolley.hurl.agera.gson.request.HurlReservoirRequests;
-import com.camnter.savevolley.hurl.toolbox.Volley;
+import com.camnter.savevolley.okhttp3.agera.core.Okhttp3ReservoirRequest;
+import com.camnter.savevolley.okhttp3.agera.core.SaveVolley;
+import com.camnter.savevolley.okhttp3.agera.fastjson.request.Okhttp3ReservoirRequests;
+import com.camnter.savevolley.okhttp3.volley.Request;
+import com.camnter.savevolley.okhttp3.volley.RequestQueue;
+import com.camnter.savevolley.okhttp3.volley.toolbox.Volley;
 import com.google.android.agera.Reservoir;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.camnter.savevolley.hurl.agera.core.Preconditions.checkArgument;
-import static com.camnter.savevolley.hurl.agera.core.Preconditions.checkNotNull;
-import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.GSON;
-import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.JSON_ARRAY;
-import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.JSON_OBJECT;
-import static com.camnter.savevolley.hurl.agera.gson.SaveVolleyCompilerStates.ParseStyle;
+import static com.camnter.savevolley.okhttp3.agera.core.Preconditions.checkArgument;
+import static com.camnter.savevolley.okhttp3.agera.core.Preconditions.checkNotNull;
+import static com.camnter.savevolley.okhttp3.agera.fastjson.SaveVolleyCompilerStates.FASTJSON;
+import static com.camnter.savevolley.okhttp3.agera.fastjson.SaveVolleyCompilerStates.JSON_ARRAY;
+import static com.camnter.savevolley.okhttp3.agera.fastjson.SaveVolleyCompilerStates.JSON_OBJECT;
+import static com.camnter.savevolley.okhttp3.agera.fastjson.SaveVolleyCompilerStates.ParseStyle;
 import static com.google.android.agera.Preconditions.checkState;
 
 /**
  * Description：SaveVolleyCompiler
  * Created by：CaMnter
- * Time：2016-06-27 00:24
+ * Time：2016-07-01 11:39
  */
 
-public final class SaveVolleyCompiler<RType> implements
+public class SaveVolleyCompiler<RType> implements
     SaveVolleyCompilerStates.VRequestState<RType>,
     SaveVolleyCompilerStates.VRequestQueue<RType>,
     SaveVolleyCompilerStates.VTermination<RType> {
@@ -134,7 +133,7 @@ public final class SaveVolleyCompiler<RType> implements
     @NonNull @Override
     public SaveVolleyCompilerStates.VRequestState<RType> method(@Nullable final Integer method) {
         checkExpect(REQUEST);
-        this.requestMethod = method != null ? method : Method.GET;
+        this.requestMethod = method != null ? method : Request.Method.GET;
         this.expect = REQUEST;
         return this;
     }
@@ -169,7 +168,7 @@ public final class SaveVolleyCompiler<RType> implements
     public SaveVolleyCompilerStates.VRequestState<RType> parseStyle(
         @Nullable @ParseStyle final Integer parseStyle) {
         checkExpect(REQUEST);
-        this.requestParseStyle = parseStyle != null ? parseStyle : GSON;
+        this.requestParseStyle = parseStyle != null ? parseStyle : FASTJSON;
         this.expect = REQUEST;
         return this;
     }
@@ -187,7 +186,7 @@ public final class SaveVolleyCompiler<RType> implements
 
     @NonNull @Override public SaveVolleyCompilerStates.VRequestQueue<RType> createRequest() {
         checkExpect(REQUEST);
-        if (this.requestMethod != Method.GET) {
+        if (this.requestMethod != Request.Method.GET) {
             checkNotNull(this.requestParams,
                 "The params of request was null, params == null.");
             checkArgument(this.requestParams.isEmpty(),
@@ -195,19 +194,19 @@ public final class SaveVolleyCompiler<RType> implements
             this.request.setParams(this.requestParams);
         }
         switch (this.requestParseStyle) {
-            case GSON:
+            case FASTJSON:
                 checkNotNull(this.requestClassOf,
                     "The parse style of response was null, requestTypeClass == null.");
-                this.request = HurlReservoirRequests.gsonReservoirRequest(this.requestMethod,
+                this.request = Okhttp3ReservoirRequests.fastjsonReservoirRequest(this.requestMethod,
                     this.requestUrl,
                     this.requestClassOf);
                 break;
             case JSON_OBJECT:
-                this.request = HurlReservoirRequests.jsonReservoirRequest(this.requestMethod,
+                this.request = Okhttp3ReservoirRequests.jsonReservoirRequest(this.requestMethod,
                     this.requestUrl);
                 break;
             case JSON_ARRAY:
-                this.request = HurlReservoirRequests.jsonArrayReservoirRequest(
+                this.request = Okhttp3ReservoirRequests.jsonArrayReservoirRequest(
                     this.requestMethod,
                     this.requestUrl);
                 break;
@@ -227,8 +226,8 @@ public final class SaveVolleyCompiler<RType> implements
         checkNotNull(this.request, "The request was null, request == null");
         checkNotNull(context, "The context was null, context == null");
         requestQueue(context).add(this.request);
-        if (this.request instanceof HurlReservoirRequest) {
-            this.reservoir = ((HurlReservoirRequest) this.request).getReservoir();
+        if (this.request instanceof Okhttp3ReservoirRequest) {
+            this.reservoir = ((Okhttp3ReservoirRequest) this.request).getReservoir();
         }
         this.expect = TERMINATION;
         return this;

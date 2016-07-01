@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.hurl.agera.core;
 
+import android.support.annotation.NonNull;
 import com.camnter.savevolley.hurl.NetworkResponse;
 import com.camnter.savevolley.hurl.ParseError;
 import com.camnter.savevolley.hurl.Request;
@@ -40,12 +41,13 @@ public class HurlJsonReservoirRequest extends HurlReservoirRequest<JSONObject>
     private final Response.Listener<JSONObject> mResponseListener;
 
 
-    public HurlJsonReservoirRequest(String url) {
+    public HurlJsonReservoirRequest(@NonNull String url) {
         this(Request.Method.GET, url);
     }
 
 
-    public HurlJsonReservoirRequest(int method, String url) {
+    public HurlJsonReservoirRequest(@NonNull int method,
+                                    @NonNull String url) {
         super(method, url, null);
         this.mResponseListener = this;
     }
