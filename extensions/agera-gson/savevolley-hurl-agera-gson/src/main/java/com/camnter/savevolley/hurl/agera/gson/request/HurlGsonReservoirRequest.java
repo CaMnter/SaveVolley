@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.hurl.agera.gson.request;
 
+import android.support.annotation.NonNull;
 import com.camnter.savevolley.hurl.NetworkResponse;
 import com.camnter.savevolley.hurl.ParseError;
 import com.camnter.savevolley.hurl.Response;
@@ -38,15 +39,19 @@ public class HurlGsonReservoirRequest<T> extends HurlReservoirRequest<T>
 
     private final Gson mGson;
     private final Response.Listener<T> mResponseListener;
+    @NonNull
     private final Class<T> mClass;
 
 
-    public HurlGsonReservoirRequest(String url, Class<T> clazz) {
+    public HurlGsonReservoirRequest(@NonNull String url,
+                                    @NonNull Class<T> clazz) {
         this(Method.GET, url, clazz);
     }
 
 
-    public HurlGsonReservoirRequest(int method, String url, Class<T> clazz) {
+    public HurlGsonReservoirRequest(@NonNull int method,
+                                    @NonNull String url,
+                                    @NonNull Class<T> clazz) {
         super(method, url, null);
         this.mGson = new Gson();
         this.mClass = clazz;

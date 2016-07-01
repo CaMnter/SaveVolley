@@ -90,7 +90,7 @@ public final class SaveVolleyCompiler<RType> implements
     }
 
 
-    public static RequestQueue requestQueue(final Context context) {
+    public static RequestQueue requestQueue(@NonNull final Context context) {
         if (queue.get() == null) {
             queue.set(Volley.newRequestQueue(context));
         }

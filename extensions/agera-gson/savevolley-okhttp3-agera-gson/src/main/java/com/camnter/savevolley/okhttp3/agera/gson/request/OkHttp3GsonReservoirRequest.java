@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.okhttp3.agera.gson.request;
 
+import android.support.annotation.NonNull;
 import com.camnter.savevolley.okhttp3.agera.core.Okhttp3ReservoirRequest;
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
@@ -38,15 +39,19 @@ public class OkHttp3GsonReservoirRequest<T> extends Okhttp3ReservoirRequest<T>
 
     private final Gson mGson;
     private final Response.Listener<T> mResponseListener;
+    @NonNull
     private final Class<T> mClass;
 
 
-    public OkHttp3GsonReservoirRequest(String url, Class<T> clazz) {
+    public OkHttp3GsonReservoirRequest(@NonNull String url,
+                                       @NonNull Class<T> clazz) {
         this(Method.GET, url, clazz);
     }
 
 
-    public OkHttp3GsonReservoirRequest(int method, String url, Class<T> clazz) {
+    public OkHttp3GsonReservoirRequest(@NonNull int method,
+                                       @NonNull String url,
+                                       @NonNull Class<T> clazz) {
         super(method, url, null);
         this.mGson = new Gson();
         this.mClass = clazz;
