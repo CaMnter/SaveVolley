@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.okhttp3.agera.fastjson.request;
 
+import android.support.annotation.NonNull;
 import com.camnter.savevolley.okhttp3.agera.core.OkHttp3JsonArrayReservoirRequest;
 import com.camnter.savevolley.okhttp3.agera.core.OkHttp3JsonReservoirRequest;
 
@@ -25,20 +26,31 @@ import com.camnter.savevolley.okhttp3.agera.core.OkHttp3JsonReservoirRequest;
  * Time：2016-07-01 11:38
  */
 
-public class Okhttp3ReservoirRequests {
+public final class Okhttp3ReservoirRequests {
 
-    public static <T> OkHttp3FastjsonReservoirRequest<T> fastjsonReservoirRequest(int method, String url, Class<T> clazz) {
+    @NonNull
+    public static <T> OkHttp3FastjsonReservoirRequest<T> fastjsonReservoirRequest(
+        @NonNull int method,
+        @NonNull String url,
+        @NonNull Class<T> clazz) {
         return new OkHttp3FastjsonReservoirRequest<>(method, url, clazz);
     }
 
 
-    public static OkHttp3JsonReservoirRequest jsonReservoirRequest(int method, String url) {
+    @NonNull
+    public static OkHttp3JsonReservoirRequest jsonReservoirRequest(@NonNull int method,
+                                                                   @NonNull String url) {
         return new OkHttp3JsonReservoirRequest(method, url);
     }
 
 
-    public static OkHttp3JsonArrayReservoirRequest jsonArrayReservoirRequest(int method, String url) {
+    @NonNull
+    public static OkHttp3JsonArrayReservoirRequest jsonArrayReservoirRequest(@NonNull int method,
+                                                                             @NonNull String url) {
         return new OkHttp3JsonArrayReservoirRequest(method, url);
     }
+
+
+    private Okhttp3ReservoirRequests() {}
 
 }

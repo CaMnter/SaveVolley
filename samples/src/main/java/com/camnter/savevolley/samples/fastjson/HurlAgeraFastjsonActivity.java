@@ -31,7 +31,7 @@ import com.google.android.agera.Result;
 import com.google.android.agera.Updatable;
 import java.util.concurrent.Executor;
 
-import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.GSON;
+import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.FASTJSON;
 import static java.util.concurrent.Executors.newSingleThreadExecutor;
 
 /**
@@ -49,7 +49,7 @@ public class HurlAgeraFastjsonActivity extends BaseTestActivity {
         SaveVolley saveVolley = SaveVolleys
             .<GankData>request(TEST_URL)
             .method(Method.GET)
-            .parseStyle(GSON)
+            .parseStyle(FASTJSON)
             .classOf(GankData.class)
             .createRequest()
             .context(this)

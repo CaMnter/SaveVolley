@@ -35,7 +35,7 @@ import java.util.Map;
 
 import static com.camnter.savevolley.hurl.agera.core.Preconditions.checkArgument;
 import static com.camnter.savevolley.hurl.agera.core.Preconditions.checkNotNull;
-import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.GSON;
+import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.FASTJSON;
 import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.JSON_ARRAY;
 import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.JSON_OBJECT;
 import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.ParseStyle;
@@ -91,7 +91,7 @@ public class SaveVolleyCompiler<RType> implements
     }
 
 
-    public static RequestQueue requestQueue(final Context context) {
+    public static RequestQueue requestQueue(@NonNull final Context context) {
         if (queue.get() == null) {
             queue.set(Volley.newRequestQueue(context));
         }
@@ -170,7 +170,7 @@ public class SaveVolleyCompiler<RType> implements
     public SaveVolleyCompilerStates.VRequestState<RType> parseStyle(
         @Nullable @ParseStyle final Integer parseStyle) {
         checkExpect(REQUEST);
-        this.requestParseStyle = parseStyle != null ? parseStyle : GSON;
+        this.requestParseStyle = parseStyle != null ? parseStyle : FASTJSON;
         this.expect = REQUEST;
         return this;
     }
@@ -196,10 +196,10 @@ public class SaveVolleyCompiler<RType> implements
             this.request.setParams(this.requestParams);
         }
         switch (this.requestParseStyle) {
-            case GSON:
+            case FASTJSON:
                 checkNotNull(this.requestClassOf,
                     "The parse style of response was null, requestTypeClass == null.");
-                this.request = HurlReservoirRequests.gsonReservoirRequest(this.requestMethod,
+                this.request = HurlReservoirRequests.fastjsonReservoirRequest(this.requestMethod,
                     this.requestUrl,
                     this.requestClassOf);
                 break;
@@ -240,6 +240,7 @@ public class SaveVolleyCompiler<RType> implements
      * VTermination *
      *****************/
 
+    @NonNull
     @Override public SaveVolley compile() {
         checkExpect(TERMINATION);
         SaveVolley saveVolley = new SaveVolley(this.requestMethod, this.requestUrl,

@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.hurl.agera.fastjson.request;
 
+import android.support.annotation.NonNull;
 import com.camnter.savevolley.hurl.agera.core.HurlJsonArrayReservoirRequest;
 import com.camnter.savevolley.hurl.agera.core.HurlJsonReservoirRequest;
 
@@ -25,20 +26,31 @@ import com.camnter.savevolley.hurl.agera.core.HurlJsonReservoirRequest;
  * Time：2016-06-29 17:05
  */
 
-public class HurlReservoirRequests {
+public final class HurlReservoirRequests {
 
-    public static <T> HurlFastjsonReservoirRequest<T> gsonReservoirRequest(int method, String url, Class<T> clazz) {
+    @NonNull
+    public static <T> HurlFastjsonReservoirRequest<T> fastjsonReservoirRequest(@NonNull int method,
+                                                                               @NonNull String url,
+                                                                               @NonNull
+                                                                                   Class<T> clazz) {
         return new HurlFastjsonReservoirRequest<>(method, url, clazz);
     }
 
 
-    public static HurlJsonReservoirRequest jsonReservoirRequest(int method, String url) {
+    @NonNull
+    public static HurlJsonReservoirRequest jsonReservoirRequest(@NonNull int method,
+                                                                @NonNull String url) {
         return new HurlJsonReservoirRequest(method, url);
     }
 
 
-    public static HurlJsonArrayReservoirRequest jsonArrayReservoirRequest(int method, String url) {
+    @NonNull
+    public static HurlJsonArrayReservoirRequest jsonArrayReservoirRequest(@NonNull int method,
+                                                                          @NonNull String url) {
         return new HurlJsonArrayReservoirRequest(method, url);
     }
+
+
+    private HurlReservoirRequests() {}
 
 }

@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.okhttp3.agera.fastjson.request;
 
+import android.support.annotation.NonNull;
 import com.alibaba.fastjson.JSON;
 import com.camnter.savevolley.okhttp3.agera.core.Okhttp3ReservoirRequest;
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
@@ -37,15 +38,20 @@ public class OkHttp3FastjsonReservoirRequest<T> extends Okhttp3ReservoirRequest<
     protected static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Response.Listener<T> mResponseListener;
+    @NonNull
     private final Class<T> mClass;
 
 
-    public OkHttp3FastjsonReservoirRequest(String url, Class<T> clazz) {
+    public OkHttp3FastjsonReservoirRequest(@NonNull String url,
+                                           @NonNull Class<T> clazz) {
         this(Method.GET, url, clazz);
     }
 
 
-    public OkHttp3FastjsonReservoirRequest(int method, String url, Class<T> clazz) {
+
+    public OkHttp3FastjsonReservoirRequest(@NonNull int method,
+                                           @NonNull String url,
+                                           @NonNull Class<T> clazz) {
         super(method, url, null);
         this.mClass = clazz;
         this.mResponseListener = this;

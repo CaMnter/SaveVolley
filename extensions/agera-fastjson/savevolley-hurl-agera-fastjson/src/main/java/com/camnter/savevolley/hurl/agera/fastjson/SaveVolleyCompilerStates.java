@@ -33,12 +33,12 @@ import java.util.Map;
 
 public interface SaveVolleyCompilerStates {
 
-    int GSON = 260;
+    int FASTJSON = 260;
     int JSON_OBJECT = 261;
     int JSON_ARRAY = 262;
 
 
-    @IntDef({ GSON, JSON_OBJECT, JSON_ARRAY })
+    @IntDef({ FASTJSON, JSON_OBJECT, JSON_ARRAY })
     @Retention(RetentionPolicy.SOURCE) @interface ParseStyle {}
 
 
