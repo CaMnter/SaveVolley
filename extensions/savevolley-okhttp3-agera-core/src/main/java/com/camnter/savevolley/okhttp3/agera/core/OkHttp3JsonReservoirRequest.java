@@ -16,6 +16,7 @@
 
 package com.camnter.savevolley.okhttp3.agera.core;
 
+import android.support.annotation.NonNull;
 import com.camnter.savevolley.okhttp3.volley.NetworkResponse;
 import com.camnter.savevolley.okhttp3.volley.ParseError;
 import com.camnter.savevolley.okhttp3.volley.Request;
@@ -40,12 +41,13 @@ public class OkHttp3JsonReservoirRequest extends Okhttp3ReservoirRequest<JSONObj
     private final Response.Listener<JSONObject> mResponseListener;
 
 
-    public OkHttp3JsonReservoirRequest(String url) {
+    public OkHttp3JsonReservoirRequest(@NonNull String url) {
         this(Request.Method.GET, url);
     }
 
 
-    public OkHttp3JsonReservoirRequest(int method, String url) {
+    public OkHttp3JsonReservoirRequest(@NonNull int method,
+                                       @NonNull String url) {
         super(method, url, null);
         this.mResponseListener = this;
     }
