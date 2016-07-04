@@ -55,7 +55,7 @@ public class HurlJsonArrayReservoirRequest extends HurlReservoirRequest<JSONArra
 
     @Override protected Response<JSONArray> parseNetworkResponse(NetworkResponse response) {
         try {
-            String jsonString = new String(response.data,
+            String jsonString = new String(response.getResultData(),
                 HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
             return Response.success(new JSONArray(jsonString),
                 HttpHeaderParser.parseCacheHeaders(response));

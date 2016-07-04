@@ -56,7 +56,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
 }
 
 publish {

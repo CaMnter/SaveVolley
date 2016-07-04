@@ -1,4 +1,5 @@
 /*
+ * Copyright (C) 2016 CaMnter yuanyu.camnter@gmail.com
  * Copyright (C) 2011 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +18,13 @@
 package com.camnter.savevolley.hurl;
 
 import com.camnter.savevolley.network.core.http.core.HttpStatus;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Collections;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Data and headers returned from {@link Network#performRequest(Request)}.
@@ -34,6 +40,9 @@ public class NetworkResponse {
     public final boolean notModified;
     /** Network roundtrip time in milliseconds. */
     public final long networkTimeMs;
+    /** Raw data from this response by gzip parse */
+    private byte[] gzipData;
+
 
     /**
      * Creates a new network response.
@@ -52,16 +61,76 @@ public class NetworkResponse {
         this.networkTimeMs = networkTimeMs;
     }
 
+
     public NetworkResponse(int statusCode, byte[] data, Map<String, String> headers, boolean notModified) {
         this(statusCode, data, headers, notModified, 0);
     }
+
 
     public NetworkResponse(byte[] data) {
         this(HttpStatus.SC_OK, data, Collections.<String, String>emptyMap(), false, 0);
     }
 
+
     public NetworkResponse(byte[] data, Map<String, String> headers) {
         this(HttpStatus.SC_OK, data, headers, false, 0);
     }
+
+
+    private String getContentEncoding() {
+        return this.headers.get("Content-Encoding");
+    }
+
+
+    /**
+     * Is gzipped?
+     *
+     * @param contentEncoding Content-Encoding
+     * @return true or false
+     */
+    private boolean gzipped(String contentEncoding) {
+        return contentEncoding != null && contentEncoding.toLowerCase().contains("gzip");
+    }
+
+
+    /**
+     * Get the raw data from this response by gzip parse
+     *
+     * @return gzip byte[]
+     */
+    private byte[] getGzipData() {
+        if (gzipData == null && this.gzipped(this.getContentEncoding())) {
+            try {
+                String result = "";
+                GZIPInputStream gzipInputStream = new GZIPInputStream(
+                    new ByteArrayInputStream(this.data));
+                InputStreamReader inputStreamReader = new InputStreamReader(gzipInputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String read;
+                while ((read = bufferedReader.readLine()) != null) {
+                    result += read;
+                }
+                bufferedReader.close();
+                inputStreamReader.close();
+                gzipInputStream.close();
+
+                this.gzipData = result.getBytes();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return this.gzipData;
+    }
+
+
+    /**
+     * gzip data or normal data
+     *
+     * @return the finally byte[] data
+     */
+    public byte[] getResultData() {
+        return this.getGzipData() != null ? this.gzipData : this.data;
+    }
+
 }
 

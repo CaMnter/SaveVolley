@@ -55,7 +55,7 @@ public class HurlJsonReservoirRequest extends HurlReservoirRequest<JSONObject>
 
     @Override protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
         try {
-            String jsonString = new String(response.data,
+            String jsonString = new String(response.getResultData(),
                 HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
             return Response.success(new JSONObject(jsonString),
                 HttpHeaderParser.parseCacheHeaders(response));
