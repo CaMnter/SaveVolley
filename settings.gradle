@@ -36,10 +36,7 @@ include ':extensions:agera-fastjson:savevolley-hurl-agera-fastjson',
         ':savevolley-network-core',
         ':savevolley-network-hurl-adapter',
         ':savevolley-network-okhttp3-adapter',
-        ':savevolley-okhttp3',
-
-        ':volley-comments'
-
+        ':savevolley-okhttp3'
 
 
 gradle.ext.versionCode = 165
