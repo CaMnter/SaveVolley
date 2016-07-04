@@ -61,7 +61,7 @@ public class HurlGsonReservoirRequest<T> extends HurlReservoirRequest<T>
 
     @Override protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
-            String jsonString = new String(response.data,
+            String jsonString = new String(response.getResultData(),
                 HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
             return Response.success(this.mGson.fromJson(jsonString, this.mClass),
                 HttpHeaderParser.parseCacheHeaders(response));
