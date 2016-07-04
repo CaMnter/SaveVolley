@@ -38,3 +38,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+defaultTasks 'lint', 'jacocoTestReport', ':samples:assembleRelease'
