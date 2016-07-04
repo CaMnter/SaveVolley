@@ -5,7 +5,7 @@
 
 ![Language](https://img.shields.io/badge/language-Java-EE0000.svg) [![License](https://img.shields.io/badge/license-Apache%202.0-orange.svg)](https://github.com/CaMnter/SaveVolley/blob/master/LICENSE)
 ![Version](https://img.shields.io/badge/version-1.6.4-8470FF.svg)
-[ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion)    
+[ ![Download](https://api.bintray.com/packages/camnter/maven/SaveVolley/images/download.svg) ](https://bintray.com/camnter/maven/SaveVolley/_latestVersion) [![Build Status](https://travis-ci.org/CaMnter/SaveVolley.svg?branch=master)](https://travis-ci.org/CaMnter/SaveVolley)   
 
 
 **gson:** 2.7   
