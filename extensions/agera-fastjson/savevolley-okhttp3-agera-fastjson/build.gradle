@@ -44,7 +44,7 @@ dependencies {
     provided project(':savevolley-okhttp3')
 
     provided 'com.alibaba:fastjson:1.1.52.android'
-    provided 'com.google.android.agera:agera:1.1.0-beta2'
+    provided 'com.google.android.agera:agera:1.1.0'
 }
 
 android {

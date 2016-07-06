@@ -12,7 +12,7 @@
 
 **fastjson:** 1.1.52.android   
 
-**agera:** 1.1.0-beta2   
+**agera:** 1.1.0   
 
 **okhttp3:** 3.3.1   
 
@@ -26,7 +26,7 @@
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
-    compile 'com.google.android.agera:agera:1.1.0-beta2'
+    compile 'com.google.android.agera:agera:1.1.0'
 
     // for okhttp3
     compile 'com.camnter.savevolley:okhttp3:1.6.6'
@@ -83,7 +83,7 @@ dependencies {
 dependencies {
     compile 'com.alibaba:fastjson:1.1.52.android'
     compile 'com.squareup.okhttp3:okhttp:3.3.1'
-    compile 'com.google.android.agera:agera:1.1.0-beta2'
+    compile 'com.google.android.agera:agera:1.1.0'
 
     // for okhttp3
     compile 'com.camnter.savevolley:okhttp3:1.6.6'
@@ -143,7 +143,7 @@ dependencies {
 ```gradle
 dependencies {
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.google.android.agera:agera:1.1.0-beta2'
+    compile 'com.google.android.agera:agera:1.1.0'
 
     // for hurl
     compile 'com.camnter.savevolley:hurl:1.6.6'
@@ -198,7 +198,7 @@ dependencies {
 ```gradle
 dependencies {
     compile 'com.alibaba:fastjson:1.1.52.android'
-    compile 'com.google.android.agera:agera:1.1.0-beta2'
+    compile 'com.google.android.agera:agera:1.1.0'
 
     // for hurl
     compile 'com.camnter.savevolley:hurl:1.6.6'
