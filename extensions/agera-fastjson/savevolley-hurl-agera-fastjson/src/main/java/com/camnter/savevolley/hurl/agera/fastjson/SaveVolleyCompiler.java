@@ -41,15 +41,13 @@ import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerState
 import static com.camnter.savevolley.hurl.agera.fastjson.SaveVolleyCompilerStates.ParseStyle;
 import static com.google.android.agera.Preconditions.checkState;
 
-;
-
 /**
  * Description：SaveVolleyCompiler
  * Created by：CaMnter
  * Time：2016-06-29 17:04
  */
 
-public class SaveVolleyCompiler<RType> implements
+class SaveVolleyCompiler<RType> implements
     SaveVolleyCompilerStates.VRequestState<RType>,
     SaveVolleyCompilerStates.VRequestQueue<RType>,
     SaveVolleyCompilerStates.VTermination<RType> {
@@ -66,7 +64,6 @@ public class SaveVolleyCompiler<RType> implements
     private static final int PRODUCT = 264;
 
     private int requestMethod;
-    @NonNull
     private String requestUrl;
     private int requestParseStyle;
     private Class requestClassOf;
@@ -77,7 +74,7 @@ public class SaveVolleyCompiler<RType> implements
 
     private Request<?> request;
 
-    private Reservoir<Object> reservoir;
+    private Reservoir reservoir;
 
     private static final ThreadLocal<SaveVolleyCompiler> compilers = new ThreadLocal<>();
     private static final ThreadLocal<RequestQueue> queue = new ThreadLocal<>();
@@ -91,7 +88,7 @@ public class SaveVolleyCompiler<RType> implements
     }
 
 
-    public static RequestQueue requestQueue(@NonNull final Context context) {
+    private static RequestQueue requestQueue(@NonNull final Context context) {
         if (queue.get() == null) {
             queue.set(Volley.newRequestQueue(context));
         }
@@ -104,6 +101,7 @@ public class SaveVolleyCompiler<RType> implements
     }
 
 
+    @SuppressWarnings("unchecked")
     @NonNull
     static <RType> SaveVolleyCompilerStates.VRequestState<RType> request(
         @NonNull final String url) {
@@ -222,7 +220,7 @@ public class SaveVolleyCompiler<RType> implements
      * VRequestQueue *
      *****************/
 
-    @Override
+    @NonNull @Override
     public SaveVolleyCompilerStates.VTermination<RType> context(@NonNull final Context context) {
         checkExpect(REQUEST_QUEUE);
         checkNotNull(this.request, "The request was null, request == null");
@@ -240,6 +238,7 @@ public class SaveVolleyCompiler<RType> implements
      * VTermination *
      *****************/
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override public SaveVolley compile() {
         checkExpect(TERMINATION);

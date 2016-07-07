@@ -35,7 +35,7 @@ import java.io.UnsupportedEncodingException;
 public class OkHttp3FastjsonReservoirRequest<T> extends Okhttp3ReservoirRequest<T>
     implements Response.Listener<T>, Response.ErrorListener {
 
-    protected static final String PROTOCOL_CHARSET = "utf-8";
+    private static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Response.Listener<T> mResponseListener;
     @NonNull
@@ -49,7 +49,7 @@ public class OkHttp3FastjsonReservoirRequest<T> extends Okhttp3ReservoirRequest<
 
 
 
-    public OkHttp3FastjsonReservoirRequest(@NonNull int method,
+    public OkHttp3FastjsonReservoirRequest(int method,
                                            @NonNull String url,
                                            @NonNull Class<T> clazz) {
         super(method, url, null);

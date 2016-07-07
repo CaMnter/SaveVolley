@@ -47,7 +47,7 @@ import static com.google.android.agera.Preconditions.checkState;
  * Time：2016-07-01 11:39
  */
 
-public class SaveVolleyCompiler<RType> implements
+class SaveVolleyCompiler<RType> implements
     SaveVolleyCompilerStates.VRequestState<RType>,
     SaveVolleyCompilerStates.VRequestQueue<RType>,
     SaveVolleyCompilerStates.VTermination<RType> {
@@ -64,7 +64,6 @@ public class SaveVolleyCompiler<RType> implements
     private static final int PRODUCT = 264;
 
     private int requestMethod;
-    @NonNull
     private String requestUrl;
     private int requestParseStyle;
     private Class requestClassOf;
@@ -89,7 +88,7 @@ public class SaveVolleyCompiler<RType> implements
     }
 
 
-    public static RequestQueue requestQueue(@NonNull final Context context) {
+    private static RequestQueue requestQueue(@NonNull final Context context) {
         if (queue.get() == null) {
             queue.set(Volley.newRequestQueue(context));
         }
@@ -102,6 +101,7 @@ public class SaveVolleyCompiler<RType> implements
     }
 
 
+    @SuppressWarnings("unchecked")
     @NonNull
     static <RType> SaveVolleyCompilerStates.VRequestState<RType> request(
         @NonNull final String url) {
@@ -220,7 +220,8 @@ public class SaveVolleyCompiler<RType> implements
      * VRequestQueue *
      *****************/
 
-    @Override
+    @SuppressWarnings("unchecked")
+    @NonNull @Override
     public SaveVolleyCompilerStates.VTermination<RType> context(@NonNull final Context context) {
         checkExpect(REQUEST_QUEUE);
         checkNotNull(this.request, "The request was null, request == null");
@@ -238,7 +239,7 @@ public class SaveVolleyCompiler<RType> implements
      * VTermination *
      *****************/
 
-    @Override public SaveVolley compile() {
+    @NonNull @Override public SaveVolley compile() {
         checkExpect(TERMINATION);
         SaveVolley saveVolley = new SaveVolley(this.requestMethod, this.requestUrl,
             this.requestParseStyle, this.requestClassOf, this.request, this.reservoir);

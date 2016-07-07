@@ -30,7 +30,7 @@ public final class Okhttp3ReservoirRequests {
 
     @NonNull
     public static <T> OkHttp3FastjsonReservoirRequest<T> fastjsonReservoirRequest(
-        @NonNull int method,
+        int method,
         @NonNull String url,
         @NonNull Class<T> clazz) {
         return new OkHttp3FastjsonReservoirRequest<>(method, url, clazz);
@@ -38,14 +38,14 @@ public final class Okhttp3ReservoirRequests {
 
 
     @NonNull
-    public static OkHttp3JsonReservoirRequest jsonReservoirRequest(@NonNull int method,
+    public static OkHttp3JsonReservoirRequest jsonReservoirRequest(int method,
                                                                    @NonNull String url) {
         return new OkHttp3JsonReservoirRequest(method, url);
     }
 
 
     @NonNull
-    public static OkHttp3JsonArrayReservoirRequest jsonArrayReservoirRequest(@NonNull int method,
+    public static OkHttp3JsonArrayReservoirRequest jsonArrayReservoirRequest(int method,
                                                                              @NonNull String url) {
         return new OkHttp3JsonArrayReservoirRequest(method, url);
     }

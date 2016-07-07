@@ -29,7 +29,7 @@ import com.camnter.savevolley.hurl.agera.core.HurlJsonReservoirRequest;
 public final class HurlReservoirRequests {
 
     @NonNull
-    public static <T> HurlFastjsonReservoirRequest<T> fastjsonReservoirRequest(@NonNull int method,
+    public static <T> HurlFastjsonReservoirRequest<T> fastjsonReservoirRequest(int method,
                                                                                @NonNull String url,
                                                                                @NonNull
                                                                                    Class<T> clazz) {
@@ -38,14 +38,14 @@ public final class HurlReservoirRequests {
 
 
     @NonNull
-    public static HurlJsonReservoirRequest jsonReservoirRequest(@NonNull int method,
+    public static HurlJsonReservoirRequest jsonReservoirRequest(int method,
                                                                 @NonNull String url) {
         return new HurlJsonReservoirRequest(method, url);
     }
 
 
     @NonNull
-    public static HurlJsonArrayReservoirRequest jsonArrayReservoirRequest(@NonNull int method,
+    public static HurlJsonArrayReservoirRequest jsonArrayReservoirRequest(int method,
                                                                           @NonNull String url) {
         return new HurlJsonArrayReservoirRequest(method, url);
     }
