@@ -47,10 +47,10 @@ dependencies {
     /*************
      * Necessary *
      *************/
-    compile 'com.google.code.gson:gson:2.7'
-    compile 'com.alibaba:fastjson:1.1.52.android'
-    compile 'com.squareup.okhttp3:okhttp:3.3.1'
-    compile 'com.google.android.agera:agera:1.1.0'
+    compile "com.google.code.gson:gson:$gradle.gsonVersion"
+    compile "com.alibaba:fastjson:$gradle.fastjsonVersion"
+    compile "com.squareup.okhttp3:okhttp:$gradle.okhttp3Version"
+    compile "com.google.android.agera:agera:$gradle.ageraVersion"
 
     /********************
      * Local extensions *

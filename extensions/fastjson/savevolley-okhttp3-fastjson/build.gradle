@@ -41,7 +41,7 @@ android {
 
 dependencies {
     provided project(':savevolley-okhttp3')
-    provided 'com.alibaba:fastjson:1.1.52.android'
+    provided "com.alibaba:fastjson:$gradle.fastjsonVersion"
 }
 
 android {

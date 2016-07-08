@@ -42,7 +42,7 @@ android {
 dependencies {
     provided project(':savevolley-hurl')
 
-    provided 'com.google.android.agera:agera:1.1.0-beta2'
+    provided "com.google.android.agera:agera:$gradle.ageraVersion"
 }
 
 android {

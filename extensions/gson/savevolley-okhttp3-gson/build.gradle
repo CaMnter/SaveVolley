@@ -41,7 +41,7 @@ android {
 
 dependencies {
     provided project(':savevolley-okhttp3')
-    provided 'com.google.code.gson:gson:2.7'
+    provided "com.google.code.gson:gson:$gradle.gsonVersion"
 }
 
 android {

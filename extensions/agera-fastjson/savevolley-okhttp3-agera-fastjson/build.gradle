@@ -43,8 +43,8 @@ dependencies {
     compile project(':extensions:savevolley-okhttp3-agera-core')
     provided project(':savevolley-okhttp3')
 
-    provided 'com.alibaba:fastjson:1.1.52.android'
-    provided 'com.google.android.agera:agera:1.1.0'
+    provided "com.alibaba:fastjson:$gradle.fastjsonVersion"
+    provided "com.google.android.agera:agera:$gradle.ageraVersion"
 }
 
 android {
