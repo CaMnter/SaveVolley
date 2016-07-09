@@ -65,7 +65,6 @@ public final class SaveVolleyCompiler<RType> implements
     private static final int PRODUCT = 264;
 
     private int requestMethod;
-    @NonNull
     private String requestUrl;
     private int requestParseStyle;
     private Class requestClassOf;
@@ -103,6 +102,7 @@ public final class SaveVolleyCompiler<RType> implements
     }
 
 
+    @SuppressWarnings("unchecked")
     @NonNull
     static <RType> SaveVolleyCompilerStates.VRequestState<RType> request(
         @NonNull final String url) {
@@ -221,7 +221,8 @@ public final class SaveVolleyCompiler<RType> implements
      * VRequestQueue *
      *****************/
 
-    @Override
+    @SuppressWarnings("unchecked")
+    @NonNull @Override
     public SaveVolleyCompilerStates.VTermination<RType> context(@NonNull final Context context) {
         checkExpect(REQUEST_QUEUE);
         checkNotNull(this.request, "The request was null, request == null");
@@ -239,7 +240,7 @@ public final class SaveVolleyCompiler<RType> implements
      * VTermination *
      *****************/
 
-    @Override public SaveVolley compile() {
+    @NonNull @Override public SaveVolley compile() {
         checkExpect(TERMINATION);
         SaveVolley saveVolley = new SaveVolley(this.requestMethod, this.requestUrl,
             this.requestParseStyle, this.requestClassOf, this.request, this.reservoir);

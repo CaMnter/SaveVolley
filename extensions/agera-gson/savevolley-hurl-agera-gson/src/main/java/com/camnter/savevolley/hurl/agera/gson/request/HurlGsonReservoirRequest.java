@@ -35,7 +35,7 @@ import java.io.UnsupportedEncodingException;
 public class HurlGsonReservoirRequest<T> extends HurlReservoirRequest<T>
     implements Response.Listener<T>, Response.ErrorListener {
 
-    protected static final String PROTOCOL_CHARSET = "utf-8";
+    private static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Gson mGson;
     private final Response.Listener<T> mResponseListener;
@@ -49,7 +49,7 @@ public class HurlGsonReservoirRequest<T> extends HurlReservoirRequest<T>
     }
 
 
-    public HurlGsonReservoirRequest(@NonNull int method,
+    public HurlGsonReservoirRequest(int method,
                                     @NonNull String url,
                                     @NonNull Class<T> clazz) {
         super(method, url, null);

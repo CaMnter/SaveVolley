@@ -29,19 +29,23 @@ import com.camnter.savevolley.hurl.agera.core.HurlJsonReservoirRequest;
 public final class HurlReservoirRequests {
 
     @NonNull
-    public static <T> HurlGsonReservoirRequest<T> gsonReservoirRequest(int method, String url, Class<T> clazz) {
+    public static <T> HurlGsonReservoirRequest<T> gsonReservoirRequest(int method,
+                                                                       @NonNull String url,
+                                                                       @NonNull Class<T> clazz) {
         return new HurlGsonReservoirRequest<>(method, url, clazz);
     }
 
 
     @NonNull
-    public static HurlJsonReservoirRequest jsonReservoirRequest(int method, String url) {
+    public static HurlJsonReservoirRequest jsonReservoirRequest(int method,
+                                                                @NonNull String url) {
         return new HurlJsonReservoirRequest(method, url);
     }
 
 
     @NonNull
-    public static HurlJsonArrayReservoirRequest jsonArrayReservoirRequest(int method, String url) {
+    public static HurlJsonArrayReservoirRequest jsonArrayReservoirRequest(int method,
+                                                                          @NonNull String url) {
         return new HurlJsonArrayReservoirRequest(method, url);
     }
 
