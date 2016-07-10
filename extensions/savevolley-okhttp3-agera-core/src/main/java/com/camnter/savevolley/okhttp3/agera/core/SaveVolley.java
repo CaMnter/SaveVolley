@@ -76,17 +76,17 @@ public class SaveVolley {
     }
 
 
-    public Class getRequestClassOf() {
+    @Nullable public Class getRequestClassOf() {
         return requestClassOf;
     }
 
 
-    public Request<?> getRequest() {
+    @NonNull public Request<?> getRequest() {
         return request;
     }
 
 
-    public Reservoir<Object> getReservoir() {
+    @NonNull public Reservoir<Object> getReservoir() {
         return reservoir;
     }
 }

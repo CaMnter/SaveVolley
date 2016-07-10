@@ -34,7 +34,7 @@ import java.io.UnsupportedEncodingException;
 public abstract class OkHttp3GsonRequest<T> extends Request<T>
     implements Response.Listener<T>, Response.ErrorListener {
 
-    protected static final String PROTOCOL_CHARSET = "utf-8";
+    private static final String PROTOCOL_CHARSET = "utf-8";
 
     private Gson mGson;
     private Response.Listener<T> mResponseListener;
@@ -48,7 +48,7 @@ public abstract class OkHttp3GsonRequest<T> extends Request<T>
     }
 
 
-    public OkHttp3GsonRequest(@NonNull int method,
+    public OkHttp3GsonRequest(int method,
                               @NonNull String url,
                               @NonNull Class<T> clazz) {
         super(method, url, null);

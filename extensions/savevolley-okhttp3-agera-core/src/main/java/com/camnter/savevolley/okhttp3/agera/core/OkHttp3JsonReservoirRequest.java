@@ -36,7 +36,7 @@ import org.json.JSONObject;
 public class OkHttp3JsonReservoirRequest extends Okhttp3ReservoirRequest<JSONObject>
     implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    protected static final String PROTOCOL_CHARSET = "utf-8";
+    private static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Response.Listener<JSONObject> mResponseListener;
 
@@ -46,7 +46,7 @@ public class OkHttp3JsonReservoirRequest extends Okhttp3ReservoirRequest<JSONObj
     }
 
 
-    public OkHttp3JsonReservoirRequest(@NonNull int method,
+    public OkHttp3JsonReservoirRequest(int method,
                                        @NonNull String url) {
         super(method, url, null);
         this.mResponseListener = this;

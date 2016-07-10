@@ -36,7 +36,7 @@ import org.json.JSONException;
 public class OkHttp3JsonArrayReservoirRequest extends Okhttp3ReservoirRequest<JSONArray>
     implements Response.Listener<JSONArray>, Response.ErrorListener {
 
-    protected static final String PROTOCOL_CHARSET = "utf-8";
+    private static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Response.Listener<JSONArray> mResponseListener;
 
@@ -46,7 +46,7 @@ public class OkHttp3JsonArrayReservoirRequest extends Okhttp3ReservoirRequest<JS
     }
 
 
-    public OkHttp3JsonArrayReservoirRequest(@NonNull int method,
+    public OkHttp3JsonArrayReservoirRequest(int method,
                                             @NonNull String url) {
         super(method, url, null);
         this.mResponseListener = this;

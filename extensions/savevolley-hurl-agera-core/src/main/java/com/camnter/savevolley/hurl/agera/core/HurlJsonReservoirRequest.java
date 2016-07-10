@@ -36,7 +36,7 @@ import org.json.JSONObject;
 public class HurlJsonReservoirRequest extends HurlReservoirRequest<JSONObject>
     implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    protected static final String PROTOCOL_CHARSET = "utf-8";
+    private static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Response.Listener<JSONObject> mResponseListener;
 
@@ -46,7 +46,7 @@ public class HurlJsonReservoirRequest extends HurlReservoirRequest<JSONObject>
     }
 
 
-    public HurlJsonReservoirRequest(@NonNull int method,
+    public HurlJsonReservoirRequest(int method,
                                     @NonNull String url) {
         super(method, url, null);
         this.mResponseListener = this;

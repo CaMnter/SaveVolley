@@ -36,7 +36,7 @@ import org.json.JSONException;
 public class HurlJsonArrayReservoirRequest extends HurlReservoirRequest<JSONArray>
     implements Response.Listener<JSONArray>, Response.ErrorListener {
 
-    protected static final String PROTOCOL_CHARSET = "utf-8";
+    private static final String PROTOCOL_CHARSET = "utf-8";
 
     private final Response.Listener<JSONArray> mResponseListener;
 
@@ -46,7 +46,7 @@ public class HurlJsonArrayReservoirRequest extends HurlReservoirRequest<JSONArra
     }
 
 
-    public HurlJsonArrayReservoirRequest(@NonNull int method,
+    public HurlJsonArrayReservoirRequest(int method,
                                          @NonNull String url) {
         super(method, url, null);
         this.mResponseListener = this;
